@@ -180,13 +180,14 @@
   when: not enable_tls|bool
   notify: restart nginx
 
-- name: ensure nginx is running
-  become: yes
-  service:
-    name: nginx
-    state: started
+# commented out -- we will run nginx as an s6 service
+# - name: ensure nginx is running
+#   become: yes
+#   service:
+#     name: nginx
+#     state: started
 
-- name: www-data sudoers atrm as pi user
+- name: www-data sudoers atrm as root user
   become: yes
   copy:
     src: 020_www-data-atrm-nopasswd
