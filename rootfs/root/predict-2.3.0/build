@@ -5,7 +5,7 @@
 if [ -e predict.h ]; then
 	rm -f predict
 	echo -n "Compiling PREDICT version `cat .version`... "
-	cc -Wall -O3 -s -fomit-frame-pointer predict.c -lm -lncurses -pthread -lasound -o predict
+	cc -Wall -O3 -s -fomit-frame-pointer predict.c -lm -lc -lgcc -lncurses -pthread -lasound -o predict
 	if [ -x predict ]; then
 		echo "Done!"
 	else
