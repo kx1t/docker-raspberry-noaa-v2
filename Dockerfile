@@ -84,7 +84,7 @@ COPY rootfs/ /
 RUN set -x && \
 #
 #
-    /install/install_and_upgrade.sh && \
+    /root/install_and_upgrade.sh && \
 #
 # Do some other stuff
     echo "alias dir=\"ls -alsv\"" >> /root/.bashrc && \
