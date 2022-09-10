@@ -9,9 +9,9 @@ RUN set -x && \
     KEPT_PIP3_PACKAGES=() && \
     KEPT_RUBY_PACKAGES=() && \
 #
-    TEMP_PACKAGES+=(gcc) && \
-    TEMP_PACKAGES+=(python3-dev) && \
-    TEMP_PACKAGES+=(pkg-config) && \
+    KEPT_PACKAGES+=(gcc) && \
+    KEPT_PACKAGES+=(python3-dev) && \
+    KEPT_PACKAGES+=(pkg-config) && \
 #
 
     KEPT_PACKAGES+=(at) && \
@@ -39,6 +39,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(libusb-1.0-0-dev) && \
     KEPT_PACKAGES+=(libxft-dev) && \
     KEPT_PACKAGES+=(libxft2) && \
+    KEPT_PACKAGES+=(make) && \
     KEPT_PACKAGES+=(nginx) && \
     KEPT_PACKAGES+=(php7.4-fpm) && \
     KEPT_PACKAGES+=(php7.4-mbstring) && \
@@ -75,7 +76,7 @@ RUN set -x && \
 
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \
-    apt-get remove -y -q ${TEMP_PACKAGES[@]} && \
+#    apt-get remove -y -q ${TEMP_PACKAGES[@]} && \
     apt-get autoremove -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -y && \
     apt-get clean -y -q && \
     rm -rf \
