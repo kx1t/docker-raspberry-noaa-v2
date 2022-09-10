@@ -9,7 +9,6 @@
       register: raspbian_version
       check_mode: no
       changed_when: no
-  warn: false
   roles:
     - role: common
 ...
