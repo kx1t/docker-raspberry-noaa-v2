@@ -85,13 +85,16 @@ RUN set -x && \
       /.dockerenv \
       /git
 #
+
 COPY rootfs/ /
 #
 #COPY ATTRIBUTION.md /usr/share/planefence/stage/attribution.txt
 #
+
 RUN set -x && \
 #
 #
+    mkdir -p /etc/udev/rules.d && \
     curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules && \
     pushd /root && \
         ./install_and_upgrade.sh && \
