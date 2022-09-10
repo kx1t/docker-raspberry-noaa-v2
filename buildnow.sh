@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-set -x
+
 
 [[ "$1" != "" ]] && BRANCH="$1" || BRANCH=main
 [[ "$BRANCH" == "main" ]] && TAG="latest" || TAG="$BRANCH"
@@ -18,6 +18,7 @@ read
 
 starttime="$(date +%s)"
 # rebuild the container
+set -x
 git checkout $BRANCH || exit 2
 git pull -a
 docker buildx build --compress --push $2 --platform $ARCHS --tag $IMAGE1 .
