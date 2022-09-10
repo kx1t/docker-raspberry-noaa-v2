@@ -23,6 +23,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(composer) && \
     KEPT_PACKAGES+=(cron) && \
     KEPT_PACKAGES+=(ffmpeg) && \
+    KEPT_PACKAGES+=(git) && \
     KEPT_PACKAGES+=(gmic) && \
     KEPT_PACKAGES+=(gnuradio) && \
     KEPT_PACKAGES+=(gr-osmosdr) && \
