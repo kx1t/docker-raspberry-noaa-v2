@@ -77,14 +77,14 @@ RUN set -x && \
       /.dockerenv \
       /git
 #
-# COPY rootfs/ /
+COPY rootfs/ /
 #
 #COPY ATTRIBUTION.md /usr/share/planefence/stage/attribution.txt
 #
 RUN set -x && \
 #
 #
-    ./install_and_upgrade.sh && \
+    /install/install_and_upgrade.sh && \
 #
 # Do some other stuff
     echo "alias dir=\"ls -alsv\"" >> /root/.bashrc && \
