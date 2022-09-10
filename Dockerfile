@@ -9,8 +9,6 @@ RUN set -x && \
     KEPT_PIP3_PACKAGES=() && \
     KEPT_RUBY_PACKAGES=() && \
 #
-    TEMP_PACKAGES+=(pkg-config) && \
-    TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(gcc) && \
     TEMP_PACKAGES+=(python3-dev) && \
     TEMP_PACKAGES+=(pkg-config) && \
