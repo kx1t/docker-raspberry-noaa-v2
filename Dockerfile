@@ -75,10 +75,6 @@ RUN set -x && \
         dpkg -i wkhtmltox.deb && \
         rm wkhtmltox.deb && \
 #
-# Install predict
-    pushd /root/predict-2.3.0 && \
-        ./configure && \
-    popd && \
 
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \
@@ -101,8 +97,14 @@ COPY rootfs/ /
 RUN set -x && \
 #
 #
+# Install predict
+    pushd /root/predict-2.3.0 && \
+        ./configure && \
+    popd && \
+# Install udev rules
     mkdir -p /etc/udev/rules.d && \
     curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules && \
+# Install and configure raspberry-noaa2
     pushd /root && \
         ./install_and_upgrade.sh && \
     popd && \
