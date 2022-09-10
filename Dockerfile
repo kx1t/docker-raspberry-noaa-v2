@@ -49,6 +49,8 @@ RUN set -x && \
     KEPT_PACKAGES+=(socat) && \
     KEPT_PACKAGES+=(sox) && \
     KEPT_PACKAGES+=(sqlite3) && \
+    KEPT_PACKAGES+=(xfonts-base) && \
+    KEPT_PACKAGES+=(xfonts-75dpi) && \
 
 # other packages"
     KEPT_PACKAGES+=(unzip) && \
