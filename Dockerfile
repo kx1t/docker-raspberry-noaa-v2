@@ -20,6 +20,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(cmake) && \
     KEPT_PACKAGES+=(composer) && \
     KEPT_PACKAGES+=(cron) && \
+    KEPT_PACKAGES+=(curl) && \
     KEPT_PACKAGES+=(ffmpeg) && \
     KEPT_PACKAGES+=(git) && \
     KEPT_PACKAGES+=(gmic) && \
