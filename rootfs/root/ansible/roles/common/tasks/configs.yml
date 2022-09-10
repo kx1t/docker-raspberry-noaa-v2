@@ -122,7 +122,7 @@
 - name: annotation file (sample for modification)
   copy:
     src: annotation.html.j2_file
-    dest: /root/raspberry-noaa-v2/config/annotation/annotation.html.j2
+    dest: /root/config/annotation/annotation.html.j2
     force: no
     owner: root
     group: root
@@ -131,7 +131,7 @@
 - name: annotation file image (sample for modification)
   copy:
     src: raspberry-noaa-v2-logo.png
-    dest: /root/raspberry-noaa-v2/config/annotation/raspberry-noaa-v2-logo.png
+    dest: /root/config/annotation/raspberry-noaa-v2-logo.png
     force: no
     owner: root
     group: root
