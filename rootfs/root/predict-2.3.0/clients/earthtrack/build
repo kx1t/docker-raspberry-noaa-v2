@@ -3,11 +3,10 @@
 #
 echo -n "Compiling earthtrack... "
 rm -f earthtrack
-cc -O3 -s -fomit-frame-pointer -lm earthtrack.c -o earthtrack
+cc -O3 -s -fomit-frame-pointer -lm -lc -lgcc earthtrack.c -o earthtrack
 
 if [ -x earthtrack ]; then
 	echo "Done!"
 else
 	echo "earthtrack compilation failed!  :-("
 fi
-
