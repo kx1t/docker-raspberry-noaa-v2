@@ -5,10 +5,11 @@
   gather_facts: no
   pre_tasks:
     - name: get os release
-      shell: 'sed -n ''s/VERSION_CODENAME=\(.*\)/\1/p'' <(cat /etc/os-release)'
+      shell: cat /etc/os-release | sed -n 's/VERSION_CODENAME=\(.*\)/\1/p'
       register: raspbian_version
       check_mode: no
       changed_when: no
+      warn: false
   roles:
     - role: common
 ...
