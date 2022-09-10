@@ -31,7 +31,7 @@ echo -e "\e[2J"		# Erase and paint the background blue
 echo -e "\e[1m"		# Bold on
 
 echo -e "                  \e[41m                                           \e[44m"
- 
+
 echo -e "                  \e[41m         --== PREDICT  v$version ==--         \e[44m"
 
 echo -e "                  \e[41m   Released by John A. Magliacane, KD2BD   \e[44m"
@@ -54,22 +54,22 @@ cat <<_EOF_
 
 _EOF_
 
-echo -en "\e[37m  Do you accept these conditions and wish to install this software? [Y/N] "
+echo -en "\e[37m  Acceptance of these conditions is a prerequisite to install and use this software."
 
-ans=""
-
-while [[ $ans != "y" && $ans != "Y"  && $ans != 'n' && $ans != 'N' ]]; 
-do
-	read -s -n 1 ans
-done
+# ans=""
+#
+# while [[ $ans != "y" && $ans != "Y"  && $ans != 'n' && $ans != 'N' ]];
+# do
+# 	read -s -n 1 ans
+# done
 
 echo -e "\e[0m"		# Clear all text attributes
 clear			# Clear the terminal
 
-if [[ $ans == "n" || $ans == "N" ]]; then
-	echo "Bye!"
-	exit -1
-fi
+# if [[ $ans == "n" || $ans == "N" ]]; then
+# 	echo "Bye!"
+# 	exit -1
+# fi
 
 # Test the compiler and that the required libraries are in place.
 
@@ -223,7 +223,7 @@ rm -if /usr/local/man/man1/predict.1
 echo
 echo "Installing PREDICT's man page in /usr/local/man/man1:"
 lncmd="`pwd`/docs/man/predict.1 > /usr/local/man/man1"
-gzip -c `pwd`/docs/man/predict.1 > /usr/local/man/man1/predict.1.gz 
+gzip -c `pwd`/docs/man/predict.1 > /usr/local/man/man1/predict.1.gz
 
 if [ -e /usr/local/man/man1/predict.1.gz ]; then
 	echo "... Done!"
@@ -242,7 +242,7 @@ result=$((response1+response2))
 if [ $result == 2 ]; then
 	echo "Good!  Your /etc/services file appears to be configured for PREDICT:"
         echo
-	echo -n "     " 
+	echo -n "     "
 	grep -e 1210/udp -e PREDICT /etc/services
 	echo
 else
@@ -258,4 +258,3 @@ echo "https://www.qsl.net/kd2bd/predict.html for the latest news.  Happy Trackin
 echo
 
 export TERM=$oldterm
-
