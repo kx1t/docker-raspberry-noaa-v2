@@ -45,6 +45,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(gpredict) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python-setuptools) && \
+    KEPT_PACKAGES+=(rtl-sdr) && \
     KEPT_PACKAGES+=(socat) && \
     KEPT_PACKAGES+=(sox) && \
     KEPT_PACKAGES+=(sqlite3) && \
