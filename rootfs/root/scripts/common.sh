@@ -24,10 +24,10 @@ log() {
 }
 
 # run as a normal user for any scripts within
-if [ $EUID -eq 0 ]; then
-  log "This script shouldn't be run as root." "ERROR"
-  exit 1
-fi
+# if [ $EUID -eq 0 ]; then
+#   log "This script shouldn't be run as root." "ERROR"
+#   exit 1
+# fi
 
 # binary helpers
 CONVERT="/usr/bin/convert"
