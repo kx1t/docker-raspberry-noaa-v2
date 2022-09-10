@@ -1,13 +1,16 @@
 #!/bin/bash
 
-RED=$(tput setaf 1)
-GREEN=$(tput setaf 2)
-YELLOW=$(tput setaf 3)
-BLUE=$(tput setaf 4)
-BOLD=$(tput bold)
-RESET=$(tput sgr0)
+# these don't work when running from Dockerfile (and arent needed!)
+# RED=$(tput setaf 1)
+# GREEN=$(tput setaf 2)
+# YELLOW=$(tput setaf 3)
+# BLUE=$(tput setaf 4)
+# BOLD=$(tput bold)
+# RESET=$(tput sgr0)
 
 [[ -z "$HOME" ]] && HOME=/root
+
+echo "Home directory is $HOME"
 
 die() {
   >&2 echo "${RED}Error: $1${RESET}" && exit 1
