@@ -34,10 +34,10 @@ log_finished() {
 #fi
 
 # verify the repo exists as expected in the home directory
-if [ ! -e "$HOME/raspberry-noaa-v2" ]; then
-  die "Please clone https://github.com/jekhokie/raspberry-noaa-v2 to your home directory"
-fi
-
+# if [ ! -e "$HOME/raspberry-noaa-v2" ]; then
+#   die "Please clone https://github.com/jekhokie/raspberry-noaa-v2 to your home directory"
+# fi
+#
 # check if this is a new install or an upgrade based on modprobe settings
 # which is likey a safe way to tell if the user has already installed
 # tools and rebooted
@@ -62,7 +62,7 @@ install_type='install'
 # fi
 
 log_running "Installing Python dependencies..."
-python3 -m pip install -r $HOME/raspberry-noaa-v2/requirements.txt
+python3 -m pip install -r $HOME/requirements.txt
 if [ $? -eq 0 ]; then
   log_done "  Successfully aligned required Python packages!"
 else
