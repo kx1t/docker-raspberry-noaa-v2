@@ -67,7 +67,7 @@ RUN set -x && \
 # Install wkhtmltoimg -- it is done here because we have more control over the arch here than in ansible
     pushd /tmp && \
         if [ "$TARGETARCH" == "armhf" ]; then curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.raspberrypi.bullseye_armhf.deb -o wkhtmltox.deb; \
-                                         else curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_$TARGETARCH.deb-o wkhtmltox.deb; fi && \
+                                         else curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_$TARGETARCH.deb -o wkhtmltox.deb; fi && \
         dpkg -i wkhtmltox.deb && \
 
 # Clean up
