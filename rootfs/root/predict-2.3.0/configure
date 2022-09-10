@@ -154,10 +154,10 @@ echo "*version={\"`cat .version`\"};" >> predict.h
 ./build
 
 # Compile earthtrack...
-rm -if $bindestination/earthtrack2
-cd clients/earthtrack
-./build
-cd ../..
+# rm -if $bindestination/earthtrack2
+# cd clients/earthtrack
+# ./build
+# cd ../..
 
 # Install PREDICT's symlinks and man pages
 
