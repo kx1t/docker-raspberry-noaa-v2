@@ -7,6 +7,8 @@ BLUE=$(tput setaf 4)
 BOLD=$(tput bold)
 RESET=$(tput sgr0)
 
+[[ -z "$HOME" ]] && HOME=/root
+
 die() {
   >&2 echo "${RED}Error: $1${RESET}" && exit 1
 }
@@ -24,9 +26,9 @@ log_finished() {
 }
 
 # run as a normal user
-if [ $EUID -eq 0 ]; then
-  die "Please run this script as the pi user (not as root)"
-fi
+#if [ $EUID -eq 0 ]; then
+#  die "Please run this script as the pi user (not as root)"
+#fi
 
 # verify the repo exists as expected in the home directory
 if [ ! -e "$HOME/raspberry-noaa-v2" ]; then
@@ -37,26 +39,27 @@ fi
 # which is likey a safe way to tell if the user has already installed
 # tools and rebooted
 install_type='install'
-if [ -f /etc/modprobe.d/rtlsdr.conf ]; then
-  install_type='upgrade'
-fi
+# it's always a new install when running Dockerfile
+#if [ -f /etc/modprobe.d/rtlsdr.conf ]; then
+#  install_type='upgrade'
+#fi
 
-log_running "Checking for python3-pip..."
-dpkg -l python3-pip 2>&1 >/dev/null
-if [ $? -eq 0 ]; then
-  log_done "  python3-pip already installed!"
-else
-  log_running "  python3-pip not yet installed - installing..."
-  sudo apt-get -y install python3-pip
-  if [ $? -eq 0 ]; then
-    log_done "    python3-pip successfully installed!"
-  else
-    die "    Could not install python3-pip - please check the logs above"
-  fi
-fi
+# log_running "Checking for python3-pip..."
+# dpkg -l python3-pip 2>&1 >/dev/null
+# if [ $? -eq 0 ]; then
+#   log_done "  python3-pip already installed!"
+# else
+#   log_running "  python3-pip not yet installed - installing..."
+#   apt-get -y install python3-pip
+#   if [ $? -eq 0 ]; then
+#     log_done "    python3-pip successfully installed!"
+#   else
+#     die "    Could not install python3-pip - please check the logs above"
+#   fi
+# fi
 
 log_running "Installing Python dependencies..."
-sudo python3 -m pip install -r $HOME/raspberry-noaa-v2/requirements.txt
+python3 -m pip install -r $HOME/raspberry-noaa-v2/requirements.txt
 if [ $? -eq 0 ]; then
   log_done "  Successfully aligned required Python packages!"
 else
@@ -72,18 +75,18 @@ else
 fi
 
 # install ansible
-which ansible-playbook 2>&1 >/dev/null
-if [ $? -ne 0 ]; then
-  log_running "Updating and installing Ansible..."
-  sudo apt update -yq
-  sudo apt install -yq ansible
-
-  if [ $? -eq 0 ]; then
-    log_done "  Ansible install complete!"
-  else
-    die "  Could not install Ansible - please inspect the logs above"
-  fi
-fi
+# which ansible-playbook 2>&1 >/dev/null
+# if [ $? -ne 0 ]; then
+#   log_running "Updating and installing Ansible..."
+#   apt update -yq
+#   apt install -yq ansible
+#
+#   if [ $? -eq 0 ]; then
+#     log_done "  Ansible install complete!"
+#   else
+#     die "  Could not install Ansible - please inspect the logs above"
+#   fi
+# fi
 
 log_running "Checking for configuration settings..."
 if [ -f config/settings.yml ]; then
@@ -123,7 +126,7 @@ log_running "Updating web content..."
 (
   find $WEB_HOME/ -mindepth 1 -type d -name "Config" -prune -o -print | xargs rm -rf &&
   cp -r $NOAA_HOME/webpanel/* $WEB_HOME/ &&
-  sudo chown -R pi:www-data $WEB_HOME/ &&
+  chown -R pi:www-data $WEB_HOME/ &&
   composer install -d $WEB_HOME/
 ) || die "  Something went wrong updating web content - please inspect the logs above"
 

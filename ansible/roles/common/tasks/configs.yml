@@ -2,41 +2,41 @@
 - name: noaa environment variables
   template:
     src: noaa-v2.conf.j2
-    dest: ~pi/.noaa-v2.conf
-    owner: pi
-    group: pi
+    dest: /root/.noaa-v2.conf
+    owner: root
+    group: root
     mode: 0644
 
 - name: predict directory
   file:
-    path: ~pi/.predict
+    path: /root/.predict
     state: directory
-    owner: pi
-    group: pi
+    owner: root
+    group: root
     mode: 0755
 
 - name: predict config file
   template:
     src: predict.qth.j2
-    dest: ~pi/.predict/predict.qth
-    owner: pi
-    group: pi
+    dest: /root/.predict/predict.qth
+    owner: root
+    group: root
     mode: 0644
 
 - name: wxtoimg config file
   template:
     src: wxtoimgrc.j2
-    dest: ~pi/.wxtoimgrc
-    owner: pi
-    group: pi
+    dest: /root/.wxtoimgrc
+    owner: root
+    group: root
     mode: 0644
 
 - name: wxtoimg license terms acceptance file
   copy:
     src: wxtoimglic
-    dest: ~pi/.wxtoimglic
-    owner: pi
-    group: pi
+    dest: /root/.wxtoimglic
+    owner: root
+    group: root
     mode: 0644
 
 - name: log directory for raspberry-noaa-v2 logs
@@ -44,8 +44,8 @@
   file:
     path: /var/log/raspberry-noaa-v2
     state: directory
-    owner: pi
-    group: pi
+    owner: root
+    group: root
     mode: 0755
 
 - name: logrotate settings for raspberry-noaa-v2 logs
@@ -59,81 +59,81 @@
 
 - name: gnuradio home directory
   file:
-    path: ~pi/.gnuradio
+    path: /root/.gnuradio
     state: directory
-    owner: pi
-    group: pi
+    owner: root
+    group: root
     mode: 0755
 
 - name: gnuradio prefs directory
   file:
-    path: ~pi/.gnuradio/prefs
+    path: /root/.gnuradio/prefs
     state: directory
-    owner: pi
-    group: pi
+    owner: root
+    group: root
     mode: 0755
 
 - name: gnuradio prefs file
   copy:
     src: vmcircbuf_default_factory
-    dest: ~pi/.gnuradio/prefs/vmcircbuf_default_factory
-    owner: pi
-    group: pi
-    mode: 0644
-
-- name: disable wifi power mgmt script
-  become: yes
-  copy:
-    src: disable-wifi-powermgmt.sh
-    dest: /usr/local/sbin/disable-wifi-powermgmt.sh
-    owner: root
-    group: root
-    mode: 0755
-  when: disable_wifi_power_mgmt | bool
-  register: wifi_powermgmt_script
-
-- name: disable wifi power mgmt service definition
-  become: yes
-  copy:
-    src: disable-wifi-powermgmt.service
-    dest: /lib/systemd/system/disable-wifi-powermgmt.service
+    dest: /root/.gnuradio/prefs/vmcircbuf_default_factory
     owner: root
     group: root
     mode: 0644
-  when: disable_wifi_power_mgmt | bool
-  register: wifi_powermgmt_service
 
-- name: enable systemd wifi power management disable service
-  become: yes
-  systemd:
-    daemon_reload: yes
-    name: disable-wifi-powermgmt.service
-    enabled: yes
-  when: (wifi_powermgmt_script.changed or wifi_powermgmt_service.changed) and (disable_wifi_power_mgmt|bool)
+# - name: disable wifi power mgmt script
+#   become: yes
+#   copy:
+#     src: disable-wifi-powermgmt.sh
+#     dest: /usr/local/sbin/disable-wifi-powermgmt.sh
+#     owner: root
+#     group: root
+#     mode: 0755
+#   when: disable_wifi_power_mgmt | bool
+#   register: wifi_powermgmt_script
+
+# - name: disable wifi power mgmt service definition
+#   become: yes
+#   copy:
+#     src: disable-wifi-powermgmt.service
+#     dest: /lib/systemd/system/disable-wifi-powermgmt.service
+#     owner: root
+#     group: root
+#     mode: 0644
+#   when: disable_wifi_power_mgmt | bool
+#   register: wifi_powermgmt_service
+
+#- name: enable systemd wifi power management disable service
+#  become: yes
+#  systemd:
+#    daemon_reload: yes
+#    name: disable-wifi-powermgmt.service
+#    enabled: yes
+ # when: (wifi_powermgmt_script.changed or wifi_powermgmt_service.changed) and (disable_wifi_power_mgmt|bool)
 
 - name: annotation directory
   file:
-    path: ~pi/config/annotation
+    path: /root/config/annotation
     state: directory
-    owner: pi
-    group: pi
+    owner: root
+    group: root
     mode: 0755
 
 - name: annotation file (sample for modification)
   copy:
     src: annotation.html.j2_file
-    dest: ~pi/raspberry-noaa-v2/config/annotation/annotation.html.j2
+    dest: /root/raspberry-noaa-v2/config/annotation/annotation.html.j2
     force: no
-    owner: pi
-    group: pi
+    owner: root
+    group: root
     mode: 0600
 
 - name: annotation file image (sample for modification)
   copy:
     src: raspberry-noaa-v2-logo.png
-    dest: ~pi/raspberry-noaa-v2/config/annotation/raspberry-noaa-v2-logo.png
+    dest: /root/raspberry-noaa-v2/config/annotation/raspberry-noaa-v2-logo.png
     force: no
-    owner: pi
-    group: pi
+    owner: root
+    group: root
     mode: 0600
 ...

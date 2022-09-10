@@ -8,6 +8,7 @@
       - at
       - bc
       - cmake
+      - cron
       - ffmpeg
       - gmic
       - gnuradio
@@ -16,8 +17,8 @@
       - jq
       - libatlas-base-dev
       - libgfortran5
-      - libjpeg9
-      - libjpeg9-dev
+      # - libjpeg9
+      - libjpeg-dev
       - libncurses5-dev
       - libncursesw5-dev
       - libsox-fmt-mp3

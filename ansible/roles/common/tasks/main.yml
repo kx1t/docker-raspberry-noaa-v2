@@ -6,7 +6,7 @@
 - include: dependencies.yml
 
 # ntp configurations
-- include: ntp.yml
+# - include: ntp.yml
 
 # core software modules
 - include: sdr.yml
@@ -15,7 +15,7 @@
 - include: tools.yml
 
 # ramfs setup
-- include: ramfs.yml
+# - include: ramfs.yml
 
 # email setup
 - include: email.yml
