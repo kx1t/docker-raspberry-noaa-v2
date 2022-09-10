@@ -1,0 +1,14 @@
+# Uncomment the line that works best for you.  Modify as needed.
+# Generally, urxvt requires less memory than other terminal emulators.
+#
+#xterm -geometry 80x25 -fn 10x20 -title PREDICT -e predict $*
+xterm -geometry 80x25 -fn "-misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1" -ls -bg black -fg white -aw -e predict $*
+#xterm -geometry 80x25 -fn "9x15,xft:Bitstream Vera Sans Mono" -title PREDICT -e predict $*
+#urxvt -geometry 80x25 -fn 10x20 +sb -title PREDICT -e predict $*
+#xterm -geometry 80x25 -fn 10x20 -rv -title PREDICT -e predict $*
+#xfce4-terminal --geometry 80x25 --hide-scrollbar --hide-menubar -e predict $*
+#Eterm -g 80x25 -F 10x20 -n PREDICT -x -e predict $1 $2 $3 $4
+#gnome-terminal --geometry 80x25 --disable-sound -t PREDICT -e predict $*
+#rxvt -geometry 80x25 -font 10x20 -rv -tn linux -title PREDICT -e predict $*
+#rxvt -geometry 80x25 -font 10x20 -rv -tn color_xterm -title PREDICT -e predict $*
+#kvt -vt_geometry 80x25 -linux -T PREDICT -e predict $*

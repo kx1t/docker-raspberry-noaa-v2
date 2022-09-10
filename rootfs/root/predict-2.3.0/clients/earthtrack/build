@@ -1,0 +1,13 @@
+#!/bin/bash
+# Script to compile earthtrack
+#
+echo -n "Compiling earthtrack... "
+rm -f earthtrack
+cc -O3 -s -fomit-frame-pointer -lm earthtrack.c -o earthtrack
+
+if [ -x earthtrack ]; then
+	echo "Done!"
+else
+	echo "earthtrack compilation failed!  :-("
+fi
+

@@ -1,0 +1,14 @@
+#!/bin/sh
+# This script builds the documentation in pdf, text, and html
+# from the man page, which is written in groff.
+echo "Creating documentation in: "
+echo -ne "\n\tPDF... "
+groff -T pdf -man predict.1 > ../pdf/predict.pdf
+echo
+echo -ne "\tUTF-8 text... "
+groff -T utf8 -man predict.1 > ../text/predict.txt
+echo
+echo -ne "\tHTML... "
+groff -T html -man predict.1 > ../html/predict.html
+echo
+echo "Done!"

@@ -44,7 +44,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(php7.4-fpm) && \
     KEPT_PACKAGES+=(php7.4-mbstring) && \
     KEPT_PACKAGES+=(php7.4-sqlite3) && \
-    KEPT_PACKAGES+=(gpredict) && \
+#    KEPT_PACKAGES+=(gpredict) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python-setuptools) && \
     KEPT_PACKAGES+=(rtl-sdr) && \
@@ -73,6 +73,13 @@ RUN set -x && \
         if [ "$TARGETARCH" == "armhf" ]; then curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.raspberrypi.bullseye_armhf.deb -o wkhtmltox.deb; \
                                          else curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_$TARGETARCH.deb -o wkhtmltox.deb; fi && \
         dpkg -i wkhtmltox.deb && \
+        rm wkhtmltox.deb
+    popd && \
+#
+# Install predict
+    pushd /root/predict-2.3.0 && \
+        ./configure && \
+    popd && \
 
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \

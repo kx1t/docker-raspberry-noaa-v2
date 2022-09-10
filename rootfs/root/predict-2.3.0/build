@@ -1,0 +1,16 @@
+#!/bin/bash
+# Script to manually compile PREDICT
+#
+
+if [ -e predict.h ]; then
+	rm -f predict
+	echo -n "Compiling PREDICT version `cat .version`... "
+	cc -Wall -O3 -s -fomit-frame-pointer predict.c -lm -lncurses -pthread -lasound -o predict
+	if [ -x predict ]; then
+		echo "Done!"
+	else
+		echo "PREDICT compilation failed!  :-("
+	fi
+else
+	./configure
+fi

@@ -1,0 +1,261 @@
+#!/bin/bash
+
+#############################################################
+#   Script to configure, compile, and install PREDICT.      #
+# Give an argument to this script if you wish to override   #
+#  the default installation directory of /usr/local/bin.    #
+#                ie: ./configure /usr/bin                   #
+#############################################################
+#    Written by John A. Magliacane, KD2BD on 12-Apr-2020    #
+#                Last updated on 19-Jul-2022                #
+#############################################################
+
+version=$(cat .version)
+export TERM=linux
+path=`pwd`'/'
+bindestination="/usr/local/bin/"
+whoiam=`whoami`
+
+if [ $whoiam != "root" ]; then
+	echo "Sorry '$whoiam'.  You need to be 'root' to install PREDICT.  :-("
+	exit -1
+else
+	oldterm=$TERM
+	export TERM=linux
+fi
+
+clear
+echo -en "\e[=3l"	# 80x25 color text mode
+echo -e "\e[44m" 	# Set the background color to blue
+echo -e "\e[2J"		# Erase and paint the background blue
+echo -e "\e[1m"		# Bold on
+
+echo -e "                  \e[41m                                           \e[44m"
+ 
+echo -e "                  \e[41m         --== PREDICT  v$version ==--         \e[44m"
+
+echo -e "                  \e[41m   Released by John A. Magliacane, KD2BD   \e[44m"
+echo -e "                  \e[41m                 July 2022                 \e[44m"
+
+echo -e "                  \e[41m                                           \e[44m"
+
+echo -e "\n\e[33m"
+cat <<_EOF_
+  PREDICT is a satellite tracking and orbital prediction program created
+  for Linux and similar operating systems by John A. Magliacane, KD2BD.
+  PREDICT is free software.  You can redistribute it and/or modify it under
+  the terms of the GNU General Public License as published by the Free
+  Software Foundation, either version 2 of the License or any later version.
+
+  PREDICT is distributed in the hope that it will useful, but WITHOUT ANY
+  WARRANTY, without even the implied warranty of MERCHANTABILITY or FITNESS
+  FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more
+  details.
+
+_EOF_
+
+echo -en "\e[37m  Do you accept these conditions and wish to install this software? [Y/N] "
+
+ans=""
+
+while [[ $ans != "y" && $ans != "Y"  && $ans != 'n' && $ans != 'N' ]]; 
+do
+	read -s -n 1 ans
+done
+
+echo -e "\e[0m"		# Clear all text attributes
+clear			# Clear the terminal
+
+if [[ $ans == "n" || $ans == "N" ]]; then
+	echo "Bye!"
+	exit -1
+fi
+
+# Test the compiler and that the required libraries are in place.
+
+rm -f gcctest
+
+echo "int main()" > gcctest.c
+echo "{" >> gcctest.c
+echo "return 0;" >> gcctest.c
+echo "}" >> gcctest.c
+
+echo -n "Testing compiler... "
+
+cc gcctest.c -o gcctest
+
+if [ -x gcctest ]; then
+
+	rm -f gcctest
+
+	echo -ne "\nTesting pthreads library... "
+
+	cc gcctest.c -lpthread -o gcctest
+
+	if [ -x gcctest ]; then
+
+		rm -f gcctest
+		echo -ne "\nTesting ncurses library... "
+		cc gcctest.c -lncurses -o gcctest
+
+		if [ -x gcctest ]; then
+
+			rm -f gcctest
+			echo -ne "\nTesting ALSA sound library... "
+			cc gcctest.c -lasound -o gcctest
+
+			if [ -x gcctest ]; then
+
+				rm -f gcctest
+			else
+				echo -e "\n\n*** Error: Compiler test for ALSA library failed.  :-(\n"
+				export TERM=$oldterm
+				exit -1
+			fi
+		else
+
+			echo -e "\n\n*** Error: Compiler test for ncurses library failed.  :-(\n"
+			export TERM=$oldterm
+			exit -1
+		fi
+	else
+		echo -e "\n\n*** Error: Compiler test for pthreads library failed.  :-(\n"
+		export TERM=$oldterm
+		exit -1
+
+	fi
+
+else
+	echo -e "\n\n*** Error: Compiler test failed.  :-(\n\nAre you sure you have a functioning C Compiler installed?\n"
+	cc --version
+	export TERM=$oldterm
+	exit -1
+fi
+
+rm -f gcctest.c
+
+# If we made it this far, we're good to go.  Create the header files and compile the software.
+
+echo
+echo
+
+echo -n "char *predictpath={\"`pwd`/\"}, " > predict.h
+
+if [ -e /proc/asound/version ]; then
+        echo -n "soundcard=1, " >> predict.h
+
+else
+	echo -n "soundcard=0, " >> predict.h
+fi
+
+echo "*version={\"`cat .version`\"};" >> predict.h
+
+# Compile PREDICT...
+./build
+
+# Compile earthtrack...
+rm -if $bindestination/earthtrack2
+cd clients/earthtrack
+./build
+cd ../..
+
+# Install PREDICT's symlinks and man pages
+
+if [ $# == "0" ]; then
+	bindestination="/usr/local/bin"
+else
+	bindestination=$1
+fi
+
+echo
+echo "Linking PREDICT binaries to "$bindestination":"
+
+lncmd=`pwd`"/predict $bindestination/predict"
+ln -sf $lncmd
+
+if [ -L $bindestination/predict ]; then
+	echo "predict... Done!"
+else
+	echo "Oops! 'ln -sf $lncmd':  Didn't work!  :-("
+fi
+
+lncmd=`pwd`"/xpredict $bindestination/xpredict"
+ln -sf $lncmd
+
+if [ -L $bindestination/xpredict ]; then
+	echo "xpredict... Done!"
+else
+	echo "Oops! 'ln -sf $lncmd':  Didn't work!  :-("
+fi
+
+# Install kepupdate
+if [ -x kepupdate ]; then
+	ln -sf `pwd`/kepupdate $bindestination/kepupdate
+	echo
+	echo "kepupdate installed!"
+fi
+
+# Install earthtrack and earthtrack2
+echo
+echo "Linking earthtrack and earthtrack2 to "$bindestination":"
+lncmd=`pwd`"/clients/earthtrack/earthtrack $bindestination/earthtrack"
+ln -sf $lncmd
+
+if [ -L $bindestination/earthtrack ]; then
+	echo "earthtrack... Done!"
+else
+	echo "Oops! 'ln -sf $lncmd':  Didn't work!  :-("
+fi
+
+lncmd=`pwd`"/clients/earthtrack/earthtrack $bindestination/earthtrack2"
+ln -sf $lncmd
+
+if [ -L $bindestination/earthtrack2 ]; then
+	echo "earthtrack2... Done!"
+else
+	echo "Oops! 'ln -sf $lncmd':  Didn't work!  :-("
+fi
+
+# Man pages
+
+rm -if /usr/local/man/man1/predict.1
+
+echo
+echo "Installing PREDICT's man page in /usr/local/man/man1:"
+lncmd="`pwd`/docs/man/predict.1 > /usr/local/man/man1"
+gzip -c `pwd`/docs/man/predict.1 > /usr/local/man/man1/predict.1.gz 
+
+if [ -e /usr/local/man/man1/predict.1.gz ]; then
+	echo "... Done!"
+else
+	echo "Oops! 'gzip -c `pwd`/docs/man/predict.1 > /usr/local/man/man1/predict.1.gz': Didn't work!  :-("
+fi
+
+echo
+
+# Test for UDP Availability on Port 1210
+
+response1=$(grep -c -i -e 1210/udp /etc/services)
+response2=$(grep -c -i -e PREDICT /etc/services)
+result=$((response1+response2))
+
+if [ $result == 2 ]; then
+	echo "Good!  Your /etc/services file appears to be configured for PREDICT:"
+        echo
+	echo -n "     " 
+	grep -e 1210/udp -e PREDICT /etc/services
+	echo
+else
+        echo "Please insert the following line into your /etc/services file:"
+	echo
+        echo "     predict         1210/udp   #PREDICT's UDP socket port"
+        echo
+fi
+
+echo "Don't forget to cd into the 'clients' and 'utils' directories for additional"
+echo "applications, 'docs' for documentation in various forms, and visit"
+echo "https://www.qsl.net/kd2bd/predict.html for the latest news.  Happy Tracking!"
+echo
+
+export TERM=$oldterm
+

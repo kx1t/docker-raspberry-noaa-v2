@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# install - small script for installing fodtrack
+#
+# test if we are root
+#
+whoami=`whoami`
+if [ $whoami != "root" ]; then
+	echo "Sorry $whoami, you need to be root to install this program"
+	exit
+fi
+
+echo Compiling fodtrack...
+
+gcc -O3 -s fodtrack.c -o fodtrack
+
+echo Installing fodtrack...
+
+ln -s fodtrack /usr/local/bin/fodtrack
+ln -s fodtrack.conf /etc/fodtrack.conf
+## mkdir -p /usr/local/man/man8
+ln -s fodtrack.8 /usr/local/man/man8/fodtrack.8
+## mkdir -p /usr/local/man/man5
+ln -s fodtrack.conf.5 /usr/local/man/man5/fodtrack.conf.5
+
