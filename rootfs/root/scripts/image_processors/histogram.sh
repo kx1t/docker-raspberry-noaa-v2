@@ -29,7 +29,7 @@ input_filename="${input_file%.*}"
 input_fileext="${input_file##*.}"
 
 #adjust output with os release
-if [ "$(lsb_release -sc)" == "bullseye" ]; 
+if [ "$(sed -n 's/VERSION_CODENAME=\(.*\)/\1/p' <(cat /etc/os-release))" == "bullseye" ]; 
 then
    gmic_temp_1="${input_path}/_${input_filename}_c1.${input_fileext}"
 else

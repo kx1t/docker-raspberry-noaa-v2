@@ -5,7 +5,7 @@
   gather_facts: no
   pre_tasks:
     - name: get os release
-      shell: lsb_release -c --short
+      shell: sed -n 's/VERSION_CODENAME=\(.*\)/\1/p' <(cat /etc/os-release)
       register: raspbian_version
       check_mode: no
       changed_when: no
