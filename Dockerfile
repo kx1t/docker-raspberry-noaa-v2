@@ -85,7 +85,7 @@ RUN set -x && \
 #
 #
     pushd /root && \
-        install_and_upgrade.sh && \
+        ./install_and_upgrade.sh && \
     popd && \
 #
 # Do some other stuff
