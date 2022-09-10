@@ -77,7 +77,7 @@ RUN set -x && \
       /.dockerenv \
       /git
 #
-COPY rootfs/ /
+# COPY rootfs/ /
 #
 #COPY ATTRIBUTION.md /usr/share/planefence/stage/attribution.txt
 #
