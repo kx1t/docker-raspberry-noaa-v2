@@ -26,7 +26,7 @@
       - libusb-1.0-0-dev
       - libxft-dev
       - libxft2
-      - predict
+      - gpredict
       - python3-pip
       - python-setuptools
       - socat
