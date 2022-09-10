@@ -91,6 +91,7 @@ COPY rootfs/ /
 RUN set -x && \
 #
 #
+    curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules && \
     pushd /root && \
         ./install_and_upgrade.sh && \
     popd && \
