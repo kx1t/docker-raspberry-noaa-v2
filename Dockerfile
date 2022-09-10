@@ -1,5 +1,7 @@
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
+ARG TARGETARCH
+
 RUN set -x && \
 # define packages needed for installation and general management of the container:
     TEMP_PACKAGES=() && \
@@ -62,9 +64,12 @@ RUN set -x && \
 #    gem install twurl && \
 #    pip3 install ${KEPT_PIP3_PACKAGES[@]} && \
 #
-# Do this here while we still have git installed:
-    git config --global advice.detachedHead false && \
-    echo "main_($(git ls-remote https://github.com/kx1t/docker-planefence HEAD | awk '{ print substr($1,1,7)}'))_$(date +%y-%m-%d-%T%Z)" > /root/.buildtime && \
+# Install wkhtmltoimg -- it is done here because we have more control over the arch here than in ansible
+    pushd /tmp && \
+        if [ "$TARGETARCH" == "armhf" ]; then curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.raspberrypi.bullseye_armhf.deb -o wkhtmltox.deb; \
+                                         else curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_$TARGETARCH.deb-o wkhtmltox.deb; fi && \
+        dpkg -i wkhtmltox.deb && \
+
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \
     apt-get remove -y -q ${TEMP_PACKAGES[@]} && \
