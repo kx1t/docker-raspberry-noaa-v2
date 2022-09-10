@@ -24,7 +24,7 @@ else
 	export TERM=linux
 fi
 
-clear
+#clear
 echo -en "\e[=3l"	# 80x25 color text mode
 echo -e "\e[44m" 	# Set the background color to blue
 echo -e "\e[2J"		# Erase and paint the background blue
@@ -64,7 +64,7 @@ echo -en "\e[37m  Acceptance of these conditions is a prerequisite to install an
 # done
 
 echo -e "\e[0m"		# Clear all text attributes
-clear			# Clear the terminal
+#clear			# Clear the terminal
 
 # if [[ $ans == "n" || $ans == "N" ]]; then
 # 	echo "Bye!"
