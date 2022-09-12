@@ -10,7 +10,7 @@ cd "$(dirname "$0")"
 progname="php-fpm7.4"
 confdir="/etc/php/7.4/fpm"
 
-APPNAME="$(hostname)/reverse-proxy"
+APPNAME="$(hostname)/php-fpm"
 
 echo "[$(date)][$APPNAME] Started as an s6 service"
 
