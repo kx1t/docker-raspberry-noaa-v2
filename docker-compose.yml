@@ -105,6 +105,8 @@ services:
       - enable_matrix_push=false
     ports:
       - 89:80
+    devices:
+      - /dev/bus/usb
     tmpfs:
       - /tmp:rw,nosuid,nodev,noexec,relatime,size=128M
       - /run:rw,relatime,size=128M
