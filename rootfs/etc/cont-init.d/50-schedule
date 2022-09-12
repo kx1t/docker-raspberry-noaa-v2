@@ -3,7 +3,7 @@
 
 APPNAME="$(hostname)/schedule"
 
-echo "[$APPNAME][$(date)] Redownloading the schedule"
+echo "[$(date)][$APPNAME] Redownloading the schedule"
 
 cd /root/scripts
 ./schedule.sh -t \

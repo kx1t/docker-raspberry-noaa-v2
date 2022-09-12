@@ -3,15 +3,15 @@
 
 APPNAME="$(hostname)/reverse-proxy"
 
-echo "[$APPNAME][$(date)] Started as an s6 service"
-echo "[$APPNAME][$(date)] Starting the NGINX service..."
+echo "[$(date)][$APPNAME] Started as an s6 service"
+echo "[$(date)][$APPNAME] Starting the NGINX service..."
 
 while true
 do
     touch /tmp/nginx.up
     /usr/sbin/nginx -g 'daemon off;'
     rm -f /tmp/nginx.up
-    echo "[$APPNAME][$(date)] NGINX Service has exited."
+    echo "[$(date)][$APPNAME] NGINX Service has exited."
     sleep 10
-    echo "[$APPNAME][$(date)] Restarting NGINX Service now..."
+    echo "[$(date)][$APPNAME] Restarting NGINX Service now..."
 done

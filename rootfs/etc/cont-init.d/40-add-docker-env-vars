@@ -3,7 +3,7 @@
 
 APPNAME="$(hostname)/add-docker-env-vars"
 
-echo "[$APPNAME][$(date)] Setting Environment Variables from the Docker Environment:"
+echo "[$(date)][$APPNAME] Setting Environment Variables from the Docker Environment:"
 
 settingsfile="/root/config/settings.yml"
 
