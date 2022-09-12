@@ -10,6 +10,7 @@ cd "$(dirname "$0")"
 progname="php-fpm7.4"
 confdir="/etc/php/7.4/fpm"
 
+
 pid=''
 
 main() {
@@ -18,6 +19,13 @@ main() {
         # changes. It works ok with systemd, but not if you launch fpm directly so we
         # create the dir manually (instead of hacking at rpm supplied config).
         mkdir -p /var/run/php-fpm
+
+        # Make all socket target directories:
+        for name in $(grep -hE '^listen\s*=\s*' $confdir/php-fpm.conf $confdir/pool.d/* | sed -r 's/^listen\s*=\s*//' | sed -r 's/;.*$//' | sed 's|/[^/]*$||')
+        do
+            mkdir -p "$name"
+        done
+
         $progname -F --fpm-config $confdir/php-fpm.conf >&2 &
         pid=$!
         # wait for fpm to be ready
