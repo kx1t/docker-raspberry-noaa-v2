@@ -110,8 +110,10 @@ RUN set -x && \
     popd && \
 # Install udev rules
     mkdir -p /etc/udev/rules.d && \
-    curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules && \
-# Install and configure raspberry-noaa2
+    curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules
+
+RUN set -x && \
+# Install and configure raspberry-noaa2 in a separate layer:
     pushd /root && \
         ./install_and_upgrade.sh && \
     popd && \
