@@ -2,6 +2,8 @@ FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
 ARG TARGETARCH
 
+COPY rootfs/root/requirements.txt /tmp/requirements.txt
+
 RUN set -x && \
 # define packages needed for installation and general management of the container:
     TEMP_PACKAGES=() && \
@@ -70,7 +72,7 @@ apt-cache --no-all-versions show ${KEPT_PACKAGES[@]} | awk '$1 == "Package:" { p
     apt-get update -q && \
     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ${TEMP_PACKAGES[@]} ${KEPT_PACKAGES[@]} && \
 #    gem install twurl && \
-#    pip3 install ${KEPT_PIP3_PACKAGES[@]} && \
+    pip3 install ${KEPT_PIP3_PACKAGES[@]} -r /tmp/requirements.txt && \
 #
 # Install wkhtmltoimg -- it is done here because we have more control over the arch here than in ansible
     pushd /tmp && \
