@@ -22,6 +22,8 @@ main() {
         # changes. It works ok with systemd, but not if you launch fpm directly so we
         # create the dir manually (instead of hacking at rpm supplied config).
         mkdir -p /var/run/php-fpm
+        mkdir -p /run/php
+
 
         # Make all socket target directories:
         for name in $(grep -hE '^listen\s*=\s*' $confdir/php-fpm.conf $confdir/pool.d/* | sed -r 's/^listen\s*=\s*//' | sed -r 's/;.*$//' | sed 's|/[^/]*$||')
