@@ -21,7 +21,7 @@ ntp_server: ''
 #   test_freq_offset - receiver frequency offset (PPM)
 test_gain: 7.7
 test_sdr_device_id: 0
-test_enable_bias_tee: true
+test_enable_bias_tee: false
 test_freq_offset: 0
 
 # receiver settings
@@ -29,8 +29,8 @@ test_freq_offset: 0
 #   noaa_receiver  - which receiver method to use (either 'rtl_fm' or 'gnuradio')
 #     **WARNING**: 'gnuradio' does not work with certain SDR devices (e.g. it will not currently
 #                  work with a RTL-SDR v3 dongle, as no image will be decoded from the bitstream)
-meteor_receiver: 'gnuradio'
-noaa_receiver: 'gnuradio'
+meteor_receiver: 'rtl_fm'
+noaa_receiver: 'rtl_fm'
 
 # whether to schedule specific orbiting objects for capture
 #   <satellite_name>_schedule - whether to schedule captures for the satellite
@@ -200,7 +200,7 @@ lang_setting: en
 #   web_datetime_format - format to display date and time in the web interface for captures - note that this MUST conform to
 #                         https://www.php.net/manual/en/datetime.format.php or else bad things will happen
 web_server_name: raspberry-noaa.localdomain
-enable_non_tls: false
+enable_non_tls: true
 web_port: 80
 enable_tls: false
 web_tls_port: 443

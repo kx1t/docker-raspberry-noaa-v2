@@ -154,11 +154,3 @@ log_finished "You can view the webpanel updates by visiting the URL(s) listed in
 log_finished "'output web server url' and 'output web server tls url' play outputs above."
 echo "-------------------------------------------------------------------------------"
 echo ""
-
-if [ $install_type == 'install' ]; then
-  log_running "It looks like this is a fresh install of the tooling for captures."
-  log_running "If you've never had the software tools installed previously (e.g. if you've"
-  log_running "not installed the original raspberry-noaa repo content), you likely need to"
-  log_running "restart your device. Please do this to rule out any potential issues in the"
-  log_running "software and libraries that have been installed."
-fi
