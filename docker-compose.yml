@@ -108,8 +108,8 @@ services:
     devices:
       - /dev/bus/usb
     tmpfs:
-      - /tmp:rw,nosuid,nodev,noexec,relatime,size=128M
-      - /run:rw,relatime,size=128M
+      - /tmp
+      - /run
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "/etc/timezone:/etc/timezone:ro"
