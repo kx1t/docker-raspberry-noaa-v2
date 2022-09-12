@@ -64,7 +64,7 @@ RUN set -x && \
 #    KEPT_RUBY_PACKAGES+=(twurl) && \
 #
 # Show package sizes:
-apt-cache --no-all-versions show $packages | awk '$1 == "Package:" { p = $2 } $1 == "Size:" { printf("%10d %s\n", $2, p) }' && \
+apt-cache --no-all-versions show ${KEPT_PACKAGES[@]} | awk '$1 == "Package:" { p = $2 } $1 == "Size:" { printf("%10d %s\n", $2, p) }' && \
 # Install all the apt, pip3, and gem (ruby) packages:
     apt-get update -q && \
     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ${TEMP_PACKAGES[@]} ${KEPT_PACKAGES[@]} && \
