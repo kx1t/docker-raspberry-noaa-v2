@@ -106,6 +106,7 @@ services:
       - enable_matrix_push=false
     ports:
       - 89:80
+      - 8073:8073   # for audio testing
     devices:
       - /dev/bus/usb
     tmpfs:
