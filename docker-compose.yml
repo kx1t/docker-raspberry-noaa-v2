@@ -6,6 +6,7 @@ services:
     hostname: noaa
     restart: always
     environment:
+      - VERBOSELOG=true
       - latitude=42.40487
       - longitude=-71.16615
       - altitude=18
