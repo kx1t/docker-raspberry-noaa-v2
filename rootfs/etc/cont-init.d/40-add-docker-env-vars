@@ -30,6 +30,7 @@ do
     then
         echo "[$APPNAME][$(date)] $variable --> ${!variable}"
         setvalue "$variable" "${!variable}"
+    fi
 done
 
 # Now run install_and_upgrade to ensure that any changes are applied
