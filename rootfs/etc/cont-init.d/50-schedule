@@ -1,11 +1,10 @@
 #!/usr/bin/with-contenv bash
 #shellcheck shell=bash
 
-APPNAME="$(hostname)/50-schedule"
+APPNAME="$(hostname)/schedule"
 
 echo "[$APPNAME][$(date)] Redownloading the schedule"
 
 cd /root/scripts
 ./schedule.sh -t \
  | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[" strftime("%a %b %e %T %Z %Y", systime()) "]['"$APPNAME"'] " $0}'
- 

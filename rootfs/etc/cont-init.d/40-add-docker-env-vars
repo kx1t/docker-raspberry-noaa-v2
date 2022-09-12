@@ -1,0 +1,30 @@
+#!/usr/bin/with-contenv bash
+#shellcheck shell=bash
+
+APPNAME="$(hostname)/add-docker-env-vars"
+
+echo "[$APPNAME][$(date)] Redownloading the schedule"
+
+settingsfile="/root/config/settings.yml"
+
+function setvalue () {
+    # This function writes values to the settings file
+    # Example: setvalue "latitude" "42.41234"
+    local param
+    local value
+    param="$1"; param="${param,,}"
+    value="$2"; value="${value,,}"
+
+    [[ -z "$value" ]] && value="\'\'"
+
+	sed -i "s~\(^\s*${param}:\s*\).*~\1${value}~" "$settingsfile"
+}
+
+# First we iterate through all the variables present in the settings file and update those that are defined as Docker Env Var.
+# Note - these can all be passed in as Environment Variables in Docker and they will be used
+# or overwritten as long as they exist in the settings file.
+
+for variable in $(sed -n 's|^\s*\([A-Za-z0-9\_\-]*\):.*|\1|p' /root/config/settings.yml)
+do
+    [[ -n "$variable" ]] && setvalue "$variable" "${!variable}"
+done

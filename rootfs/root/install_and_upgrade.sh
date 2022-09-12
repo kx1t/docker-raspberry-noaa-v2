@@ -43,9 +43,9 @@ log_finished() {
 # tools and rebooted
 install_type='install'
 # it's always a new install when running Dockerfile
-#if [ -f /etc/modprobe.d/rtlsdr.conf ]; then
-#  install_type='upgrade'
-#fi
+if [ -f /etc/modprobe.d/rtlsdr.conf ]; then
+  install_type='upgrade'
+fi
 
 # log_running "Checking for python3-pip..."
 # dpkg -l python3-pip 2>&1 >/dev/null
@@ -77,19 +77,19 @@ else
   die "  Please update your config/settings.yml file to accommodate the above errors"
 fi
 
-# install ansible
-# which ansible-playbook 2>&1 >/dev/null
-# if [ $? -ne 0 ]; then
-#   log_running "Updating and installing Ansible..."
-#   apt update -yq
-#   apt install -yq ansible
-#
-#   if [ $? -eq 0 ]; then
-#     log_done "  Ansible install complete!"
-#   else
-#     die "  Could not install Ansible - please inspect the logs above"
-#   fi
-# fi
+install ansible
+which ansible-playbook 2>&1 >/dev/null
+if [ $? -ne 0 ]; then
+  log_running "Updating and installing Ansible..."
+  apt update -yq
+  apt install -yq ansible
+
+  if [ $? -eq 0 ]; then
+    log_done "  Ansible install complete!"
+  else
+    die "  Could not install Ansible - please inspect the logs above"
+  fi
+fi
 
 log_running "Checking for configuration settings..."
 if [ -f config/settings.yml ]; then
@@ -143,6 +143,13 @@ else
   ./scripts/schedule.sh
 fi
 log_running "Passes scheduled!"
+
+# remove any SDR drivers if they'd incidentally should be present
+rmmod rtl2832_sdr >/dev/null 2>&1
+rmmod dvb_usb_rtl28xxu >/dev/null 2>&1
+rmmod rtl2832 >/dev/null 2>&1
+rmmod rtl8xxxu >/dev/null 2>&1
+rmmod rtl2838 >/dev/null 2>&1
 
 echo ""
 echo "-------------------------------------------------------------------------------"

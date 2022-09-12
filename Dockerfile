@@ -30,6 +30,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(gr-osmosdr) && \
     KEPT_PACKAGES+=(imagemagick) && \
     KEPT_PACKAGES+=(jq) && \
+    KEPT_PACKAGES+=(kmod) && \
     KEPT_PACKAGES+=(libasound2-dev) && \
     KEPT_PACKAGES+=(libatlas-base-dev) && \
     KEPT_PACKAGES+=(libgfortran5) && \
