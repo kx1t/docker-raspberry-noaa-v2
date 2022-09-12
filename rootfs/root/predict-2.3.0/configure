@@ -13,7 +13,7 @@
 version=$(cat .version)
 export TERM=linux
 path=`pwd`'/'
-bindestination="/usr/local/bin/"
+bindestination="/usr/bin/"
 whoiam=`whoami`
 
 if [ $whoiam != "root" ]; then
