@@ -44,7 +44,7 @@ forced_exit() {
 # List out all the sockets php-fpm is configured to listen on. These images are
 # consumed unpredictably so we want to support arbitrary listen directives.
 list_sockets() {
-        grep -hE '^listen\s*=\s*' $confdir/php-fpm.conf $confdir/conf.d/* \
+        grep -hE '^listen\s*=\s*' $confdir/php-fpm.conf $confdir/pool.d/* \
                 | sed -r 's/^listen\s*=\s*//' \
                 | sed -r 's/;.*$//'
 }
