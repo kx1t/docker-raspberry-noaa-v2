@@ -28,3 +28,9 @@ for variable in $(sed -n 's|^\s*\([A-Za-z0-9\_\-]*\):.*|\1|p' /root/config/setti
 do
     [[ -n "$variable" ]] && setvalue "$variable" "${!variable}"
 done
+
+# Now run install_and_upgrade to ensure that any changes are applied
+
+cd /root
+./install_and_upgrade.sh \
+    | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[" strftime("%a %b %e %T %Z %Y", systime()) "]['"$APPNAME"'] " $0}'
