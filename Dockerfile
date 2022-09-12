@@ -46,6 +46,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(php7.4-mbstring) && \
     KEPT_PACKAGES+=(php7.4-sqlite3) && \
 #    KEPT_PACKAGES+=(gpredict) && \
+    KEPT_PACKAGES+=(python3-apt) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python-setuptools) && \
     KEPT_PACKAGES+=(rtl-sdr) && \
