@@ -3,7 +3,7 @@
 
 set -euo pipefail
 
-APPNAME="$(hostname)/reverse-proxy"
+APPNAME="$(hostname)/VERBOSELOG"
 
 logfile="/var/log/raspberry-noaa-v2/output.log"
 
