@@ -3,7 +3,7 @@
 
 APPNAME="$(hostname)/add-docker-env-vars"
 
-echo "[$APPNAME][$(date)] Redownloading the schedule"
+echo "[$APPNAME][$(date)] Setting Environment Variables from the Docker Environment:"
 
 settingsfile="/root/config/settings.yml"
 
@@ -13,7 +13,7 @@ function setvalue () {
     local param
     local value
     param="$1"; param="${param,,}"
-    value="$2"; value="${value,,}"
+    value="$2"
 
     [[ -z "$value" ]] && value="\'\'"
 
@@ -26,7 +26,10 @@ function setvalue () {
 
 for variable in $(sed -n 's|^\s*\([A-Za-z0-9\_\-]*\):.*|\1|p' /root/config/settings.yml)
 do
-    [[ -n "$variable" ]] && setvalue "$variable" "${!variable}"
+    if [[ -n "$variable" ]]
+    then
+        echo "[$APPNAME][$(date)] $variable --> ${!variable}"
+        setvalue "$variable" "${!variable}"
 done
 
 # Now run install_and_upgrade to ensure that any changes are applied
