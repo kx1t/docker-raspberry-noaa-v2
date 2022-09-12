@@ -7,6 +7,9 @@ cd "$(dirname "$0")"
 
 # Start php-fpm and confirm it's started by sending a fcgi request through it
 
+progname="php-fpm7.4"
+confdir="/etc/php/7.4/fpm"
+
 pid=''
 
 main() {
@@ -15,12 +18,13 @@ main() {
         # changes. It works ok with systemd, but not if you launch fpm directly so we
         # create the dir manually (instead of hacking at rpm supplied config).
         mkdir -p /var/run/php-fpm
-        php-fpm -F --fpm-config /etc/php-fpm.conf >&2 &
+        $progname -F --fpm-config $confdir/php-fpm.conf >&2 &
         pid=$!
         # wait for fpm to be ready
-        wait_sockets
+        # wait_sockets # this wont work with nginx -- just wait a few secs
+        sleep 3
         # let s6 know it's ready
-        echo "PHP-FPM is ready"
+        echo "$progname is ready"
         # wait for fpm
         wait "$pid"
 }
@@ -40,7 +44,7 @@ forced_exit() {
 # List out all the sockets php-fpm is configured to listen on. These images are
 # consumed unpredictably so we want to support arbitrary listen directives.
 list_sockets() {
-        grep -hE '^listen\s*=\s*' /etc/php-fpm.conf /etc/php-fpm.d/*.conf \
+        grep -hE '^listen\s*=\s*' $confdir/php-fpm.conf $confdir/conf.d/* \
                 | sed -r 's/^listen\s*=\s*//' \
                 | sed -r 's/;.*$//'
 }
