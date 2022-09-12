@@ -10,6 +10,9 @@ cd "$(dirname "$0")"
 progname="php-fpm7.4"
 confdir="/etc/php/7.4/fpm"
 
+APPNAME="$(hostname)/reverse-proxy"
+
+echo "[$APPNAME][$(date)] Started as an s6 service"
 
 pid=''
 
@@ -23,6 +26,7 @@ main() {
         # Make all socket target directories:
         for name in $(grep -hE '^listen\s*=\s*' $confdir/php-fpm.conf $confdir/pool.d/* | sed -r 's/^listen\s*=\s*//' | sed -r 's/;.*$//' | sed 's|/[^/]*$||')
         do
+            echo "[$APPNAME][$(date)] Creating $name ..."
             mkdir -p "$name"
         done
 
