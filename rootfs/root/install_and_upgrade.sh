@@ -77,7 +77,7 @@ else
   die "  Please update your config/settings.yml file to accommodate the above errors"
 fi
 
-install ansible
+# install ansible
 which ansible-playbook 2>&1 >/dev/null
 if [ $? -ne 0 ]; then
   log_running "Updating and installing Ansible..."
