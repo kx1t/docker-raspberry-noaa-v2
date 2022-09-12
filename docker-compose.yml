@@ -110,7 +110,6 @@ services:
       - /dev/bus/usb
     tmpfs:
       - /tmp
-      - /run
     volumes:
       - "/etc/localtime:/etc/localtime:ro"
       - "/etc/timezone:/etc/timezone:ro"
