@@ -161,11 +161,11 @@ echo "*version={\"`cat .version`\"};" >> predict.h
 
 # Install PREDICT's symlinks and man pages
 
-if [ $# == "0" ]; then
-	bindestination="/usr/local/bin"
-else
-	bindestination=$1
-fi
+# if [ $# == "0" ]; then
+# 	bindestination="/usr/local/bin"
+# else
+# 	bindestination=$1
+# fi
 
 echo
 echo "Linking PREDICT binaries to "$bindestination":"
