@@ -103,6 +103,8 @@ services:
       - slack_push_to=''
       - slack_link='https://XXXX/captures/listImages'
       - enable_matrix_push=false
+    ports:
+      - 89:80
     tmpfs:
       - /tmp:rw,nosuid,nodev,noexec,relatime,size=128M
       - /run:rw,relatime,size=128M
