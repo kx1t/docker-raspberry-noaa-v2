@@ -77,13 +77,26 @@ RUN set -x && \
     pip3 install ${KEPT_PIP3_PACKAGES[@]} -r /tmp/requirements.txt && \
 #
 # Install wkhtmltoimg -- it is done here because we have more control over the arch here than in ansible
-    pushd /tmp && \
-        if [ "$TARGETARCH" == "armhf" ]; then cp /root/software/wxtoimg-armhf-2.11.2-beta.deb wkhtmltox.deb; \
-                                         else curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_$TARGETARCH.deb -o wkhtmltox.deb; fi && \
-        dpkg -i wkhtmltox.deb && \
-        rm wkhtmltox.deb && \
-    popd && \
+#    pushd /tmp && \
+#        if [ "$TARGETARCH" == "armhf" ]; then cp /root/software/wxtoimg-armhf-2.11.2-beta.deb wkhtmltox.deb; \
+#                                         else curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_$TARGETARCH.deb -o wkhtmltox.deb; fi && \
+#        dpkg -i wkhtmltox.deb && \
+#        rm wkhtmltox.deb && \
+#    popd && \
 #
+
+# Install wxtoimg
+    pushd /wxtoimg && \
+        if   [ "$TARGETARCH" == "armhf" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
+        elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
+        elif [ "$TARGETARCH" == "i386"  ]; then dpkg -i wxtoimg_2.10.11-1_i386.deb; \
+        elif [ "$TARGETARCH" == "arm64" ]; then \
+            dpkg --add-architecture armhf && \
+            apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests libc6:armhf libstdc++6:armhf libasound2:armhf libx11-6:armhf libxft-dev:armhf libxft2:armhf ghostscript && \
+            dpkg -i wxtoimg-armhf-2.11.2-beta.deb;
+        else echo "No target for wxtoimg for $TARGETARCH" && exit 1; \
+        fi && \
+    popd && \
 
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \
@@ -96,6 +109,7 @@ RUN set -x && \
       /var/lib/apt/lists/* \
       /.dockerenv \
       /git
+      /wxtoimg
 #
 
 COPY rootfs/ /
