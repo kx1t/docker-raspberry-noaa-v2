@@ -111,7 +111,7 @@ RUN set -x && \
 #
 # Install wxtoimg
     pushd /wxtoimg && \
-        if   [ "$TARGETARCH" == "armhf" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
+        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "386"  ]; then dpkg -i wxtoimg_2.10.11-1_i386.deb; \
         elif [ "$TARGETARCH" == "arm64" ]; then \
