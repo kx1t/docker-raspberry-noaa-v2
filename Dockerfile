@@ -69,7 +69,7 @@ RUN set -x && \
 #    KEPT_RUBY_PACKAGES+=(twurl) && \
 #
 # Show package sizes:
-apt-cache --no-all-versions show ${KEPT_PACKAGES[@]} | awk '$1 == "Package:" { p = $2 } $1 == "Size:" { printf("%10d %s\n", $2, p) }' && \
+# apt-cache --no-all-versions show ${KEPT_PACKAGES[@]} | awk '$1 == "Package:" { p = $2 } $1 == "Size:" { printf("%10d %s\n", $2, p) }' && \
 # Install all the apt, pip3, and gem (ruby) packages:
     apt-get update -q && \
     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ${TEMP_PACKAGES[@]} ${KEPT_PACKAGES[@]} && \
@@ -78,10 +78,11 @@ apt-cache --no-all-versions show ${KEPT_PACKAGES[@]} | awk '$1 == "Package:" { p
 #
 # Install wkhtmltoimg -- it is done here because we have more control over the arch here than in ansible
     pushd /tmp && \
-        if [ "$TARGETARCH" == "armhf" ]; then curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.raspberrypi.bullseye_armhf.deb -o wkhtmltox.deb; \
+        if [ "$TARGETARCH" == "armhf" ]; then cp /root/software/wxtoimg-armhf-2.11.2-beta.deb wkhtmltox.deb; \
                                          else curl -sL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-2/wkhtmltox_0.12.6.1-2.bullseye_$TARGETARCH.deb -o wkhtmltox.deb; fi && \
         dpkg -i wkhtmltox.deb && \
         rm wkhtmltox.deb && \
+    popd && \
 #
 
 # Clean up
