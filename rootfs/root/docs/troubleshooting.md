@@ -108,10 +108,10 @@ settings.
 
 # Setting PPM
 
-PPM is the error rate measured in Parts Per Million of your RTL-SDR device. While most RTL-SDR have a low PPM, they no two devices have the same PPM. 
+PPM is the error rate measured in Parts Per Million of your RTL-SDR device. While most RTL-SDR have a low PPM, they no two devices have the same PPM.
 To evaluate what your device's PPM is you can do so at the command line as follows:
 
-``` 
+```
 
 $ rtl_test -p
 Found 1 device(s):
@@ -119,7 +119,7 @@ Found 1 device(s):
 
 Using device 0: Generic RTL2832U OEM
 Found Rafael Micro R820T tuner
-Supported gain values (29): 0.0 0.9 1.4 2.7 3.7 7.7 8.7 12.5 14.4 15.7 16.6 19.7 20.7 22.9 25.4 28.0 29.7 32.8 33.8 36.4 37.2 38.6 40.2 42.1 43.4 43.9 44.5 48.0 49.6 
+Supported gain values (29): 0.0 0.9 1.4 2.7 3.7 7.7 8.7 12.5 14.4 15.7 16.6 19.7 20.7 22.9 25.4 28.0 29.7 32.8 33.8 36.4 37.2 38.6 40.2 42.1 43.4 43.9 44.5 48.0 49.6
 [R82XX] PLL not locked!
 Sampling at 2048000 S/s.
 Reporting PPM error measurement every 10 seconds...
@@ -141,13 +141,13 @@ real sample rate: 2047975 current PPM: -12 cumulative PPM: 2
 real sample rate: 2047887 current PPM: -55 cumulative PPM: -3
 real sample rate: 2048116 current PPM: 57 cumulative PPM: 2
 real sample rate: 2048020 current PPM: 10 cumulative PPM: 2
-real sample rate: 2048027 current PPM: 14 cumulative PPM: 3 
+real sample rate: 2048027 current PPM: 14 cumulative PPM: 3
 ...
 ```
 
-As you can see from my example above the PPM for my card is beginning to average at around 2/3. 
-The longer I leave the test running the more accurate that average will become. 
-These PPM figures can be used in the settings.yml to offset the frequency accuracy. 
+As you can see from my example above the PPM for my card is beginning to average at around 2/3.
+The longer I leave the test running the more accurate that average will become.
+These PPM figures can be used in the settings.yml to offset the frequency accuracy.
 Generally they don't make a lot of difference unless you have a card which is wildly offset from '0'.
 
 
@@ -204,9 +204,9 @@ Below are some useful commands in a more summary fashion:
 * Read the main log file: `less /var/log/raspberry-noaa-v2/output.log`
 * List the scheduled passes: `atq`
 * Cancel a pass: `atrm <job_id>`
-* Location of the tmp directory: `/home/pi/raspberry-noaa-v2/tmp/`
+* Location of the tmp directory: `/root/raspberry-noaa-v2/tmp/`
 * Location of the wav files: `/srv/audio/noaa` and `/srv/audio/meteor`
-* Location of the database: `/home/pi/raspberry-noaa-v2/db/panel.db`
+* Location of the database: `/root/raspberry-noaa-v2/db/panel.db`
 * Location of the images: `/srv/images`
 
 # Webpanel Expired Certificate

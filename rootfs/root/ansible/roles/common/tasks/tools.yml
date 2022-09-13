@@ -44,6 +44,16 @@
     mode: 0755
     remote_src: yes
 
+- name: install medet_amd64
+  become: yes
+  copy:
+    src: "{{ noaa_home }}/software/medet_amd64"
+    dest: /usr/bin/medet_amd64
+    owner: root
+    group: root
+    mode: 0755
+    remote_src: yes
+
 - name: remove old scheduling cron job
   cron:
     disabled: yes

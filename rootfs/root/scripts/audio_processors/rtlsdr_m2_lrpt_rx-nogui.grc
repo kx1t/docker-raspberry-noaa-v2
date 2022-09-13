@@ -113,7 +113,7 @@
     </param>
     <param>
       <key>value</key>
-      <value>"/home/pi/weather/meteor_LRPT_" + datetime.now().strftime("%d%m%Y_%H%M") + ".s"</value>
+      <value>"/root/weather/meteor_LRPT_" + datetime.now().strftime("%d%m%Y_%H%M") + ".s"</value>
     </param>
   </block>
   <block>

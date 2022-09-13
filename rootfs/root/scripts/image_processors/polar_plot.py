@@ -16,7 +16,7 @@
 #
 # Example:
 #   ./scripts/tools/polar_plot.py "NOAA 15" \
-#                                 "/home/pi/raspberry-noaa-v2/tmp/orbit.tle" \
+#                                 "/root/raspberry-noaa-v2/tmp/orbit.tle" \
 #                                 102394157 \
 #                                 102394167 \
 #                                 40.712776 \
@@ -168,7 +168,7 @@ def main():
   Main function to check for usage, accept arguments from command
   line, and render the polar plot
   '''
-  
+
   # parse input arguments
   if len(sys.argv) != 11:
     displayUsage()
@@ -188,7 +188,7 @@ def main():
   # make sure one of two types is specified
   if plot_type != "azel" and plot_type != "direction":
     displayUsage()
-  
+
   # establish ground station coordinates
   gs = ephem.Observer()
   gs.lat = gs_latitude
@@ -200,7 +200,7 @@ def main():
   if sat is None:
     print("Could not determine satellite {} using TLE file {}".format(satellite, tle_file))
     exit(1)
-  
+
   # collect azimuth and elevation values
   azimuth_pos = []
   elevation_pos = []
