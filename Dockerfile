@@ -53,6 +53,8 @@ RUN set -x && \
     KEPT_PACKAGES+=(python3-apt) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python-setuptools) && \
+    KEPT_PACKAGES+=(python3-matplotlib) && \
+    KEPT_PACKAGES+=(python3-pyrsistent) && \
     KEPT_PACKAGES+=(rtl-sdr) && \
     KEPT_PACKAGES+=(socat) && \
     KEPT_PACKAGES+=(sox) && \
