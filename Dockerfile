@@ -84,20 +84,7 @@ RUN set -x && \
 #        rm wkhtmltox.deb && \
 #    popd && \
 #
-
-# Install wxtoimg
-    pushd /wxtoimg && \
-        if   [ "$TARGETARCH" == "armhf" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
-        elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
-        elif [ "$TARGETARCH" == "i386"  ]; then dpkg -i wxtoimg_2.10.11-1_i386.deb; \
-        elif [ "$TARGETARCH" == "arm64" ]; then \
-            dpkg --add-architecture armhf && \
-            apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests libc6:armhf libstdc++6:armhf libasound2:armhf libx11-6:armhf libxft-dev:armhf libxft2:armhf ghostscript && \
-            dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
-        else echo "No target for wxtoimg for $TARGETARCH" && exit 1; \
-        fi && \
-    popd && \
-
+#
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \
 #    apt-get remove -y -q ${TEMP_PACKAGES[@]} && \
@@ -119,6 +106,20 @@ COPY rootfs/ /
 
 RUN set -x && \
 #
+#
+# Install wxtoimg
+    pushd /wxtoimg && \
+        if   [ "$TARGETARCH" == "armhf" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
+        elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
+        elif [ "$TARGETARCH" == "i386"  ]; then dpkg -i wxtoimg_2.10.11-1_i386.deb; \
+        elif [ "$TARGETARCH" == "arm64" ]; then \
+            dpkg --add-architecture armhf && \
+            apt-get update -q && apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests libc6:armhf libstdc++6:armhf libasound2:armhf libx11-6:armhf libxft-dev:armhf libxft2:armhf ghostscript && \
+            dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
+            apt-get clean -y -q && \
+        else echo "No target for wxtoimg for $TARGETARCH" && exit 1; \
+        fi && \
+    popd && \
 #
 # Install predict
     pushd /root/predict-2.3.0 && \
