@@ -115,8 +115,8 @@ RUN set -x && \
         elif [ "$TARGETARCH" == "arm64" ]; then \
             dpkg --add-architecture armhf && \
             apt-get update -q && apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests libc6:armhf libstdc++6:armhf libasound2:armhf libx11-6:armhf libxft-dev:armhf libxft2:armhf ghostscript && \
-            dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
-            apt-get clean -y -q && \
+            dpkg -i wxtoimg-armhf-2.11.2-beta.deb && \
+            apt-get clean -y -q; \
         else echo "No target for wxtoimg for $TARGETARCH" && exit 1; \
         fi && \
     popd && \
