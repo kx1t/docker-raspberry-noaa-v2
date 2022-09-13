@@ -26,6 +26,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(ffmpeg) && \
     KEPT_PACKAGES+=(git) && \
     KEPT_PACKAGES+=(gmic) && \
+    KEPT_PACKAGES+=(g++) && \
     KEPT_PACKAGES+=(gnuradio) && \
     KEPT_PACKAGES+=(gr-osmosdr) && \
     KEPT_PACKAGES+=(imagemagick) && \
