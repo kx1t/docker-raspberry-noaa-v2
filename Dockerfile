@@ -108,7 +108,7 @@ RUN set -x && \
       /tmp/* \
       /var/lib/apt/lists/* \
       /.dockerenv \
-      /git
+      /git \
       /wxtoimg
 #
 
