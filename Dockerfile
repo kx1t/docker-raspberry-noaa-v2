@@ -128,16 +128,6 @@ RUN set -x && \
         ./configure && \
     popd && \
 #
-# Install meteor_demod
-    pushd /tmp && \
-        git clone --depth=1 https://github.com/dbdexter-dev/meteor_demod.git && \
-        cd meteor_demod && \
-        mkdir build && cd build && \
-        cmake .. && \
-        make && \
-        make install && \
-    popd && \
-#
 # Install udev rules
     mkdir -p /etc/udev/rules.d && \
     curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules
