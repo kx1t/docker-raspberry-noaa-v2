@@ -7,7 +7,7 @@ import os
 from envbash import load_envbash
 
 # load bash environment vars
-load_envbash('/root/.noaa-v2.conf')
+load_envbash('/RaspiNOAA2/.noaa-v2.conf')
 tz_offset = int(os.environ['TZ_OFFSET'])
 lat = str(os.environ['LAT'])
 lon = str(os.environ['LON'])

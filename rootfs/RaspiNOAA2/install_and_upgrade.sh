@@ -8,7 +8,7 @@
 # BOLD=$(tput bold)
 # RESET=$(tput sgr0)
 
-[[ -z "$HOME" ]] && HOME=/root
+[[ -z "$HOME" ]] && HOME=/RaspiNOAA2
 
 echo "Home directory is $HOME"
 

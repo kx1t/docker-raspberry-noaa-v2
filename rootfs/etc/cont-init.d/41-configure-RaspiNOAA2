@@ -1,0 +1,12 @@
+#!/usr/bin/with-contenv bash
+#shellcheck shell=bash
+
+APPNAME="$(hostname)/configure-RaspiNOAA2"
+
+echo "[$(date)][$APPNAME] Configuring Raspberry-NOAA-2 ..."
+
+# Run install_and_upgrade to ensure that any changes are applied
+
+cd /RaspiNOAA2
+./install_and_upgrade.sh \
+    | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[" strftime("%a %b %e %T %Z %Y", systime()) "]['"$APPNAME"'] " $0}'

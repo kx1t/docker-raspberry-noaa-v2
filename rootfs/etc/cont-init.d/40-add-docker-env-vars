@@ -3,9 +3,9 @@
 
 APPNAME="$(hostname)/add-docker-env-vars"
 
-echo "[$(date)][$APPNAME] Setting Environment Variables from the Docker Environment:"
+echo "[$(date)][$APPNAME] Setting Environment Variables from the Docker Environment ..."
 
-settingsfile="/root/config/settings.yml"
+settingsfile="/RaspiNOAA2/config/settings.yml"
 
 function setvalue () {
     # This function writes values to the settings file
@@ -24,7 +24,7 @@ function setvalue () {
 # Note - these can all be passed in as Environment Variables in Docker and they will be used
 # or overwritten as long as they exist in the settings file.
 
-for variable in $(sed -n 's|^\s*\([A-Za-z0-9\_\-]*\):.*|\1|p' /root/config/settings.yml)
+for variable in $(sed -n 's|^\s*\([A-Za-z0-9\_\-]*\):.*|\1|p' /RaspiNOAA2/config/settings.yml)
 do
     if [[ "${!variable}" != "" ]]
     then
@@ -32,9 +32,3 @@ do
         setvalue "$variable" "${!variable}"
     fi
 done
-
-# Now run install_and_upgrade to ensure that any changes are applied
-
-cd /root
-./install_and_upgrade.sh \
-    | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[" strftime("%a %b %e %T %Z %Y", systime()) "]['"$APPNAME"'] " $0}'
