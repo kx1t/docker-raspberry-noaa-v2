@@ -132,7 +132,7 @@ RUN set -x && \
 #
 # Install udev rules
     mkdir -p /etc/udev/rules.d && \
-    curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules
+    curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules && \
 #
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \
