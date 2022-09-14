@@ -83,10 +83,10 @@ RUN set -x && \
 # Install a bunch of other things from the repo
 # This is done here rather than in a COPY command to keep the image clean
     mkdir -p /git && \
-    git clone --depth=1 https://github.com/kx1t/docker-raspberry-noaa-v2.git  /git/docker-raspberry-noaa-v2 && \
 #
 #
 # Install wxtoimg
+    git clone --depth=1 https://github.com/kx1t/docker-raspberry-noaa-v2.git  /git/docker-raspberry-noaa-v2 && \
     pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \

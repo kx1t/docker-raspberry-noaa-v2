@@ -171,26 +171,26 @@ echo
 echo "Linking PREDICT binaries to "$bindestination":"
 
 lncmd=`pwd`"/predict $bindestination/predict"
-ln -sf $lncmd
+cp -f $lncmd
 
 if [ -L $bindestination/predict ]; then
 	echo "predict... Done!"
 else
-	echo "Oops! 'ln -sf $lncmd':  Didn't work!  :-("
+	echo "Oops! 'cp -f $lncmd':  Didn't work!  :-("
 fi
 
 lncmd=`pwd`"/xpredict $bindestination/xpredict"
-ln -sf $lncmd
+cp -f $lncmd
 
 if [ -L $bindestination/xpredict ]; then
 	echo "xpredict... Done!"
 else
-	echo "Oops! 'ln -sf $lncmd':  Didn't work!  :-("
+	echo "Oops! 'cp -f $lncmd':  Didn't work!  :-("
 fi
 
 # Install kepupdate
 if [ -x kepupdate ]; then
-	ln -sf `pwd`/kepupdate $bindestination/kepupdate
+	cp -f `pwd`/kepupdate $bindestination/kepupdate
 	echo
 	echo "kepupdate installed!"
 fi
@@ -199,21 +199,21 @@ fi
 echo
 echo "Linking earthtrack and earthtrack2 to "$bindestination":"
 lncmd=`pwd`"/clients/earthtrack/earthtrack $bindestination/earthtrack"
-ln -sf $lncmd
+cp -f $lncmd
 
 if [ -L $bindestination/earthtrack ]; then
 	echo "earthtrack... Done!"
 else
-	echo "Oops! 'ln -sf $lncmd':  Didn't work!  :-("
+	echo "Oops! 'cp -f $lncmd':  Didn't work!  :-("
 fi
 
 lncmd=`pwd`"/clients/earthtrack/earthtrack $bindestination/earthtrack2"
-ln -sf $lncmd
+cp -f $lncmd
 
 if [ -L $bindestination/earthtrack2 ]; then
 	echo "earthtrack2... Done!"
 else
-	echo "Oops! 'ln -sf $lncmd':  Didn't work!  :-("
+	echo "Oops! 'cp -f $lncmd':  Didn't work!  :-("
 fi
 
 # Man pages
