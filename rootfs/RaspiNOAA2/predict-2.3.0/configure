@@ -139,7 +139,7 @@ rm -f gcctest.c
 echo
 echo
 
-echo -n "char *predictpath={\"`pwd`/\"}, " > predict.h
+echo -n "char *predictpath={\"$bindestination\"}, " > predict.h
 
 if [ -e /proc/asound/version ]; then
         echo -n "soundcard=1, " >> predict.h
