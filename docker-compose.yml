@@ -46,7 +46,7 @@ services:
       - meteor_m2_sun_min_elevation=6
       - meteor_m2_sat_min_elevation=30
       - meteor_m2_memory_threshold=600
-      - days_to_schedule_passes=1
+      - days_to_schedule_passes=3
       - delete_audio=false
       - flip_meteor_image=true
       - produce_spectrogram=true
