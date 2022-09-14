@@ -44,6 +44,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(libusb-1.0-0-dev) && \
     KEPT_PACKAGES+=(libxft-dev) && \
     KEPT_PACKAGES+=(libxft2) && \
+    KRPT_PACKAGES+=(mailutils) && \
     KEPT_PACKAGES+=(make) && \
     KEPT_PACKAGES+=(nginx) && \
     KEPT_PACKAGES+=(php7.4-fpm) && \
