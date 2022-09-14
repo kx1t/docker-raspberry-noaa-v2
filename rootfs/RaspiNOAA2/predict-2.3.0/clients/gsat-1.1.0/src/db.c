@@ -87,7 +87,7 @@ void lookup_sat_db( void )
   strncpy( satname, sat, 25 );
   satname[ 25 ] = '\0';
 
-  strncpy(filename,getenv("HOME"),256);
+  strncpy(filename,getenv("NOAA_HOME"),256);
   strcat(filename,"/.gsat.db");
 
   if((fd=fopen( filename, "r" ))==NULL) {
@@ -167,7 +167,7 @@ void save_sat_db( void )
   clist=lookup_widget( dialog_dbedit, "clist_satdb" );
   nrows = GTK_CLIST(clist)->rows;
 
-  strncpy(filename,getenv("HOME"),256);
+  strncpy(filename,getenv("NOAA_HOME"),256);
   strcat(filename,"/.gsat.db");
 
   fd=fopen( filename, "w" );

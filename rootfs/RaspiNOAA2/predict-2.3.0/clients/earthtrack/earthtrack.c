@@ -446,9 +446,9 @@ char argc, *argv[];
 	/* Write xearth/xplanet working files
 	   to the user's home directory */
 
-	sprintf(markerfile,"%s/.markerfile",getenv("HOME"));
-	sprintf(greatarcfile,"%s/.greatarcfile",getenv("HOME"));
-	sprintf(configfile,"%s/.xplanetconfig",getenv("HOME"));
+	sprintf(markerfile,"%s/.markerfile",getenv("NOAA_HOME"));
+	sprintf(greatarcfile,"%s/.greatarcfile",getenv("NOAA_HOME"));
+	sprintf(configfile,"%s/.xplanetconfig",getenv("NOAA_HOME"));
 
 	if (xplanet)
 	{

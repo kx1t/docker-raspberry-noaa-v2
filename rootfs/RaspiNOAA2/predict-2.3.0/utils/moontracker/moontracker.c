@@ -367,7 +367,7 @@ char argc, *argv[];
 	y=argc-1;
 	rot_hostname[0]=0;
 	rot_port[0]=0;
-	env=getenv("HOME");
+	env=getenv("NOAA_HOME");
 	sprintf(qthfile,"%s/.predict/predict.qth",env);
 
 	/* Interpret command-line options */

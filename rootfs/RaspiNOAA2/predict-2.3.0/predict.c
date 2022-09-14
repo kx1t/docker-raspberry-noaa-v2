@@ -6872,7 +6872,7 @@ void NewUser()
 
 	/* Make "~/.predict" subdirectory */
 
-	snprintf(temp,255,"%s/.predict",getenv("HOME"));
+	snprintf(temp,255,"%s/.predict",getenv("NOAA_HOME"));
 	mkdir(temp,0777);
 
 	/* Copy default files into ~/.predict directory */
@@ -8018,7 +8018,7 @@ char argc, *argv[];
 	   to PREDICT, create qth, tle, and database filenames based on
 	   the default ($NOAA_HOME) directory. */
 
-	env=getenv("HOME");
+	env=getenv("NOAA_HOME");
 
 	if (qth_cli[0]==0)
 		sprintf(qthfile,"%s/.predict/predict.qth",env);

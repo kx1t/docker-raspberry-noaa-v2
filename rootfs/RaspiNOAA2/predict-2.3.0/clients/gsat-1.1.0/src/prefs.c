@@ -40,7 +40,7 @@ void open_preferences( void )
   int n, state;
   GtkWidget *widget;
 
-  strncpy(filename,getenv("HOME"),256);
+  strncpy(filename,getenv("NOAA_HOME"),256);
   strcat(filename,"/.gsat.prefs");
 
   if((fd=fopen( filename, "r" ))==NULL) {
@@ -166,7 +166,7 @@ void save_preferences( void )
   char prefsfile[256];
   FILE * fd;
 
-  strncpy(prefsfile,getenv("HOME"),256);
+  strncpy(prefsfile,getenv("NOAA_HOME"),256);
   strcat(prefsfile,"/.gsat.prefs");
 
   fd=fopen( prefsfile, "w" );

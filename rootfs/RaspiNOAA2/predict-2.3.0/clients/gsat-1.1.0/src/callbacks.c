@@ -791,7 +791,7 @@ on_bt_dbedit_clicked                   (GtkButton       *button,
   gtk_clist_set_sort_type(GTK_CLIST(widget),GTK_SORT_ASCENDING);
   gtk_clist_set_auto_sort(GTK_CLIST(widget),TRUE);
 
-  strncpy(filename,getenv("HOME"),256);
+  strncpy(filename,getenv("NOAA_HOME"),256);
   strcat(filename,"/.gsat.db");
 
   if((fd=fopen( filename, "r" ))==NULL) {
