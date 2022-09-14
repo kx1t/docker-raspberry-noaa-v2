@@ -11,8 +11,8 @@
 #   ./schedule.sh -t -x
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 # TLE data files
 WEATHER_TXT="${NOAA_HOME}/tmp/weather.txt"
@@ -103,7 +103,7 @@ start_time_ms=$(date +"%s")
 last_day=$(($DAYS_TO_SCHEDULE_PASSES - 1))
 end_time_ms=$(date --date="+${last_day} days 23:59:59" +"%s")
 if [ -z "${atq_date}" ]; then
-  log "No passes currently scheduled - scheduling all passes starting now through ${end_time_ms} ms..." "INFO"
+  log "No passes currently scheduled - scheduling all passes starting now through $(date -d @${end_time_ms})..." "INFO"
 else
   # calculate current day of last passes and what should be the
   # latest day of scheduled passes - assume if we've scheduled into

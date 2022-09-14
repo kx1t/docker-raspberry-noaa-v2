@@ -11,8 +11,8 @@
 #   ./produce_annotation_image.sh /tmp/output.png
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 # make sure an output file is specified
 if [ -z "$1" ]; then

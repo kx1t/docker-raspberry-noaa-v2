@@ -6,5 +6,5 @@ APPNAME="$(hostname)/schedule"
 echo "[$(date)][$APPNAME] Redownloading the schedule"
 
 cd /RaspiNOAA2/scripts
-./schedule.sh -t \
+./schedule.sh -t -x \
  | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[" strftime("%a %b %e %T %Z %Y", systime()) "]['"$APPNAME"'] " $0}'

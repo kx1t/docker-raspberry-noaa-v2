@@ -5,8 +5,8 @@
 #          that are older than 3 days old (reasonable retention).
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 #Generate date since epoch in seconds - days
 dt=$(date +"%Y%m%d")

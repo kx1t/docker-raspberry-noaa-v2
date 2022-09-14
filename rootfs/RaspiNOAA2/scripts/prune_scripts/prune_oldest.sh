@@ -4,8 +4,8 @@
 #          database records and associated images/files on disk.
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 log "Pruning captures..." "INFO"
 for img_path in $(sqlite3 ${DB_FILE} "select file_path from decoded_passes limit ${PRUNE_OLDEST};"); do

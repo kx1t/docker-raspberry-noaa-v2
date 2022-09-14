@@ -1,8 +1,8 @@
 #!/usr/bin/with-contenv bash
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 if [ -z "$1" ]; then
     log "Usage: $0 <frequency>. Example: $0 90.3" "ERROR"

@@ -19,7 +19,7 @@ double x;
 
 	if (x>0.0)
 		value=1.0;
-	
+
 	if (x<0.0)
 		value=-1.0;
 
@@ -32,7 +32,7 @@ int main()
 	char qthfile[50], input[7];
 	FILE *fd;
 
-	sprintf(qthfile,"%s/.predict/predict.qth",getenv("HOME"));
+	sprintf(qthfile,"%s/.predict/predict.qth",getenv("NOAA_HOME"));
 
 	/* Read user's lat and long from ~/.predict/predict.qth file */
 
@@ -67,7 +67,7 @@ int main()
 		sscanf(input,"%lf",&cd);
 
 		c=cd*dr;
-		dc=cos(l)*cos(c-g);  
+		dc=cos(l)*cos(c-g);
 		ds=sqrt(1.0-(dc*dc));
 
 		j=-sin(l)*dc/(cos(l)*ds);

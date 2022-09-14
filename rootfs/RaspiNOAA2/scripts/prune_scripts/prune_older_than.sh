@@ -4,8 +4,8 @@
 #          database records and associated images/files on disk.
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 #Generate date since epoch in seconds - days
 let prunedate=$(date +%s)-$PRUNE_OLDER_THAN*24*60*60

@@ -12,9 +12,9 @@
 #                                                               "/srv/images/NOAA-18-20210212-091356-MCIR-precip.jpg"
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
-. "$NOAA_HOME/.tweepy.conf"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.tweepy.conf"
 
 # input params
 MESSAGE=$1

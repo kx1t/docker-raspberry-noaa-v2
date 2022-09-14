@@ -12,8 +12,8 @@
 #   ./meteor_normalize_annotate.sh /path/to/inputfile.jpg /path/to/outputfile.jpg
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 # input params
 INPUT_JPG=$1

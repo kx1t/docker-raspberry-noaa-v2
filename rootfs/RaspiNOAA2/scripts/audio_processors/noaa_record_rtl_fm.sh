@@ -11,8 +11,8 @@
 #   ./record_noaa.sh 15 /srv/audio/noaa/NOAA18.wav
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 # input params
 SAT_NAME=$1
