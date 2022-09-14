@@ -1,6 +1,7 @@
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
 ARG TARGETARCH
+ENV NOAA_HOME="/RaspiNOAA2"
 
 # COPY rootfs/root/requirements.txt /tmp/requirements.txt
 
