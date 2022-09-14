@@ -8,7 +8,7 @@
 # BOLD=$(tput bold)
 # RESET=$(tput sgr0)
 
-NOAA_HOME="/RaspiNOAA2"
+export NOAA_HOME="/RaspiNOAA2"
 
 echo "Home directory is $NOAA_HOME"
 
