@@ -7,6 +7,7 @@ services:
     restart: always
     environment:
       - VERBOSELOG=true
+      - NOAA_HOME=/RaspiNOAA2
       - latitude=42.40487
       - longitude=-71.16615
       - altitude=18
