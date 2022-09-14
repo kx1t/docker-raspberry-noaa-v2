@@ -12,7 +12,7 @@
 #   ./spectrogram.sh /path/to/inputfile.wav /path/to/outputfile.png "my chart title" "my chart comment"
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params

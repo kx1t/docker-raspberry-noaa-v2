@@ -10,7 +10,7 @@
 #   ./noaa_hvc.sh /path/to/input.wav /path/to/output.png
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params

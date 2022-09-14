@@ -8,9 +8,9 @@
 # BOLD=$(tput bold)
 # RESET=$(tput sgr0)
 
-[[ -z "$HOME" ]] && HOME=/RaspiNOAA2
+HOME=/RaspiNOAA2
 
-echo "Home directory is $HOME"
+echo "Home directory is $NOAA_HOME"
 
 die() {
   >&2 echo "${RED}Error: $1${RESET}" && exit 1
@@ -34,7 +34,7 @@ log_finished() {
 #fi
 
 # verify the repo exists as expected in the home directory
-# if [ ! -e "$HOME/raspberry-noaa-v2" ]; then
+# if [ ! -e "$NOAA_HOME/raspberry-noaa-v2" ]; then
 #   die "Please clone https://github.com/jekhokie/raspberry-noaa-v2 to your home directory"
 # fi
 #
@@ -42,7 +42,7 @@ log_finished() {
 # which is likey a safe way to tell if the user has already installed
 # tools and rebooted
 install_type='install'
-# it's always a new install when running Dockerfile
+
 if [ -f /etc/modprobe.d/rtlsdr.conf ]; then
   install_type='upgrade'
 fi
@@ -62,7 +62,7 @@ else
 fi
 
 log_running "Installing Python dependencies..."
-python3 -m pip install -r $HOME/requirements.txt
+python3 -m pip install -r $NOAA_HOME/requirements.txt
 if [ $? -eq 0 ]; then
   log_done "  Successfully aligned required Python packages!"
 else
@@ -107,7 +107,7 @@ else
 fi
 
 # source some env vars
-. "$HOME/.noaa-v2.conf"
+source "$NOAA_HOME/.noaa-v2.conf"
 
 # TLE data files
 # NOTE: This should be DRY-ed up with the scripts/schedule.sh script

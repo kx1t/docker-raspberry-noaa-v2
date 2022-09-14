@@ -11,7 +11,7 @@
 #   ./noaa_histogram_data.sh  /path/to/input.wav /path/to/output-a.png /path/to/output-b.png
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params

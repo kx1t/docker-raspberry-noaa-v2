@@ -16,7 +16,7 @@
 #   ./scripts/push_processors/push_email.sh test@test.com /srv/images/NOAA-18-20210212-091356-MCIR.jpg "Test"
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params

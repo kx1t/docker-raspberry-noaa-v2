@@ -11,7 +11,7 @@
 #   ./schedule.sh -t -x
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # TLE data files

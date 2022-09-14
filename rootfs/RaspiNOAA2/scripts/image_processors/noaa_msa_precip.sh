@@ -13,7 +13,7 @@
 #   ./noaa_msa_precip.sh /path/to/map_overlay.png /path/to/input.wav /path/to/output.jpg
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params

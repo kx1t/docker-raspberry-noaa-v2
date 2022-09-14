@@ -10,7 +10,7 @@
 #   ./noaa_avi.sh /path/to/map_overlay.png /path/to/input.wav
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params

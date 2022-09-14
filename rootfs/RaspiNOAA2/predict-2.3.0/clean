@@ -13,6 +13,6 @@ cd clients
 	rm -f earthtrack/earthtrack
 	rm -f kep_reload/kep_reload
 	cd ..
-cp -p $HOME/.predict/predict.tle default/predict.tle
-cp -p $HOME/.predict/predict.db default/predict.db
+cp -p $NOAA_HOME/.predict/predict.tle default/predict.tle
+cp -p $NOAA_HOME/.predict/predict.db default/predict.db
 echo "Done!"

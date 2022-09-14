@@ -10,7 +10,7 @@
 #   ./meteor_decode.sh /path/to/input.s /path/to/output.bmp
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params

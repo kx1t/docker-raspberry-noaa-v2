@@ -144,7 +144,7 @@ By John A. Magliacane <kd2bd@amsat.org> (15-Apr-2006):
   and no default TLE and QTH files are found under the user's
   home directory, PREDICT is no longer placed into "new user"
   mode.  This should ease the use of PREDICT in non-interactive
-  applications (in automated scripts, etc.) where a $HOME
+  applications (in automated scripts, etc.) where a $NOAA_HOME
   environment is lacking or not desired.  Only if a user
   has no QTH and TLE files under their home directory, and
   has passed no -q and -t arguments to PREDICT will that

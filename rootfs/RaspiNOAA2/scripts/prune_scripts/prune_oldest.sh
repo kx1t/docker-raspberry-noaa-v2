@@ -4,7 +4,7 @@
 #          database records and associated images/files on disk.
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 log "Pruning captures..." "INFO"

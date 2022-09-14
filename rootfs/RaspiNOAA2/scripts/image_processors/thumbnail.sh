@@ -11,7 +11,7 @@
 #   ./thumbnail.sh 300 /path/to/input_file.png /path/to/output_thumbnail.png
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params

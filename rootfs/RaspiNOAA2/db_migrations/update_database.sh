@@ -10,8 +10,8 @@
 #       can map each script to a check for whether an item exists already, then
 #       loop over that struct.
 
-. "$HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 SQL_CMD=/usr/bin/sqlite3
 log "Applying any schema updates..." "INFO"

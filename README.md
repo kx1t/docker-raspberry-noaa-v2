@@ -44,7 +44,7 @@ sudo raspi-config
 sudo apt-get -y install git
 
 # clone repository
-cd $HOME
+cd $NOAA_HOME
 git clone https://github.com/jekhokie/raspberry-noaa-v2.git
 cd raspberry-noaa-v2/
 
@@ -123,7 +123,7 @@ install script:
 sudo apt-get -y install git
 
 # clone repository
-cd $HOME
+cd $NOAA_HOME
 git clone https://github.com/jekhokie/raspberry-noaa-v2.git
 cd raspberry-noaa-v2/
 
@@ -156,7 +156,7 @@ parameters are not within range or of the expected format to help with reducing 
 
 ```bash
 # pull down new code
-cd $HOME/raspberry-noaa-v2/
+cd $NOAA_HOME/raspberry-noaa-v2/
 git pull
 
 # compare settings file:

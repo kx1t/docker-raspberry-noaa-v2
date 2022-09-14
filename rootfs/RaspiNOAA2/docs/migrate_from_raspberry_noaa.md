@@ -23,7 +23,7 @@ Once you've installed raspberry-noaa-v2, perform the following:
 
 ```bash
 # copy the original database from v1 to v2 to retain metadata
-cp $HOME/raspberry-noaa/panel.db $HOME/raspberry-noaa-v2/db/
+cp $NOAA_HOME/raspberry-noaa/panel.db $NOAA_HOME/raspberry-noaa-v2/db/
 
 # if you have any files in these directories from v1, transfer them using the following:
 cp -rf /var/www/wx/images/* /srv/images/
@@ -31,7 +31,7 @@ cp -rf /var/www/wx/audio/* /srv/audio/noaa/
 cp -rf /var/www/wx/meteor/audio/* /srv/audio/meteor/
 
 # re-run schedule.sh to update the database with the latest passes
-$HOME/raspberry-noaa-v2/scripts/schedule.sh
+$NOAA_HOME/raspberry-noaa-v2/scripts/schedule.sh
 ```
 
 Finally, ensure the original cron job for scheduling is commented out or removed to avoid conflicting
@@ -47,11 +47,11 @@ to explore and (if desired) execute the following to remove some of the old cont
 
 ```bash
 # remove the raspberry-noaa project directory (V1)
-rm -rf $HOME/raspberry-noaa
+rm -rf $NOAA_HOME/raspberry-noaa
 
 # remove the raspberry-noaa webpanel (V1)
 sudo rm -rf /var/www/wx
 
 # remove the raspberry-noaa environment vars (V1)
-rm $HOME/.noaa.conf
+rm $NOAA_HOME/.noaa.conf
 ```

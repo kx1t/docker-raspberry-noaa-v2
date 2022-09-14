@@ -2,8 +2,8 @@
 #
 # Invoke as kepupdate -q in crontab scripts to keep the update "quiet".
 #
- 
-dir=$HOME/.predict
+
+dir=$NOAA_HOME/.predict
 
 wget -qr www.celestrak.com/NORAD/elements/amateur.txt -O $dir/amateur.txt
 wget -qr www.celestrak.com/NORAD/elements/visual.txt -O $dir/visual.txt
@@ -21,9 +21,8 @@ fi
 
 # Copy the update if there's a DOS version of PREDICT under DOSEMU
 
-if [ -e $HOME/.dosemu/drive_c/predict/predict.tle ]; then
-	todos < $dir/predict.tle > $HOME/.dosemu/drive_c/predict/predict.tle
+if [ -e $NOAA_HOME/.dosemu/drive_c/predict/predict.tle ]; then
+	todos < $dir/predict.tle > $NOAA_HOME/.dosemu/drive_c/predict/predict.tle
 fi
 
 rm $dir/amateur.txt $dir/visual.txt $dir/weather.txt
-

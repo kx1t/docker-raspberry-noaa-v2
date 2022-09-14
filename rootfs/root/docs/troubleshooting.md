@@ -37,7 +37,7 @@ script that can be used to perform broadcast FM capture, allowing for tuning and
 Raspberry Pi and perform the following:
 
 ```bash
-cd $HOME/raspberry-noaa-v2/
+cd $NOAA_HOME/raspberry-noaa-v2/
 
 # specify a frequency to use with the script
 ./scripts/testing/test_reception.sh 90.3
@@ -69,7 +69,7 @@ PC switchmode powersupplies, or nearly anything else. If you want to analyze thi
 whats floating around.
 
 ```bash
-cd $HOME
+cd $NOAA_HOME
 
 raspberry-noaa-v2/scripts/testing/scan_for.sh 5h
 ```
@@ -199,7 +199,7 @@ SDR devices (see your device official documentation).
 
 Below are some useful commands in a more summary fashion:
 
-* Edit the main configuration file: `nano $HOME/raspberry-noaa-v2/config/settings.yml`
+* Edit the main configuration file: `nano $NOAA_HOME/raspberry-noaa-v2/config/settings.yml`
 * View the generated configuration (do not edit this one): `less ~/.noaa-v2.conf`
 * Read the main log file: `less /var/log/raspberry-noaa-v2/output.log`
 * List the scheduled passes: `atq`

@@ -10,7 +10,7 @@
 #   ./scripts/push_processors/push_discord.sh /srv/images/NOAA-18-20210212-091356-MCIR.jpg "test"
 
 # import common lib and settings
-. "$HOME/.noaa-v2.conf"
+. "$NOAA_HOME/.noaa-v2.conf"
 . "$NOAA_HOME/scripts/common.sh"
 
 # input params
