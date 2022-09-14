@@ -145,7 +145,7 @@ RUN set -x && \
       /var/lib/apt/lists/* \
       /.dockerenv \
       /git \
-      /wxtoimg \ &&
+      /wxtoimg \ && \
 # Do some other stuff
     echo "alias dir=\"ls -alsv\"" >> /root/.bashrc && \
     echo "alias nano=\"nano -l\"" >> /root/.bashrc
