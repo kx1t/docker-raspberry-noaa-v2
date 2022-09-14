@@ -87,7 +87,7 @@ RUN set -x && \
 #
 #
 # Install wxtoimg
-    pushd /git/docker-raspberry-noaa-v2/rootfs/root/software && \
+    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "386"  ]; then dpkg -i wxtoimg_2.10.11-1_i386.deb; \
@@ -101,12 +101,12 @@ RUN set -x && \
     popd && \
 #
 # Install predict
-    pushd /git/docker-raspberry-noaa-v2/rootfs/root/predict-2.3.0 && \
+    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/predict-2.3.0 && \
         ./configure && \
     popd && \
 #
 # Install meteor_demod
-    pushd /git/docker-raspberry-noaa-v2/rootfs/root/software && \
+    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp meteor_demod_armhf /usr/bin/meteor_demod; \
         elif [ "$TARGETARCH" == "amd64" ]; then cp meteor_demod_amd64 /usr/bin/meteor_demod; \
         elif [ "$TARGETARCH" == "arm64" ]; then cp meteor_demod_arm64 /usr/bin/meteor_demod; \
@@ -115,7 +115,7 @@ RUN set -x && \
     popd && \
 #
 # Install medet
-    pushd /git/docker-raspberry-noaa-v2/rootfs/root/software && \
+    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp medet_armhf /usr/bin/medet; \
         elif [ "$TARGETARCH" == "amd64" ]; then cp medet_amd64 /usr/bin/medet; \
         elif [ "$TARGETARCH" == "arm64" ]; then cp medet_arm64 /usr/bin/medet; \
