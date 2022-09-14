@@ -102,9 +102,13 @@ RUN set -x && \
     popd && \
 #
 # Install predict
-    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/predict-2.3.0 && \
-        ./configure && \
-    popd && \
+pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
+    if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp predict_armhf /usr/bin/predict; \
+    elif [ "$TARGETARCH" == "amd64" ]; then cp predict_amd64 /usr/bin/predict; \
+    elif [ "$TARGETARCH" == "arm64" ]; then cp predict_arm64 /usr/bin/predict; \
+    else echo "No target for predict for $TARGETARCH" && exit 1; \
+    fi && \
+popd && \
 #
 # Install meteor_demod
     pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
