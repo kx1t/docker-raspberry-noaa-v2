@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Creates a false colour image from NOAA APT images based on temperature using
 #          the HVC colour model. Uses the temperature derived from the sensor 4 image to

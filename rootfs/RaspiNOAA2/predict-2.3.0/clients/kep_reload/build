@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 # Script to compile kep_reload
 #
 echo -n "Compiling kep_reload... "

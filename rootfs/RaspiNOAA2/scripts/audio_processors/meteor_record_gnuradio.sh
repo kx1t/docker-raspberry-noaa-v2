@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Record Meteor-M audio via gnuradio to a bitstream file.
 #

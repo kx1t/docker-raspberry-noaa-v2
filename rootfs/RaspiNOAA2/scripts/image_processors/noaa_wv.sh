@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose : The modified NOAA WV curve is used for the 6.7 micron water vapor channel (CH3) on GOES. 
 #	    The only temperature range that is enhanced is between -5C and -90C. 

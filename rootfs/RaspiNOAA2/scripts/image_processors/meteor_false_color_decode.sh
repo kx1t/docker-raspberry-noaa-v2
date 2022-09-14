@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Decode a METEOR-M 2 false color image.
 #

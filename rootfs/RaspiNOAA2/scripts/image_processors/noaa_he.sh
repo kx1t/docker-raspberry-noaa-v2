@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 #
 # Purpose: The NOAA HE enhancement is used principally by weather offices in the western United States. 

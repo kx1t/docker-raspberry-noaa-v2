@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Creates a false colour image from NOAA APT images based on sea surface tem- perature. 
 # 	   Uses the sea surface temperature derived from just the sensor 4 image to colour the image. 

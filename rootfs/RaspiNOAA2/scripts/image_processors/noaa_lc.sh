@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: The NOAA LC curve is used on images from the 3.9 micron shortwave infrared channel (CH2) of GOES. 
 #	   It provides maximum enhancement in the temperature range where fog and low clouds typically occur (36C to -9C). 

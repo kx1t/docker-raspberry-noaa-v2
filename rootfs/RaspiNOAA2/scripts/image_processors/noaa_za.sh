@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: NOAA general purpose meteorological IR enhancement option. Increases contrast
 #          by saturating the very low and very high temperature regions where there is

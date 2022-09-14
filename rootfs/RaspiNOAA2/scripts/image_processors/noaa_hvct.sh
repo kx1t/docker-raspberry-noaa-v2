@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Similar to HVC, but with blue water and with colours more indicative of
 #          land temperatures.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 # Script to install kep_reload
 #
 if [ ! -x $PWD/kep_reload ]; then

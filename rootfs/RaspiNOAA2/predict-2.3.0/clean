@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 # Script to prepare for a clean distribution.
 #
 rm -f predict predict.h

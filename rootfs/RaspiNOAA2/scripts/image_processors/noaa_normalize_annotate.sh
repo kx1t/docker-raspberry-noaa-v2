@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Reduce image size/quality and add annotation text inline with image
 #          and writes file to specified output image file for a NOAA capture.

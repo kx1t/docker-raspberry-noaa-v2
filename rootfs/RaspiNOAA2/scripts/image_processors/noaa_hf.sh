@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: The NOAA HF enhancement is the most current of the H series of enhance- ments, and 
 #	   is used principally by weather offices in the western United States. It provides good 

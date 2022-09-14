@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Perform backup of database - expected to run on a daily basis. Will
 #          perform a backup of the database followed by delete any backups present

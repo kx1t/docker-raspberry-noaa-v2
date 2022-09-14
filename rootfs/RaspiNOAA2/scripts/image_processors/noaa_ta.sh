@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: NOAA TA enhancement curve. This enhancement option is temperature normalised.
 #

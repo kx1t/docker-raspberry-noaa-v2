@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Prunes (removes) all captures older than $PRUNE_OLDER_THAN days old, including
 #          database records and associated images/files on disk.

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Decode Meteor-M 2 bitstream audio file to .bmp image file.
 #

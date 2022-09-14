@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
 #############################################################
 #   Script to configure, compile, and install PREDICT.      #

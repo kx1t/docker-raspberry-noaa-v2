@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: The NOAA MD enhancement is a modification of the popular, general use MB enhancement scheme. 
 #	   It is intended for warm season use, and provides improved enhancement within the gray step-wedges 

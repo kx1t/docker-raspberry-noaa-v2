@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 
 # these don't work when running from Dockerfile (and arent needed!)
 # RED=$(tput setaf 1)

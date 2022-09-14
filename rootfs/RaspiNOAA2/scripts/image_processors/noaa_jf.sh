@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: The NOAA JF enhancement is a hybrid enhancement scheme used to highlight both sea 
 #	   surface temperatures, and cold cloud tops associated with thunderstorms and other weather systems. 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Record Meteor-M audio via rtl_fm to a wav file.
 #

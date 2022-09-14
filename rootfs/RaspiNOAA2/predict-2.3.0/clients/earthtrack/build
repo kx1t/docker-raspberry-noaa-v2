@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 # Script to compile earthtrack
 #
 echo -n "Compiling earthtrack... "

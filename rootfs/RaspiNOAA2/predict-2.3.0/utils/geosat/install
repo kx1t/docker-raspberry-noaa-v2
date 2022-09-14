@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 # Script to install geosat
 #
 if [ ! -x $PWD/geosat ]; then

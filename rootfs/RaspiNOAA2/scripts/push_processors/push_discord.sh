@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Send image and message to a Discord webhook URL that will post the data to a Discord channel.
 #

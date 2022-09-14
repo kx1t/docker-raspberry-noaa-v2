@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: NOAA colour IR contrast enhancement option. Greatly increases contrast in the darker land/sea 
 # 	   regions and colours the cold cloud tops. Allows fine detail in land and sea to be seen and provides 

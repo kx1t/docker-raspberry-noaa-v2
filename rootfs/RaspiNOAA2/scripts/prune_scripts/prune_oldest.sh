@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Prunes (removes) the $PRUNE_OLDEST number of oldest captures, including
 #          database records and associated images/files on disk.

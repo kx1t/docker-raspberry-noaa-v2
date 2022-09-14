@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: The NOAA JJ enhancement is used to highlight both sea surface temperatures, and cold cloud 
 # 	   tops associated with thunderstorms and other weather systems. Maxi- mum enhancement is 

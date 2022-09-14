@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: Send email to external address with each output image attached as a separate
 #          email. Subject line and body contain details. 

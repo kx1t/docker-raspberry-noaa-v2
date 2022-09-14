@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #
 # Purpose: High-level scheduling script - schedules all desired satellite
 #          and orbital captures.
