@@ -26,7 +26,7 @@
 - name: wxtoimg config file
   template:
     src: wxtoimgrc.j2
-    dest: /RaspiNOAA2/.wxtoimgrc
+    dest: /root/.wxtoimgrc
     owner: root
     group: root
     mode: 0644
@@ -34,7 +34,7 @@
 - name: wxtoimg license terms acceptance file
   copy:
     src: wxtoimglic
-    dest: /RaspiNOAA2/.wxtoimglic
+    dest: /root/.wxtoimglic
     owner: root
     group: root
     mode: 0644
