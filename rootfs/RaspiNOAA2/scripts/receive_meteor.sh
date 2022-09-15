@@ -14,6 +14,8 @@
 # Example:
 #   ./receive_meteor.sh "METEOR-M 2" METEOR-M220210205-192623 1612571183 922 39 Northbound W
 
+set -a
+
 # time keeping
 TIMER_START=$(date '+%s')
 
@@ -178,7 +180,7 @@ if [ "$METEOR_RECEIVER" == "rtl_fm" ]; then
 
   log "Decoding in progress (QPSK to BMP)" "INFO"
   ${IMAGE_PROC_DIR}/meteor_decode_qpsk.sh "${qpsk_file}" "${AUDIO_FILE_BASE}" >> $NOAA_LOG 2>&1
-  
+
   sleep 10
 
   rm "${qpsk_file}"
@@ -286,7 +288,7 @@ elif [ "$METEOR_RECEIVER" == "gnuradio" ]; then
 
   log "Decoding in progress (Bitstream to BMP)" "INFO"
   ${IMAGE_PROC_DIR}/meteor_decode_bitstream.sh "${RAMFS_AUDIO_BASE}.s" "${RAMFS_AUDIO_BASE}" >> $NOAA_LOG 2>&1
-  
+
   sleep 2
 
   if [ "$DELETE_AUDIO" = true ]; then

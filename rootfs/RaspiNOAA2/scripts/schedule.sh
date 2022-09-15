@@ -11,6 +11,9 @@
 #   ./schedule.sh -t -x
 
 # import common lib and settings
+
+set -a
+
 source "$NOAA_HOME/.noaa-v2.conf"
 source "$NOAA_HOME/scripts/common.sh"
 

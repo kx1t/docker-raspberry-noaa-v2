@@ -12,6 +12,9 @@
 #   ./schedule_captures.sh "NOAA 18" "receive_noaa.sh" "weather.tle" 1617422399 1617425300
 
 # import common lib and settings
+
+set -a
+
 source "$NOAA_HOME/.noaa-v2.conf"
 source "$NOAA_HOME/scripts/common.sh"
 

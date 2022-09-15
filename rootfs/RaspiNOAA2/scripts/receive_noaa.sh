@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Receive and process NOAA captures.
 #
@@ -14,6 +14,8 @@
 #
 # Example:
 #   ./receive_noaa.sh "NOAA 18" NOAA1820210208-194829 ./orbit.tle 1612831709 919 31 Southbound E
+
+set -a
 
 # time keeping
 TIMER_START=$(date '+%s')
@@ -126,10 +128,10 @@ if [ "${PRODUCE_NOAA_PRISTINE_HISTOGRAM}" == "true" ]; then
   $CONVERT +append "${IMAGE_FILE_BASE}-histogram-a.jpg" "${IMAGE_FILE_BASE}-histogram-b.jpg" -resize x500 "${IMAGE_FILE_BASE}-histogram.jpg" >>$NOAA_LOG 2>&1
   $CONVERT +append "${IMAGE_THUMB_BASE}-histogram-a.jpg" "${IMAGE_THUMB_BASE}-histogram-b.jpg" -resize x300 "${IMAGE_THUMB_BASE}-histogram.jpg" >>$NOAA_LOG 2>&1
 
-  rm "${IMAGE_FILE_BASE}-histogram-a.jpg" 
-  rm "${IMAGE_FILE_BASE}-histogram-b.jpg" 
-  rm "${IMAGE_THUMB_BASE}-histogram-a.jpg" 
-  rm "${IMAGE_THUMB_BASE}-histogram-b.jpg" 
+  rm "${IMAGE_FILE_BASE}-histogram-a.jpg"
+  rm "${IMAGE_FILE_BASE}-histogram-b.jpg"
+  rm "${IMAGE_THUMB_BASE}-histogram-a.jpg"
+  rm "${IMAGE_THUMB_BASE}-histogram-b.jpg"
   rm "${tmp_dir}/${FILENAME_BASE}-a.png"
   rm "${tmp_dir}/${FILENAME_BASE}-b.png"
 fi
@@ -441,4 +443,3 @@ TIMER_END=$(date '+%s')
 DIFF=$(($TIMER_END - $TIMER_START))
 PROC_TIME=$(date -ud "@$DIFF" +'%H:%M.%S')
 log "Total processing time: ${PROC_TIME}" "INFO"
-

@@ -4,6 +4,8 @@
 #          within this framework. Handles things such as a start date/time,
 #          logging, and other various "common" functionality.
 
+set -a
+
 declare -A levels=([DEBUG]=0 [INFO]=1 [WARN]=2 [ERROR]=3)
 log_level=${LOG_LEVEL}
 
