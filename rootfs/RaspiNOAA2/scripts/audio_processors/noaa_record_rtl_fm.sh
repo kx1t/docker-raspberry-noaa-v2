@@ -22,13 +22,19 @@ OUT_FILE=$3
 # determine what frequency based on NOAA variant
 case $SAT_NAME in
   "NOAA 15")
-    freq=$NOAA15_FREQ
+    freq="$NOAA15_FREQ"
+    GAIN="$NOAA_15_GAIN"
+    SDR_DEVICE_ID="$NOAA_15_SDR_DEVICE_ID"
     ;;
   "NOAA 18")
-    freq=$NOAA18_FREQ
+    freq="$NOAA18_FREQ"
+    GAIN="$NOAA_18_GAIN"
+    SDR_DEVICE_ID="$NOAA_18_SDR_DEVICE_ID"
     ;;
   "NOAA 19")
-    freq=$NOAA19_FREQ
+    freq="$NOAA19_FREQ"
+    GAIN="$NOAA_19_GAIN"
+    SDR_DEVICE_ID="$NOAA_19_SDR_DEVICE_ID"
     ;;
   *)
     log "Satellite $SAT_NAME is not valid - please use one of ['NOAA 15', 'NOAA 18', 'NOAA 19']." "ERROR"
@@ -41,7 +47,7 @@ if [ ${OUT_FILE: -4} != ".wav" ]; then
   exit 1
 fi
 
-log "Recording at ${freq} MHz..." "INFO"
+log "Recording at ${freq} MHz using SDR ${SDR_DEVICE_ID} ..." "INFO"
 
 [[ -z "${GAIN}" ]] && GAIN=0
 
