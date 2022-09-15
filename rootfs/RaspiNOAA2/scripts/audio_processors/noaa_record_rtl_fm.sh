@@ -47,7 +47,7 @@ if [ ${OUT_FILE: -4} != ".wav" ]; then
   exit 1
 fi
 
-log "Recording at ${freq} MHz using SDR ${SDR_DEVICE_ID} ..." "INFO"
+log "Starting rtl_fm capture with Target: ${OUT_FILE} Gain: ${GAIN} Frequency: ${freq}M Offset: ${FREQ_OFFSET} Device: ${SDR_DEVICE_ID} Bias Tee: ${BIAS_TEE} Capture time: ${CAPTURE_TIME}" 
 
 [[ -z "${GAIN}" ]] && GAIN=0
 
