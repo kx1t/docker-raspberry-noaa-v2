@@ -42,6 +42,8 @@ if [ ${OUT_FILE: -4} != ".wav" ]; then
   exit 1
 fi
 
+[[ -z "${GAIN}" ]] && GAIN=0
+
 log "Recording ${NOAA_HOME} at ${freq} MHz...to " "INFO"
 log "Starting rtlsdr_noaa_apt_rx.py ${OUT_FILE} Gain: ${GAIN} Frequency: ${freq}M Offset: ${FREQ_OFFSET} Device: ${SDR_DEVICE_ID} Bias Tee: ${BIAS_TEE}" 
 timeout "${CAPTURE_TIME}" "$NOAA_HOME/scripts/audio_processors/rtlsdr_noaa_apt_rx.py" "${OUT_FILE}" "${GAIN}" "${freq}"M "${FREQ_OFFSET}" "${SDR_DEVICE_ID}" "${BIAS_TEE}" >> $NOAA_LOG 2>&1

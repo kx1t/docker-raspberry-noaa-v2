@@ -12,6 +12,8 @@ log() {
   local log_message=$1
   local log_priority=$2
 
+  [[ -z "$log_priority" ]] && log_priority="INFO"
+
   # check if level exists and is of the right level to log
   [[ ${levels[$log_priority]} ]] || return 1
   (( ${levels[$log_priority]} < ${levels[$log_level]} )) && return 2
