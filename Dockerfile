@@ -134,6 +134,15 @@ popd && \
     #     dpkg -i wkhtmltox.deb && \
     # popd && \
 #
+# Install wkhtmltox
+    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
+        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wkhtmltox_0.12.6.1-2.raspberrypi.bullseye_armhf.deb; \
+        elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wkhtmltox_0.12.6.1-2.bullseye_amd64.deb; \
+        elif [ "$TARGETARCH" == "arm64" ]; then dpkg -i wkhtmltox_0.12.6.1-2.bullseye_arm64.deb; \
+        else echo "No target for wkhtlmtox for $TARGETARCH" && exit 1; \
+        fi && \
+    popd && \
+#
 #
 # Install udev rules
     mkdir -p /etc/udev/rules.d && \
