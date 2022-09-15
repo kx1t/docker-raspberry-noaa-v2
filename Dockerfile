@@ -88,7 +88,7 @@ RUN set -x && \
 #
 # Install wxtoimg
     git clone --depth=1 https://github.com/kx1t/docker-raspberry-noaa-v2.git  /git/docker-raspberry-noaa-v2 && \
-    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
+    pushd /git/docker-raspberry-noaa-v2/rootfs/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "386"  ]; then dpkg -i wxtoimg_2.10.11-1_i386.deb; \
@@ -102,7 +102,7 @@ RUN set -x && \
     popd && \
 #
 # Install predict
-pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
+pushd /git/docker-raspberry-noaa-v2/rootfs/software && \
     if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp predict_armhf /usr/bin/predict; \
     elif [ "$TARGETARCH" == "amd64" ]; then cp predict_amd64 /usr/bin/predict; \
     elif [ "$TARGETARCH" == "arm64" ]; then cp predict_arm64 /usr/bin/predict; \
@@ -111,7 +111,7 @@ pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
 popd && \
 #
 # Install meteor_demod
-    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
+    pushd /git/docker-raspberry-noaa-v2/rootfs/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp meteor_demod_armhf /usr/bin/meteor_demod; \
         elif [ "$TARGETARCH" == "amd64" ]; then cp meteor_demod_amd64 /usr/bin/meteor_demod; \
         elif [ "$TARGETARCH" == "arm64" ]; then cp meteor_demod_arm64 /usr/bin/meteor_demod; \
@@ -120,7 +120,7 @@ popd && \
     popd && \
 #
 # Install medet
-    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
+    pushd /git/docker-raspberry-noaa-v2/rootfs/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp medet_armhf /usr/bin/medet; \
         elif [ "$TARGETARCH" == "amd64" ]; then cp medet_amd64 /usr/bin/medet; \
         elif [ "$TARGETARCH" == "arm64" ]; then cp medet_arm64 /usr/bin/medet; \
@@ -135,7 +135,7 @@ popd && \
     # popd && \
 #
 # Install wkhtmltox
-    pushd /git/docker-raspberry-noaa-v2/rootfs/RaspiNOAA2/software && \
+    pushd /git/docker-raspberry-noaa-v2/rootfs/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wkhtmltox_0.12.6.1-2.raspberrypi.bullseye_armhf.deb; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wkhtmltox_0.12.6.1-2.bullseye_amd64.deb; \
         elif [ "$TARGETARCH" == "arm64" ]; then dpkg -i wkhtmltox_0.12.6.1-2.bullseye_arm64.deb; \
