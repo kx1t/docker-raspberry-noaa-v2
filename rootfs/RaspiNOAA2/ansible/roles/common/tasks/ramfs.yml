@@ -1,24 +1,24 @@
 ---
-- name: ramfs directory
-  file:
-    path: ramfs_path
-    state: directory
-    owner: pi
-    group: pi
-    mode: 0770
-
-- name: get system memory
-  shell: free -m | awk '/^Mem:/{print $2}'
-  register: os_memory
-  check_mode: no
-  changed_when: no
-
-- name: fstab entry for ramfs
-  become: yes
-  mount:
-    fstype: tmpfs
-    opts: "nodev,nosuid,size=1000M"
-    src: tmpfs
-    path: "{{ ramfs_path }}"
-    state: mounted
+# - name: ramfs directory
+#   file:
+#     path: ramfs_path
+#     state: directory
+#     owner: pi
+#     group: pi
+#     mode: 0770
+#
+# - name: get system memory
+#   shell: free -m | awk '/^Mem:/{print $2}'
+#   register: os_memory
+#   check_mode: no
+#   changed_when: no
+#
+# - name: fstab entry for ramfs
+#   become: yes
+#   mount:
+#     fstype: tmpfs
+#     opts: "nodev,nosuid,size=1000M"
+#     src: tmpfs
+#     path: "{{ ramfs_path }}"
+#     state: mounted
 ...

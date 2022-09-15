@@ -21,7 +21,7 @@ videos_output: "{{ output_root }}/videos"
 noaa_animation_output: "{{ videos_output }}/RollingAnimation.mp4"
 
 # ramfs location
-ramfs_path: "/var/ramfs"
+ramfs_path: "/run"
 
 # log output file
 log_file: "/var/log/raspberry-noaa-v2/output.log"
