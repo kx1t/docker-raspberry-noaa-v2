@@ -74,10 +74,7 @@ if pgrep "rtl_fm" > /dev/null; then
   exit 1
 fi
 
-log " "
-log " "
-log " "
-log "Receive NOAA Processes starting...."
+log "Receive NOAA Processes starting...." "INFO"
 
 if [ "$NOAA_RECEIVER" == "rtl_fm" ]; then
   log "Starting rtl_fm record" "INFO"
@@ -314,7 +311,7 @@ for enhancement in $ENHANCEMENTS; do
      filesize=$(wc -c "${IMAGE_FILE_BASE}-$enhancement.jpg" | awk '{print $1}')
      ${IMAGE_PROC_DIR}/noaa_normalize_annotate.sh "${IMAGE_FILE_BASE}-$enhancement.jpg" "${IMAGE_FILE_BASE}-$enhancement.jpg" 90 >> $NOAA_LOG 2>&1
       ${IMAGE_PROC_DIR}/thumbnail.sh 300 "${IMAGE_FILE_BASE}-$enhancement.jpg" "${IMAGE_THUMB_BASE}-$enhancement.jpg" >> $NOAA_LOG 2>&1
-  
+
       # check that the file actually has content
       if [ $filesize -gt 20480 ]; then
         # at least one good image
