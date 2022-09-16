@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Add annotation text inline with image for a METEOR capture and writes file
 #          to specified output image file.

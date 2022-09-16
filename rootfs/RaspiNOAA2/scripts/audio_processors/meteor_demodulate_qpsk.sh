@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Demodulate Meteor-M 2 audio file in QPSK format.
 #

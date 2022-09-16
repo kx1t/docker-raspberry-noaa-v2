@@ -1,7 +1,7 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose: NOAA hurricane enhancement option. Highlights certain temperatures in the eye 
-#	   and eye wall of the storm system which are known to be related to the intensity 
+# Purpose: NOAA hurricane enhancement option. Highlights certain temperatures in the eye
+#	   and eye wall of the storm system which are known to be related to the intensity
 #	   of the hurricane. This enhancement option is temperature normalised.
 #
 # Input parameters:

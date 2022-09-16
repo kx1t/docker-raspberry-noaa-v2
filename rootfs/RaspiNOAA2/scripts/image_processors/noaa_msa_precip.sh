@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Multispectral analysis. Uses a NOAA channel 2-4 image and determines which
 #          regions are most likely to be cloud, land, or sea based on an analysis of the two

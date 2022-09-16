@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: NOAA CC enhancement curve. This enhancement option is temperature nor- malised.
 #

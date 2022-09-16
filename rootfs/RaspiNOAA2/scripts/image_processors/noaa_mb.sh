@@ -1,6 +1,6 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose: NOAA cold cloud top enhancement option. Useful for showing where the strong- est 
+# Purpose: NOAA cold cloud top enhancement option. Useful for showing where the strong- est
 #	   rainfall is occurring in thunderstorms. This enhancement option is temperature normalised.
 #
 # Input parameters:

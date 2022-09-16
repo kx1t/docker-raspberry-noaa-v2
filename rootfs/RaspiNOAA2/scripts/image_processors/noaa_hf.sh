@@ -1,11 +1,11 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose: The NOAA HF enhancement is the most current of the H series of enhance- ments, and 
-#	   is used principally by weather offices in the western United States. It provides good 
-#	   enhancement of low and middle level clouds common along the Pacific Coast of North America. 
-#	   Step wedge regions display very cold infrared cloud top temperatures associated with 
-#   	   thunderstorms and frontal systems in 5 degree increments down to -60 C. Two additional 
-#	   repeat gray segments define cloud top temperatures colder than -60C. This enhancement 
+# Purpose: The NOAA HF enhancement is the most current of the H series of enhance- ments, and
+#	   is used principally by weather offices in the western United States. It provides good
+#	   enhancement of low and middle level clouds common along the Pacific Coast of North America.
+#	   Step wedge regions display very cold infrared cloud top temperatures associated with
+#   	   thunderstorms and frontal systems in 5 degree increments down to -60 C. Two additional
+#	   repeat gray segments define cloud top temperatures colder than -60C. This enhancement
 #	   option is temperature normalised.
 #
 # Input parameters:

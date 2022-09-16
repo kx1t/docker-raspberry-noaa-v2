@@ -1,13 +1,13 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 #
-# Purpose: The NOAA HE enhancement is used principally by weather offices in the western United States. 
-#	   It provides good enhancement of a wide variety of cloud types, but is somewhat complex, and 
-#	   may be difficult to use at first. It enhances low and middle level clouds common along the 
-#    	   Pacific Coast of North America in two sep- arate gray shade ranges. The freezing level is easily 
-#	   determined, an advantage for aviation users concerned with icing. Step wedge regions display very 
-#	   cold infrared cloud top temperatures associated with thunderstorms and frontal systems in 5 degree 
-#	   increments down to -60 C. Two additional repeat gray segments define cloud top temperatures colder 
+# Purpose: The NOAA HE enhancement is used principally by weather offices in the western United States.
+#	   It provides good enhancement of a wide variety of cloud types, but is somewhat complex, and
+#	   may be difficult to use at first. It enhances low and middle level clouds common along the
+#    	   Pacific Coast of North America in two sep- arate gray shade ranges. The freezing level is easily
+#	   determined, an advantage for aviation users concerned with icing. Step wedge regions display very
+#	   cold infrared cloud top temperatures associated with thunderstorms and frontal systems in 5 degree
+#	   increments down to -60 C. Two additional repeat gray segments define cloud top temperatures colder
 #	   than -60C. This enhancement option is tem- perature normalised.
 #
 # Input parameters:

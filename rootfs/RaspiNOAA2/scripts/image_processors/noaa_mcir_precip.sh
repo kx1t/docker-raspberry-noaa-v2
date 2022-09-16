@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Color the NOAA sensor 4 IR image using a map to colour the sea blue and land
 #          green. High clouds appear white, lower clouds gray or land/sea coloured, clouds

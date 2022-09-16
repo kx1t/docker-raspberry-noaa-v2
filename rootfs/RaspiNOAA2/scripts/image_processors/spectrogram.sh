@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Produce a spectrogram for a given input file and specified output file.
 #
@@ -32,4 +32,3 @@ sleep 2
 $FFMPEG -y -i $NOAA_HOME/tmp/temp_spectrogram.png -vf "drawtext=fontfile=/path/to/font.ttf:text='${CHART_TEXT}':fontcolor=white:fontsize=18:box=1:boxcolor=black@0.5:boxborderw=5:x=20:y=10" ${OUT_PNG_FILE}
 
 # rm $NOAA_HOME/tmp/temp_spectrogram.png
-

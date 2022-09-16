@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Create an "at" scheduled job for capture based on the following
 #          input parameter positions:

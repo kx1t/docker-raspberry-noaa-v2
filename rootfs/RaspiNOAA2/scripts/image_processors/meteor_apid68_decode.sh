@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Decode a METEOR-M 2 APID 68 image.
 #
@@ -19,4 +19,3 @@ OUTPUT_BMP=$2
 
 # produce the output image
 $MEDET_ARM "${INPUT_DEC}" "${OUTPUT_BMP}" -r 68 -g 68 -b 68 -d
-

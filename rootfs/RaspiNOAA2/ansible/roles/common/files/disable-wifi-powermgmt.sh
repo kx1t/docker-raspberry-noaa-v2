@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 echo "Disabling WiFi power mgmt..."
 iwconfig wlan0 power off

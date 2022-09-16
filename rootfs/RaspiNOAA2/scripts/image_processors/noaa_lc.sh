@@ -1,10 +1,10 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose: The NOAA LC curve is used on images from the 3.9 micron shortwave infrared channel (CH2) of GOES. 
-#	   It provides maximum enhancement in the temperature range where fog and low clouds typically occur (36C to -9C). 
-#	   Another enhanced thermal range is from -10C to -29C, the region of precipitation generation in mid- latitude weather systems. 
-# 	   Since CH2 is sensitive to hot spots, a steep, reverse ramp is found at the warm end (68C to 50C) to show any observable fires as white. 
-# 	   There is no enhancement at the very cold end (-30 to -67C), due to the instrument noise normally present at these temperatures. 
+# Purpose: The NOAA LC curve is used on images from the 3.9 micron shortwave infrared channel (CH2) of GOES.
+#	   It provides maximum enhancement in the temperature range where fog and low clouds typically occur (36C to -9C).
+#	   Another enhanced thermal range is from -10C to -29C, the region of precipitation generation in mid- latitude weather systems.
+# 	   Since CH2 is sensitive to hot spots, a steep, reverse ramp is found at the warm end (68C to 50C) to show any observable fires as white.
+# 	   There is no enhancement at the very cold end (-30 to -67C), due to the instrument noise normally present at these temperatures.
 # 	   This enhancement option is temperature normalised.
 #
 # Input parameters:

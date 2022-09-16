@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 # Script to install kep_reload
 #
 if [ ! -x $PWD/kep_reload ]; then
@@ -14,4 +14,3 @@ else
 		rm -f /usr/local/bin/kep_reload
 		ln -s $PWD/kep_reload /usr/local/bin/kep_reload
 fi
-

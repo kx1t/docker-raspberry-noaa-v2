@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 
 # import common lib and settings
 source "$NOAA_HOME/.noaa-v2.conf"

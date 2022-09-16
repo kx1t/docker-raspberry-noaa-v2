@@ -1,9 +1,9 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose: Creates a false colour image from NOAA APT images based on sea surface tem- perature. 
-# 	   Uses the sea surface temperature derived from just the sensor 4 image to colour the image. 
-# 	   Land appears black and cold high cloud will also appear black. The sea surface temperature 
-#	   may be incorrect due to the presence of low cloud, or of thin or small clouds in the pixel 
+# Purpose: Creates a false colour image from NOAA APT images based on sea surface tem- perature.
+# 	   Uses the sea surface temperature derived from just the sensor 4 image to colour the image.
+# 	   Land appears black and cold high cloud will also appear black. The sea surface temperature
+#	   may be incorrect due to the presence of low cloud, or of thin or small clouds in the pixel
 #	   evaluated, or from noise in the signal. The palette used can be changed using the -P option.
 #
 # Input parameters:

@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 # Script to uninstall PREDICT by breaking symlinks
 # between the installation and destination directories
 #

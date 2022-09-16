@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 # Script to install earthtrack/earthtrack2
 #
 if [ ! -x $PWD/earthtrack ]; then

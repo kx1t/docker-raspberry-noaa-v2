@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Common code that is likely loaded in most of the scripts
 #          within this framework. Handles things such as a start date/time,

@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Output environmental information about the installed environment
 #          to aid with support requests via GitHub, Discord, etc.

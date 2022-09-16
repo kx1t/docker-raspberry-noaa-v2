@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Creates a pristine image that can later be used in things such as composite images.
 #

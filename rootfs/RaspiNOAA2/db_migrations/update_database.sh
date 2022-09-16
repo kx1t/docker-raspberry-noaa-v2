@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Applies migrations to the database schema that have not yet been applied.
 #

@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 # Script to install geosat
 #
 if [ ! -x $PWD/geosat ]; then
@@ -13,4 +13,3 @@ if [ ! -x /usr/local/bin/geosat ]; then
 		ln -s $PWD/geosat /usr/local/bin/geosat
 	fi
 fi
-

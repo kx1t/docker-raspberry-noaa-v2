@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Send image and message to a Twitter endpoint to post to a Twitter timeline.
 #

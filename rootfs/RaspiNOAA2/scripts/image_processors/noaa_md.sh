@@ -1,9 +1,9 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose: The NOAA MD enhancement is a modification of the popular, general use MB enhancement scheme. 
-#	   It is intended for warm season use, and provides improved enhancement within the gray step-wedges 
-#	   that depict warm-top convection. An additional improvement is better delineation of warm low 
-#	   clouds (30C to 7C). The middle cloud range is somewhat broader than the MB, and enhancement of 
+# Purpose: The NOAA MD enhancement is a modification of the popular, general use MB enhancement scheme.
+#	   It is intended for warm season use, and provides improved enhancement within the gray step-wedges
+#	   that depict warm-top convection. An additional improvement is better delineation of warm low
+#	   clouds (30C to 7C). The middle cloud range is somewhat broader than the MB, and enhancement of
 #	   details is minimised. Otherwise, it is the same as the MB enhancement. This enhancement option is temperature normalised.
 #
 # Input parameters:

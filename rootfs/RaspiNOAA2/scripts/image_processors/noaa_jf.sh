@@ -1,10 +1,10 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose: The NOAA JF enhancement is a hybrid enhancement scheme used to highlight both sea 
-#	   surface temperatures, and cold cloud tops associated with thunderstorms and other weather systems. 
-#	   It is somewhat simpler to interpret than the later JJ enhancement. The coldest portion 
-#	   of the enhancement (less than -33C) is nearly identical to the general-use MB enhancement. 
-#	   Maximum enhancement is pro- vided at the warm end (25 to 10C) to depict sea surface temperatures 
+# Purpose: The NOAA JF enhancement is a hybrid enhancement scheme used to highlight both sea
+#	   surface temperatures, and cold cloud tops associated with thunderstorms and other weather systems.
+#	   It is somewhat simpler to interpret than the later JJ enhancement. The coldest portion
+#	   of the enhancement (less than -33C) is nearly identical to the general-use MB enhancement.
+#	   Maximum enhancement is pro- vided at the warm end (25 to 10C) to depict sea surface temperatures
 #	   and warm low clouds in tropical and sub-tropical areas. This enhancement option is temper- ature normalised.
 #
 # Input parameters:

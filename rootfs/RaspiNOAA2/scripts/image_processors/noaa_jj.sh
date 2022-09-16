@@ -1,11 +1,11 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose: The NOAA JJ enhancement is used to highlight both sea surface temperatures, and cold cloud 
-# 	   tops associated with thunderstorms and other weather systems. Maxi- mum enhancement is 
-# 	   provided at the warm end (23 to 0C) to depict sea surface temperatures and low clouds. 
-#	   The presence of a freezing level break point is important for aviation users interested in 
-#	   icing conditions. Multiple, steep, ramp enhancement ranges provide considerable detail within 
-#	   cold cloud tops such as thunderstorms, but it is difficult to determine the actual temperatures 
+# Purpose: The NOAA JJ enhancement is used to highlight both sea surface temperatures, and cold cloud
+# 	   tops associated with thunderstorms and other weather systems. Maxi- mum enhancement is
+# 	   provided at the warm end (23 to 0C) to depict sea surface temperatures and low clouds.
+#	   The presence of a freezing level break point is important for aviation users interested in
+#	   icing conditions. Multiple, steep, ramp enhancement ranges provide considerable detail within
+#	   cold cloud tops such as thunderstorms, but it is difficult to determine the actual temperatures
 # 	   with any accuracy. This enhancement option is temperature normalised.
 #
 # Input parameters:

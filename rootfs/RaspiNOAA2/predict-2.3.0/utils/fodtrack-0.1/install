@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # install - small script for installing fodtrack
 #
@@ -22,4 +22,3 @@ ln -s fodtrack.conf /etc/fodtrack.conf
 ln -s fodtrack.8 /usr/local/man/man8/fodtrack.8
 ## mkdir -p /usr/local/man/man5
 ln -s fodtrack.conf.5 /usr/local/man/man5/fodtrack.conf.5
-

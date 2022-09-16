@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Send image and message to a Discord webhook URL that will post the data to a Discord channel.
 #
@@ -18,7 +18,7 @@ IMAGE=$1
 MESSAGE=$2
 
 # check that the file exists and is accessible
-if [ -f "${IMAGE}" ]; then 
+if [ -f "${IMAGE}" ]; then
   log "Sending message to Discord webhook" "INFO"
   push_log=$(curl -H "Content-Type: multipart/form-data" \
              -F file=@$IMAGE \

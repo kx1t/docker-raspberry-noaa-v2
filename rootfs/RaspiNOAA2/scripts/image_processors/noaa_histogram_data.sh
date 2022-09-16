@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Creates raw images (2) of each channel (A/B) of a NOAA capture.
 #

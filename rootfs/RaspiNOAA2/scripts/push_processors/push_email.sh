@@ -1,12 +1,12 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Send email to external address with each output image attached as a separate
-#          email. Subject line and body contain details. 
+#          email. Subject line and body contain details.
 #
 # Instructions:
 #  1. Edit ~/.msmtprc to configure your email service.
 #  2. Setup handling services (for example IFTTT.COM to forward images to Facebook page)
-# 
+#
 # Input parameters:
 #   1. Email address
 #   2. Attachment (image)
@@ -25,7 +25,7 @@ ATTACHMENT=$2
 SUBJECT=$3
 
 # check that the file exists and is accessible
-if [ -f "${ATTACHMENT}" ]; then 
+if [ -f "${ATTACHMENT}" ]; then
   log "Emailing to address $EMAIL_ADDRESS" "INFO"
   email_log=$(mpack -s "${SUBJECT}" ${ATTACHMENT} ${EMAIL_ADDRESS} 2>&1)
   log "${email_log}" "INFO"

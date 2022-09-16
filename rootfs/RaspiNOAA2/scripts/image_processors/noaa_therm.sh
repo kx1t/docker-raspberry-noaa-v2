@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Produces a false colour image from NOAA APT images based on temperature.
 #          Provides a good way of visualising cloud temperatures. The palette used

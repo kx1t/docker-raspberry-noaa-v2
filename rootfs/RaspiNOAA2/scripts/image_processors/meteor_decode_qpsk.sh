@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Decode Meteor-M 2 qpsk file to .bmp image file.
 #

@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Purpose: Produce a thumbnail image for a given input file, storing in specified output file.
 #

@@ -1,8 +1,8 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
-# Purpose : The modified NOAA WV curve is used for the 6.7 micron water vapor channel (CH3) on GOES. 
-#	    The only temperature range that is enhanced is between -5C and -90C. 
-#	    Temperatures colder than -90C are shown as white, and temperatures warmer than -5C are displayed as black. 
+# Purpose : The modified NOAA WV curve is used for the 6.7 micron water vapor channel (CH3) on GOES.
+#	    The only temperature range that is enhanced is between -5C and -90C.
+#	    Temperatures colder than -90C are shown as white, and temperatures warmer than -5C are displayed as black.
 # 	    This enhancement option is temperature normalised. (See also WV-old).
 #
 # Input parameters:

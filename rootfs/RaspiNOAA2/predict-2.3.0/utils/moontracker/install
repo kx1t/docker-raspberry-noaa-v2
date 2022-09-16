@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 # Script to install moontracker
 #
 if [ ! -x $PWD/moontracker ]; then
@@ -13,4 +13,3 @@ if [ ! -x /usr/local/bin/moontracker ]; then
 		ln -s $PWD/moontracker /usr/local/bin/moontracker
 	fi
 fi
-

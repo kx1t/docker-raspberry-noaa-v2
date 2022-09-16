@@ -1,4 +1,4 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #
 # Invoke as kepupdate -q in crontab scripts to keep the update "quiet".
 #
