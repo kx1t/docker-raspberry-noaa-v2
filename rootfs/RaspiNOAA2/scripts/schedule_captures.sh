@@ -52,7 +52,7 @@ while [ "$(date --date="@${end_epoch_time}" +"%s")" -le "${END_TIME_MS}" ]; do
   start_epoch_time=$(echo "$predict_start" | cut -d " " -f 1)
   start_time_seconds=$(echo "$start_datetime" | cut -d " " -f 2 | cut -d ":" -f 3)
   timer=$(expr "${end_epoch_time}" - "${start_epoch_time}" + "${start_time_seconds}")
-  file_date_ext=$(date --date="TZ=\"UTC\" ${start_datetime}" +%Y%m%d-%H%M%S)
+  file_date_ext=$(date --date=${start_datetime}" +%Y%m%d-%H%M%S)
 
   # schedule capture if elevation is above configured minimum
   if [ "${max_elev}" -gt "${SAT_MIN_ELEV}" ]; then
@@ -81,7 +81,7 @@ while [ "$(date --date="@${end_epoch_time}" +"%s")" -le "${END_TIME_MS}" ]; do
     log "Scheduling capture for: ${safe_obj_name} ${file_date_ext} ${max_elev}" "INFO"
     job_output=$(echo "${NOAA_HOME}/scripts/${RECEIVE_SCRIPT} \"${OBJ_NAME}\" ${safe_obj_name}-${file_date_ext} ${TLE_FILE} \
                                                               ${start_epoch_time} ${timer} ${max_elev} ${direction} ${pass_side}" \
-                | at "$(date --date="TZ=\"UTC\" ${start_datetime}" +"%H:%M %D")" ${mail_arg} 2>&1)
+                | at "$(date --date="${start_datetime}" +"%H:%M %D")" ${mail_arg} 2>&1)
 
     # attempt to capture the job id if job scheduling succeeded
     at_job_id=$(echo $job_output | sed -n 's/.*job \([0-9]\+\) at.*/\1/p')
