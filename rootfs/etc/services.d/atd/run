@@ -30,7 +30,7 @@ do
     # Iterate through each of the items in the queue:
     while IFS=$'\n' read -r task
     do
-        if [[ -n "$task" ]]
+        if [[ -n "$task" ]] && [[ ! -f "$SPOOLDIR/${task%%[[:space:]]*}" ]]
         then
             # check if the scheduled date <= current time and exec task if true
             # run task in the background as not to block the process and

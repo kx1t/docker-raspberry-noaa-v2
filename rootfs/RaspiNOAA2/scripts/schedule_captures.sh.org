@@ -15,7 +15,6 @@
 
 set -a
 
-
 source "$NOAA_HOME/.noaa-v2.conf"
 source "$NOAA_HOME/scripts/common.sh"
 
@@ -40,13 +39,11 @@ if [ "$OBJ_NAME" == "METEOR-M 2" ]; then
 fi
 
 # come up with prediction start/end timings for pass
-predict="$($PREDICT -t $TLE_FILE -p "${OBJ_NAME}" "${START_TIME_MS}")"
-
-predict_start="$(head -1 <<< "$predict")"
-predict_end="$(tail -1 <<< "$predict")"
-max_elev="$(awk -v max=0 '{if($5>max){max=$5}}END{print max}' <<< "$predict")"
-azimuth_at_max="$(awk -v max=0 -v az=0 '{if($5>max){max=$5;az=$6}}END{print az}' <<< "$predict")"
-end_epoch_time="${predict_end%% *}"
+predict_start=$($PREDICT -t $TLE_FILE -p "${OBJ_NAME}" "${START_TIME_MS}" | head -1)
+predict_end=$($PREDICT   -t $TLE_FILE -p "${OBJ_NAME}" "${START_TIME_MS}" | tail -1)
+max_elev=$($PREDICT      -t $TLE_FILE -p "${OBJ_NAME}" "${START_TIME_MS}" | awk -v max=0 '{if($5>max){max=$5}}END{print max}')
+azimuth_at_max=$($PREDICT   -t $TLE_FILE -p "${OBJ_NAME}" "${START_TIME_MS}" | awk -v max=0 -v az=0 '{if($5>max){max=$5;az=$6}}END{print az}')
+end_epoch_time=$(echo "${predict_end}" | cut -d " " -f 1)
 starting_azimuth=$(echo "${predict_start}" | awk '{print $6}')
 
 # get and schedule passes for user-defined days
@@ -84,7 +81,7 @@ while [ "$(date --date="@${end_epoch_time}" +"%s")" -le "${END_TIME_MS}" ]; do
     log "Scheduling capture for: ${safe_obj_name} ${file_date_ext} ${max_elev}" "INFO"
     job_output=$(echo "${NOAA_HOME}/scripts/${RECEIVE_SCRIPT} \"${OBJ_NAME}\" ${safe_obj_name}-${file_date_ext} ${TLE_FILE} \
                                                               ${start_epoch_time} ${timer} ${max_elev} ${direction} ${pass_side}" \
-                | at "$(date --date="@$start_epoch_time" +"%H:%M %D")" ${mail_arg} 2>&1)
+                | at "$(date --date="${start_datetime}" +"%H:%M %D")" ${mail_arg} 2>&1)
 
     # attempt to capture the job id if job scheduling succeeded
     at_job_id=$(echo $job_output | sed -n 's/.*job \([0-9]\+\) at.*/\1/p')
@@ -98,14 +95,11 @@ while [ "$(date --date="@${end_epoch_time}" +"%s")" -le "${END_TIME_MS}" ]; do
     fi
   fi
 
-  next_predict="$(expr "${end_epoch_time}" + 60)"
-
-  predict="$($PREDICT -t $TLE_FILE -p "${OBJ_NAME}" "${next_predict}")"
-  predict_start="$(head -1 <<< "$predict")"
-  predict_end="$(tail -1 <<< "$predict")"
-  max_elev="$(awk -v max=0 '{if($5>max){max=$5}}END{print max}' <<< "$predict")"
-  azimuth_at_max="$(awk -v max=0 -v az=0 '{if($5>max){max=$5;az=$6}}END{print az}' <<< "$predict")"
-  end_epoch_time="${predict_end%% *}"
+  next_predict=$(expr "${end_epoch_time}" + 60)
+  predict_start=$($PREDICT -t $TLE_FILE -p "${OBJ_NAME}" "${next_predict}" | head -1)
+  predict_end=$($PREDICT   -t $TLE_FILE -p "${OBJ_NAME}" "${next_predict}" | tail -1)
+  max_elev=$($PREDICT      -t $TLE_FILE -p "${OBJ_NAME}" "${next_predict}" | awk -v max=0 '{if($5>max){max=$5}}END{print max}')
+  azimuth_at_max=$($PREDICT   -t $TLE_FILE -p "${OBJ_NAME}" "${next_predict}" | awk -v max=0 -v az=0 '{if($5>max){max=$5;az=$6}}END{print az}')
+  end_epoch_time=$(echo "${predict_end}" | cut -d " " -f 1)
   starting_azimuth=$(echo "${predict_start}" | awk '{print $6}')
-
 done
