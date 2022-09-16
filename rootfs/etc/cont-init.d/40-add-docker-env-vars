@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 #shellcheck shell=bash
 
-APPNAME="$(hostname)/add-docker-env-vars"
+APPNAME="$(hostname)/40-add-docker-env-vars"
 
 echo "[$(date)][$APPNAME] Setting Environment Variables from the Docker Environment ..."
 

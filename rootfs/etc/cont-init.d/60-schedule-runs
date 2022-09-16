@@ -1,21 +1,12 @@
 #!/usr/bin/with-contenv bash
 #shellcheck shell=bash
 
-APPNAME="$(hostname)/schedule"
+APPNAME="$(hostname)/60-schedule-runs"
 
-echo "[$(date)][$APPNAME] Waiting for ATD to be active ..."
-
-while ! pgrep atd >/dev/null 2>&1
-do
-    sleep 1
-done
-
-echo "[$(date)][$APPNAME] ATD is up. Now downloading the schedule ..."
+echo "[$(date)][$APPNAME] Scheduling satellite capture passes ..."
 
 cd /RaspiNOAA2/scripts
 ./schedule.sh -t -x \
  | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[" strftime("%a %b %e %T %Z %Y", systime()) "]['"$APPNAME"'] " $0}'
 
 echo "[$(date)][$APPNAME] Schedule downloaded."
-
-sleep infinity
