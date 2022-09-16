@@ -5,10 +5,53 @@ set -euo pipefail
 
 APPNAME="$(hostname)/atd"
 
-logfile="/var/log/raspberry-noaa-v2/output.log"
+ATD_INTERVAL=1
+SPOOLDIR="/run/atspool"
 
-echo "[$(date)][$APPNAME] Starting AT daemon ..."
-/usr/sbin/atd -f -l 10 -d 2>&1 \
-    | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[" strftime("%a %b %e %T %Z %Y", systime()) "]['"$APPNAME"'] " $0}'
-echo "[$(date)][$APPNAME] AT daemon exited. Restarting ..."
-sleep 1
+# This is a custom implementation of ATD since the original one doesnt seem to work inside Docker
+# (C) 2022 by kx1t (Ramon F. Kolb), license: GPLv3.
+
+
+echo "[$(date)][$APPNAME] Starting custom AT daemon ..."
+
+if ! at -V >/dev/null 2>&1
+then
+    echo "[$(date)][$APPNAME] ATD execution halted: please install the \'at\' package and restart your container."
+    sleep infinity
+fi
+
+mkdir -p "$SPOOLDIR"
+
+while true
+do
+    #run this every ATD_INTERVAL seconds. 1 is default but you can increase this number if the system load is too high
+    sleep $ATD_INTERVAL
+
+    # Iterate through each of the items in the queue:
+    while IFS=$'\n' read -r task
+    do
+        if [[ -n "$task" ]]
+        then
+            # check if the scheduled date <= current time and exec task if true
+            # run task in the background as not to block the process and
+            # delete the task when finished
+            if (( $(date -d "$(awk '{print $2,$3,$4,$5,$6}' <<< "$task")" +%s) <= $(date +%s) ))
+            then
+                echo "[$(date)][$APPNAME] Executing task ${task%%[[:space:]]*}"
+                {
+                    # we rather execute it as a file than run the sequence through BASH
+                    # copy the task to the SPOOLDIR and adjust the attribs to allow execution:
+                    at -c ${task%%[[:space:]]*} > "$SPOOLDIR/${task%%[[:space:]]*}"
+                    chmod u+rx "$SPOOLDIR/${task%%[[:space:]]*}"
+
+                    # execute the task:
+                    "$SPOOLDIR"/"${task%%[[:space:]]*}"
+
+                    # clean up:
+                    rm -f "$SPOOLDIR/${task%%[[:space:]]*}"
+                    at -d {task%%[[:space:]]*}
+                } &
+            fi
+        fi
+    done <<< $(at -l)
+done
