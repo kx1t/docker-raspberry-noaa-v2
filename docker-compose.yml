@@ -10,7 +10,7 @@ services:
       - latitude=42.40487
       - longitude=-71.16615
       - altitude=18
-      - timezone_offset=4
+      - timezone_offset=0
       - test_gain=7.7
       - test_sdr_device_id=0
       - test_enable_bias_tee=false
