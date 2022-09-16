@@ -52,7 +52,7 @@ while [ "$(date --date="@${end_epoch_time}" +"%s")" -le "${END_TIME_MS}" ]; do
   start_epoch_time=$(echo "$predict_start" | cut -d " " -f 1)
   start_time_seconds=$(echo "$start_datetime" | cut -d " " -f 2 | cut -d ":" -f 3)
   timer=$(expr "${end_epoch_time}" - "${start_epoch_time}" + "${start_time_seconds}")
-  file_date_ext=$(date --date=${start_datetime}" +%Y%m%d-%H%M%S)
+  file_date_ext=$(date --date="${start_datetime}" +%Y%m%d-%H%M%S)
 
   # schedule capture if elevation is above configured minimum
   if [ "${max_elev}" -gt "${SAT_MIN_ELEV}" ]; then
