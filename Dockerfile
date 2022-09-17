@@ -17,13 +17,16 @@ RUN set -x && \
     KEPT_PACKAGES+=(ansible) && \
     KEPT_PACKAGES+=(bc) && \
     TEMP_PACKAGES+=(cmake) && \
+    TEMP_PACKAGES+=(cmake-data) && \
     KEPT_PACKAGES+=(composer) && \
+    TEMP_PACKAGES+=(cpp-10) && \
     KEPT_PACKAGES+=(cron) && \
     KEPT_PACKAGES+=(curl) && \
     KEPT_PACKAGES+=(ffmpeg) && \
-    KEPT_PACKAGES+=(git) && \
+    TEMP_PACKAGES+=(git) && \
     KEPT_PACKAGES+=(gmic) && \
     TEMP_PACKAGES+=(g++) && \
+    TEMP_PACKAGES+=(gcc-10) && \
     KEPT_PACKAGES+=(gnuradio) && \
     KEPT_PACKAGES+=(gr-osmosdr) && \
     KEPT_PACKAGES+=(imagemagick) && \
@@ -64,6 +67,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(socat) && \
     KEPT_PACKAGES+=(sox) && \
     KEPT_PACKAGES+=(sqlite3) && \
+    TEMP_PACKAGES+=(systemd) && \
     KEPT_PACKAGES+=(xfonts-base) && \
     KEPT_PACKAGES+=(xfonts-75dpi) && \
 
@@ -148,7 +152,7 @@ popd && \
 #
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \
-    apt-get remove -y -q ${TEMP_PACKAGES[@]} && \
+    apt-get remove --purge -y -q ${TEMP_PACKAGES[@]} && \
     apt-get autoremove -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -y && \
     apt-get clean -y -q && \
     rm -rf \
