@@ -112,7 +112,7 @@ polar_az_el=0
 polar_direction=0
 if [ "$METEOR_RECEIVER" == "rtl_fm" ]; then
   log "Starting rtl_fm record" "INFO"
-  ${AUDIO_PROC_DIR}/meteor_record_rtl_fm.sh $CAPTURE_TIME "${RAMFS_AUDIO_BASE}.wav" >> $NOAA_LOG 2>&1
+  ${AUDIO_PROC_DIR}/meteor_record_rtl_fm.sh $CAPTURE_TIME "${RAMFS_AUDRAMFS_AUDIO_FILEIO_BASE}.wav" >> $NOAA_LOG 2>&1
 
   log "Demodulation in progress (QPSK)" "INFO"
   qpsk_file="${NOAA_HOME}/tmp/meteor/${FILENAME_BASE}.qpsk"
@@ -122,7 +122,7 @@ if [ "$METEOR_RECEIVER" == "rtl_fm" ]; then
     log "Producing spectrogram" "INFO"
     spectrogram=1
     spectro_text="${capture_start} @ ${SAT_MAX_ELEVATION}°"
-    ${IMAGE_PROC_DIR}/spectrogram.sh "${AUDIO_FILE_BASE}.wav" "${IMAGE_FILE_BASE}-spectrogram.png" "${SAT_NAME}" "${spectro_text}" >> $NOAA_LOG 2>&1
+    ${IMAGE_PROC_DIR}/spectrogram.sh "${RAMFS_AUDIO_FILE}" "${IMAGE_FILE_BASE}-spectrogram.png" "${SAT_NAME}" "${spectro_text}" >> $NOAA_LOG 2>&1
     ${IMAGE_PROC_DIR}/thumbnail.sh 300 "${IMAGE_FILE_BASE}-spectrogram.png" "${IMAGE_THUMB_BASE}-spectrogram.png" >> $NOAA_LOG 2>&1
    fi
 
@@ -174,7 +174,7 @@ if [ "$METEOR_RECEIVER" == "rtl_fm" ]; then
     if [ "$in_mem" == "true" ]; then
       log "Moving audio files out to the SD card" "INFO"
       mv "${RAMFS_AUDIO_BASE}.wav" "${AUDIO_FILE_BASE}.wav"
-      rm "${RAMFS_AUDIO_BASE}.wav"
+      rm -f "${RAMFS_AUDIO_BASE}.wav"
     fi
   fi
 
