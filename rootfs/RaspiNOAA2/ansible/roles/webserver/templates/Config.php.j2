@@ -27,7 +27,7 @@ class Config {
   const IMAGE_PATH = '{{ images_output }}';
 
   # location of thumbnails
-  const THUMB_PATH = '{{ images_output }}/thumb';
+  const THUMB_PATH = ltrim('{{ images_output }}/thumb','/');
 
   # whether to enable satvis visualization
   const ENABLE_SATVIS = '{{ enable_satvis|lower }}';
