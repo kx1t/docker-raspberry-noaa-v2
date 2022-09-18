@@ -13,12 +13,18 @@ web_home: "/var/www/wx-new"
 
 # output root directories for images, audio, and video
 output_root: /srv
+output_root_rel: srv
 images_output: "{{ output_root }}/images"
 audio_output: "{{ output_root }}/audio"
 videos_output: "{{ output_root }}/videos"
 
+images_output_rel: "{{ output_root_rel }}/images"
+audio_output_rel: "{{ output_root_rel }}/audio"
+videos_output_rel: "{{ output_root_rel }}/videos"
+
 # file used for NOAA animations
 noaa_animation_output: "{{ videos_output }}/RollingAnimation.mp4"
+noaa_animation_output_rel: "{{ videos_output_rel }}/RollingAnimation.mp4"
 
 # ramfs location
 ramfs_path: "/run"
