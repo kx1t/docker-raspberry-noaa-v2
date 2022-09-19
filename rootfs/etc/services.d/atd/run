@@ -1,18 +1,29 @@
 #!/usr/bin/with-contenv bash
 #shellcheck shell=bash
 
-set -euo pipefail
-
-APPNAME="$(hostname)/atd"
-
-ATD_INTERVAL=1
-SPOOLDIR="/run/atspool"
-
 # This is a custom implementation of ATD since the original one doesnt seem to work inside Docker
 # (C) 2022 by kx1t (Ramon F. Kolb), license: GPLv3.
 
+set -euo pipefail
 
+APPNAME="$(hostname)/atd"
 echo "[$(date)][$APPNAME] Starting custom AT daemon ..."
+
+SPOOLDIR="/run/atspool"
+PIDFILE=/var/run/atd.pid
+
+# $ATD_INTERVAL determines how often ATD checks if a job needs to get executed. Default = 10 (seconds)
+# Note that this will cause a delay of up to $ATD_INTERVAL to execute the job.
+# For example, with ATD_INTERVAL=10, a job scheduled for 09:00 may get executed anytime
+# between 09:00:00 and 09:00:10.
+ATD_INTERVAL=10
+
+# trap SIGINT/SIGHUP/SIGKILL to remove the PID file
+trap "rm -f $PIDFILE; exit" 1 3 9
+
+# write the current PID to the PIDFILE - this is so the `at` command can signal it.
+# it doesn't do anything else -- ATD will discover new jobs automatically without the need to signal it
+echo "$$" > /var/run/atd.pid
 
 if ! at -V >/dev/null 2>&1
 then
