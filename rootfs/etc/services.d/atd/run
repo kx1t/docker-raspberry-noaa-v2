@@ -19,7 +19,21 @@ PIDFILE=/var/run/atd.pid
 ATD_INTERVAL=10
 
 # trap SIGINT/SIGHUP/SIGKILL to remove the PID file
-trap "rm -f $PIDFILE; exit" 1 3 9
+trap_with_arg() {
+    func="$1" ; shift
+    for sig ; do
+        trap "$func $sig" "$sig"
+    done
+}
+
+func_trap() {
+    echo "[$(date)][$APPNAME] Received signal $1; exiting/restarting ATD"
+    rm $PIDFILE
+    exit
+}
+
+trap_with_arg func_trap SIGINT SIGTERM SIGKILL
+
 
 # write the current PID to the PIDFILE - this is so the `at` command can signal it.
 # it doesn't do anything else -- ATD will discover new jobs automatically without the need to signal it
