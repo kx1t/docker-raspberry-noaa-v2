@@ -180,11 +180,11 @@
   when: not enable_tls|bool
   notify: restart nginx
 
-- name: ensure nginx is running
-  become: yes
-  service:
-    name: nginx
-    state: started
+# - name: ensure nginx is running
+#   become: yes
+#   service:
+#     name: nginx
+#     state: started
 
 - name: www-data sudoers atrm as pi user
   become: yes
