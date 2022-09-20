@@ -6,11 +6,11 @@ server {
 
   server_name {{ web_server_name }};
 
-  location ~ images/(.*) {
+  location ~ /images/(.*) {
     alias /srv/images/$1;
   }
 
-  location ~ videos/(.*) {
+  location ~ /videos/(.*) {
     alias /srv/videos/$1;
   }
 
