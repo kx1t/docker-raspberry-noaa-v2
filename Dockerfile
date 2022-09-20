@@ -73,6 +73,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(iputils-ping) && \
     KEPT_PACKAGES+=(nano) && \
 #
+# --------------------------------------------------------------------------------------------
 # Install all the apt, pip3, and gem (ruby) packages:
     apt-get update -q && \
     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ${TEMP_PACKAGES[@]} ${KEPT_PACKAGES[@]} && \
@@ -80,10 +81,10 @@ RUN set -x && \
 #  Pip3 installs arent necessary because the modules in requirements.txt are already installed via APT
 #    pip3 install -r /tmp/requirements.txt && \
 #
+# --------------------------------------------------------------------------------------------
 # Install a bunch of other things from the repo
 # This is done here rather than in a COPY command to keep the image clean
     mkdir -p /git && \
-#
 #
 # Install wxtoimg
     git clone --depth=1 https://github.com/kx1t/docker-raspberry-noaa-v2.git  /git/docker-raspberry-noaa-v2 && \
@@ -142,10 +143,11 @@ popd && \
         fi && \
     popd && \
 #
-#
 # Install udev rules
     mkdir -p /etc/udev/rules.d && \
     curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules && \
+#
+# --------------------------------------------------------------------------------------------
 #
 # Clean up
     echo Uninstalling $TEMP_PACKAGES && \
@@ -159,23 +161,17 @@ popd && \
       /.dockerenv \
       /git \
       /wxtoimg \ && \
+#
+# --------------------------------------------------------------------------------------------
+#
 # Do some other stuff
     echo "alias dir=\"ls -alsv\"" >> /root/.bashrc && \
     echo "alias nano=\"nano -l\"" >> /root/.bashrc
+#
+# --------------------------------------------------------------------------------------------
+#
 
 COPY rootfs/ /
-#
-#COPY ATTRIBUTION.md /usr/share/planefence/stage/attribution.txt
-#
-
-# This isnt needed as it will be done during startup of the runtime
-# RUN set -x && \
-# Install and configure raspberry-noaa2 in a separate layer:
-#    pushd /root && \
-#        ./install_and_upgrade.sh && \
-#    popd && \
-#
-
 
 #
 # No need for SHELL and ENTRYPOINT as those are inherited from the base image
