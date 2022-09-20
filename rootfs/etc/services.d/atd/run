@@ -22,6 +22,7 @@ ATD_INTERVAL=10
 trap_with_arg() {
     func="$1" ; shift
     for sig ; do
+        #shellcheck disable=SC2064
         trap "$func $sig" "$sig"
     done
 }
@@ -78,5 +79,5 @@ do
                 } &
             fi
         fi
-    done <<< $(at -l)
+    done <<< "$(at -l)"
 done
