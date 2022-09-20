@@ -1,7 +1,5 @@
 ---
 - name: restart nginx
   become: yes
-  service:
-    name: nginx
-    state: restarted
+  ansible.builtin.command: /RaspiNOAA/scripts/reload_nginx.sh
 ...

@@ -38,19 +38,20 @@
     state: present
     name: composer
 
-- name: add pi user to www-data group
+- name: add root user to www-data group
   become: yes
   user:
-    name: pi
+    name: root
     groups: www-data
     append: yes
+
 
 - name: web directory
   become: yes
   file:
     path: "{{ web_home }}"
     state: directory
-    owner: pi
+    owner: root
     group: www-data
     mode: 0775
 
@@ -59,7 +60,7 @@
   file:
     path: "{{ web_home }}/Config"
     state: directory
-    owner: pi
+    owner: root
     group: www-data
     mode: 0775
 
@@ -68,7 +69,7 @@
   template:
     src: Config.php.j2
     dest: "{{ web_home }}/Config/Config.php"
-    owner: pi
+    owner: root
     group: www-data
     mode: 0644
 
@@ -80,7 +81,7 @@
     owner: root
     group: root
     mode: 0644
-  notify: restart nginx
+  #notify: restart nginx
 
 - name: nginx non-tls config symlink
   become: yes
@@ -91,7 +92,7 @@
     owner: root
     group: root
   when: enable_non_tls|bool
-  notify: restart nginx
+  #notify: restart nginx
 
 - name: remove non-tls site enable if disabled
   become: yes
@@ -99,7 +100,7 @@
     path: /etc/nginx/sites-enabled/default
     state: absent
   when: not enable_non_tls|bool
-  notify: restart nginx
+  #notify: restart nginx
 
 - name: update images directory group
   become: yes
@@ -159,7 +160,7 @@
     group: root
     mode: 0644
   when: enable_tls|bool
-  notify: restart nginx
+  #notify: restart nginx
 
 - name: nginx tls config symlink
   become: yes
@@ -170,7 +171,7 @@
     owner: root
     group: root
   when: enable_tls|bool
-  notify: restart nginx
+  #notify: restart nginx
 
 - name: remove tls site enable if disabled
   become: yes
@@ -178,20 +179,21 @@
     path: /etc/nginx/sites-enabled/default-tls
     state: absent
   when: not enable_tls|bool
-  notify: restart nginx
+  #notify: restart nginx
 
-- name: ensure nginx is running
-  become: yes
-  service:
-    name: nginx
-    state: started
+# commented out -- we will run nginx as an s6 service
+# - name: ensure nginx is running
+#   become: yes
+#   service:
+#     name: nginx
+#     state: started
 
-- name: www-data sudoers atrm as pi user
-  become: yes
-  copy:
-    src: 020_www-data-atrm-nopasswd
-    dest: /etc/sudoers.d/020_www-data-atrm-nopasswd
-    owner: root
-    group: root
-    mode: 0440
+# - name: www-data sudoers atrm as root user
+#   become: yes
+#   copy:
+#     src: 020_www-data-atrm-nopasswd
+#     dest: /etc/sudoers.d/020_www-data-atrm-nopasswd
+#     owner: root
+#     group: root
+#     mode: 0440
 ...
