@@ -4,7 +4,6 @@
 APPNAME="$(hostname)/reload_nginx"
 
 set -a
-
 if [[ -f /run/nginx/pid ]]
 then
     echo "[$(date)][$APPNAME] Reloading NGINX ..."

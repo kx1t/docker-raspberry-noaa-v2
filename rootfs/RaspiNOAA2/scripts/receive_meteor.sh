@@ -71,7 +71,7 @@ fi
 
 # pass start timestamp and sun elevation
 PASS_START=$(expr "$EPOCH_START" + 90)
-export SUN_ELEV=$(python3 "$SCRIPTS_DIR"/tools/sun.py "$PASS_START")
+export SUN_ELEV="$(python3 "$SCRIPTS_DIR"/tools/sun.py "$PASS_START")"
 
 # determine if pass is in daylight
 daylight=0
