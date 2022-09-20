@@ -9,7 +9,6 @@ RUN set -x && \
     KEPT_PACKAGES=() && \
     KEPT_PIP3_PACKAGES=() && \
     KEPT_RUBY_PACKAGES=() && \
-#
     TEMP_PACKAGES+=(gcc) && \
     KEPT_PACKAGES+=(python3-dev) && \
     TEMP_PACKAGES+=(pkg-config) && \
@@ -30,12 +29,10 @@ RUN set -x && \
     KEPT_PACKAGES+=(gnuradio) && \
     KEPT_PACKAGES+=(gr-osmosdr) && \
     KEPT_PACKAGES+=(imagemagick) && \
-#    KEPT_PACKAGES+=(jq) && \
     KEPT_PACKAGES+=(kmod) && \
     KEPT_PACKAGES+=(libasound2-dev) && \
     KEPT_PACKAGES+=(libatlas-base-dev) && \
     KEPT_PACKAGES+=(libgfortran5) && \
-#     KEPT_PACKAGES+=(libjpeg9) && \
     KEPT_PACKAGES+=(libjpeg-dev) && \
     KEPT_PACKAGES+=(libncurses5-dev) && \
     KEPT_PACKAGES+=(libncursesw5-dev) && \
@@ -50,7 +47,6 @@ RUN set -x && \
     KEPT_PACKAGES+=(php7.4-fpm) && \
     KEPT_PACKAGES+=(php7.4-mbstring) && \
     KEPT_PACKAGES+=(php7.4-sqlite3) && \
-#    KEPT_PACKAGES+=(gpredict) && \
     KEPT_PACKAGES+=(python3-apt) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python-setuptools) && \
@@ -70,11 +66,12 @@ RUN set -x && \
     TEMP_PACKAGES+=(systemd) && \
     KEPT_PACKAGES+=(xfonts-base) && \
     KEPT_PACKAGES+=(xfonts-75dpi) && \
-
+#
 # other packages:
     KEPT_PACKAGES+=(unzip) && \
     KEPT_PACKAGES+=(psmisc) && \
     KEPT_PACKAGES+=(iputils-ping) && \
+    KEPT_PACKAGES+=(nano) && \
 #
 # Install all the apt, pip3, and gem (ruby) packages:
     apt-get update -q && \
