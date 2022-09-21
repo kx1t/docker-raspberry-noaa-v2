@@ -95,10 +95,10 @@ fi
 
 # make sure that web_baseurl is of the correct format
 web_baseurl="$(grep -e "^\s*web_baseurl:" config/settings.yml | awk '{print $2}')"
-if [[ "$web_baseurl" != "" ]] && [[ "$web_baseurl" != "false" ]] && [[ "${web_baseurl: -1}" != "/" ]]
-then
-    sed -i 's|\(^\s*web_baseurl:\s*.*\)\s*.*$|\1/|g' config/settings.yml
-fi
+# if [[ "$web_baseurl" != "" ]] && [[ "$web_baseurl" != "false" ]] && [[ "${web_baseurl: -1}" != "/" ]]
+# then
+#     sed -i 's|\(^\s*web_baseurl:\s*.*\)\s*.*$|\1/|g' config/settings.yml
+# fi
 if [[ "${web_baseurl,,}" == "false" ]]
 then
     sed -i "s|\(^\s*web_baseurl:\).*$|\1 ''|g" config/settings.yml
