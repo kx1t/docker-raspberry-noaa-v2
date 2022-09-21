@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
                            integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-    {% if baseurl != '' %}<base href="{{ {{ constant('Config\\Config::WEB_BASEURL') }} }}">{% endif %}
+    <base href="{{ constant('Config\\Config::WEB_BASEURL') }}">
     <title>Raspberry NOAA V2</title>
 
     <link rel="shortcut icon" href="/assets/web_img/favicon.ico" type="image/x-icon"/>
@@ -24,7 +24,7 @@
   <body>
     <!-- some debugging stuff:
          page = {{ page }}
-         baseurl = {{ Config\\Config::WEB_BASEURL }}
+         baseurl = {{ constant('Config\\Config::WEB_BASEURL') }}
     -->
     <header class="mb-3">
       <div class="navbar navbar-expand navbar-dark bg-dark">
