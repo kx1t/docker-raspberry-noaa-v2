@@ -199,8 +199,8 @@ lang_setting: en
 #                            https://www.php.net/manual/en/datetime.format.php or else bad things will happen
 #   web_datetime_format - format to display date and time in the web interface for captures - note that this MUST conform to
 #                         https://www.php.net/manual/en/datetime.format.php or else bad things will happen
-#   web_directory - if you are using a reverse web proxy, set this to the base directory where the website is rendered.
-#                   For example, if you are proxying https://abcd.com/my_noaa --> http://localhost:89 for RaspiNoaa, set this parameter to "my_noaa"
+#   web_baseurl - if you are using a reverse web proxy, set this to the base directory where the website is rendered.
+#                   For example, if you are proxying https://abcd.com/my_noaa --> http://localhost:89 for RaspiNoaa, set this parameter to "https://abcd.com/my_noaa"
 #                   If you are not using a reverse web proxy, set it to false.
 web_server_name: raspberry-noaa.localdomain
 enable_non_tls: true
@@ -213,7 +213,7 @@ admin_username: 'admin'
 admin_password: 'admin'
 web_passes_date_format: 'm/d/Y'
 web_datetime_format: 'm/d/Y H:i:s'
-web_directory: false
+web_baseurl: false
 
 # log level for output from scripts
 log_level: DEBUG

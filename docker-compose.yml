@@ -104,7 +104,7 @@ services:
       - slack_push_to=''
       - slack_link='https://XXXX/captures/listImages'
       - enable_matrix_push=false
-      - web_directory=noaa
+      - web_baseurl=false
     ports:
       - 89:80
       - 8073:8073   # for audio testing

@@ -27,5 +27,5 @@ server {
   rewrite "^/image/\d{4}/\d{2}/\d{2}/(.+)$" /images/$1 permanent;
   ###rewrite "^/captures(.*)$" /###WEBDIR###/passes$1 permanent;
   ###rewrite "^/captures/admin(.*)$" /###WEBDIR###/admin$1 permanent;
-  ###rewrite "^/captures/captures(.*) /###WEBDIR###/captures$2 permanent;
+  ###rewrite "^/captures/captures(.*)" /###WEBDIR###/captures$2 permanent;
 }

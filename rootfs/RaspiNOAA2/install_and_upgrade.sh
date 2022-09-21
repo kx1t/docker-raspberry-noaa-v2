@@ -69,6 +69,8 @@ else
   die "  Could not install dependent Python packages - please check the logs above"
 fi
 
+
+
 log_running "Checking configuration files..."
 python3 scripts/tools/validate_yaml.py config/settings.yml config/settings_schema.json
 if [ $? -eq 0 ]; then
@@ -89,6 +91,17 @@ if [ $? -ne 0 ]; then
   else
     die "  Could not install Ansible - please inspect the logs above"
   fi
+fi
+
+# make sure that web_baseurl is of the correct format
+web_baseurl="$(grep -e "^\s*web_baseurl:" config/settings.yml | awk '{print $2}')"
+if [[ "$web_baseurl" != "" ]] && [[ "$web_baseurl" != "false" ]] && [[ "${web_baseurl: -1}" != "/" ]]
+then
+    sed -i 's|\(^\s*web_baseurl:\s*.*\)\s*.*$|\1/|g' config/settings.yml
+fi
+if [[ "${web_baseurl,,}" == "false" ]]
+then
+    sed -i "s|\(^\s*web_baseurl:\).*$|\1 ''|g" config/settings.yml
 fi
 
 log_running "Checking for configuration settings..."
@@ -126,13 +139,13 @@ fi
 
 # Make sure that the NGINX rewriting rules are set if there is a WEBDIR variable:
 
-web_directory="$(grep -e "^\s*web_directory:" config/settings.yml | awk '{print $2}')"
-if [[ "$web_directory" != "" ]]
-then
-    sed -i 's/###WEBDIR###/'"$web_directory"'/g' /etc/nginx/sites-available/default
-    sed -i 's/###rewrite/rewrite/g' /etc/nginx/sites-available/default
-    $NOAA_HOME/scripts/reload_nginx.sh
-fi
+# web_directory="$(grep -e "^\s*web_directory:" config/settings.yml | awk '{print $2}')"
+# if [[ "$web_directory" != "" ]]
+# then
+#     sed -i 's/###WEBDIR###/'"$web_directory"'/g' /etc/nginx/sites-available/default
+#     sed -i 's/###rewrite/rewrite/g' /etc/nginx/sites-available/default
+#     $NOAA_HOME/scripts/reload_nginx.sh
+# fi
 
 # update all web content and permissions
 log_running "Updating web content..."
