@@ -30,13 +30,25 @@
       <div class="navbar navbar-expand navbar-dark bg-dark">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item {% if page == 'passes' %} active {% endif %}">
-            <a class="nav-link" href="{% if page == 'admin' %}../{% endif %}passes">{{ lang['passes'] }}</a>
+            <!-- a class="nav-link" href="{% if page == 'admin' %}../{% endif %}passes">{{ lang['passes'] }}</a -->
+
+            {% if page == 'admin' or page == 'passes' %}<a class="nav-link" href="../passes">{{ lang['passes'] }}</a>{% endif %}
+            {% if page == 'captures' and '.' is constant('Config\\Config::WEB_BASEURL') %}<a class="nav-link" href="/passes">{{ lang['passes'] }}</a>
+            {% elseif page == 'captures' %}<a class="nav-link" href="{{ constant('Config\\Config::WEB_BASEURL') }}/passes">{{ lang['passes'] }}</a>{% endif %}
+
           </li>
-          <li class="nav-item {% if page == 'captures' or page == 'capture'  %} active {% endif %}">
-            <a class="nav-link" href="{% if page == 'admin' %}../{% endif %}captures?page_no=1">{{ lang['captures'] }}</a>
+          <li class="nav-item {% if page == 'captures' or page == 'capture' %} active {% endif %}">
+            {% if page == 'admin' or page == 'passes' %}<a class="nav-link" href="../captures?page_no=1">{{ lang['captures'] }}</a>{% endif %}
+            {% if page == 'captures' and '.' is constant('Config\\Config::WEB_BASEURL') %}<a class="nav-link" href="/captures?page_no=1">{{ lang['captures'] }}</a>
+            {% elseif page == 'captures' %}<a class="nav-link" href="{{ constant('Config\\Config::WEB_BASEURL') }}/captures?page_no=1">{{ lang['captures'] }}</a>{% endif %}
           </li>
           <li class="nav-item {% if page == 'admin' %} active {% endif %}">
-            <a class="nav-link" href="{% if page == 'admin' %}../{% endif %}admin/passes">{{ lang['admin'] }}</a>
+            <!-- a class="nav-link" href="{% if page == 'admin' %}../{% endif %}admin/passes">{{ lang['admin'] }}</a -->
+
+            {% if page == 'admin' or page == 'passes' %}<a class="nav-link" href="../admin/passes">{{ lang['admin'] }}</a>{% endif %}
+            {% if page == 'captures' and '.' is constant('Config\\Config::WEB_BASEURL') %}<a class="nav-link" href="/admin/passes">{{ lang['admin'] }}</a>
+            {% elseif page == 'captures' %}<a class="nav-link" href="{{ constant('Config\\Config::WEB_BASEURL') }}/admin/passes">{{ lang['admin'] }}</a>{% endif %}
+
           </li>
         </ul>
         <span class="navbar-text timezone">

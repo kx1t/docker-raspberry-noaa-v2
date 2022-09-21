@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/pagination.css">
-  <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/captures.css">
+  <link rel="stylesheet" type="text/css" href="{% if constant('Config\\Config::WEB_BASEURL') != '.' %}{{ constant('Config\\Config::WEB_BASEURL') }}{% endif %}/assets/css/pagination.css">
+  <link rel="stylesheet" type="text/css" href="{% if constant('Config\\Config::WEB_BASEURL') != '.' %}{{ constant('Config\\Config::WEB_BASEURL') }}{% endif %}/assets/css/captures.css">
 {% endblock %}
 
 {% block body %}
