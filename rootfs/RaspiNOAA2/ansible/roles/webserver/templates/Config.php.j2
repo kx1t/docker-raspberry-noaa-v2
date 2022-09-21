@@ -24,17 +24,17 @@ class Config {
   const TIMEZONE = '{{ timezone }}';
 
   # location of images
-  const IMAGE_PATH = '{{ images_output }}';
+  const IMAGE_PATH = '{{ web_baseurl }}/{{ images_output }}';
 
   # location of thumbnails
-  const THUMB_PATH = '{{ images_output }}/thumb';
+  const THUMB_PATH = '{{ web_baseurl }}/{{ images_output }}/thumb';
 
   # whether to enable satvis visualization
   const ENABLE_SATVIS = '{{ enable_satvis|lower }}';
 
   # whether to enable image video
   const ENABLE_ANIMATION = '{{ enable_animation|lower }}';
-  const ANIMATION_VIDEO_FILE = '{{ noaa_animation_output }}';
+  const ANIMATION_VIDEO_FILE = '{{ web_baseurl }}/{{ noaa_animation_output }}';
 
   # lat and lon coordinates of base station
   const BASE_STATION_LAT = '{{ latitude }}';
