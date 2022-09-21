@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css" href="/assets/css/pagination.css">
-  <link rel="stylesheet" type="text/css" href="/assets/css/admin.css">
+  <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/pagination.css">
+  <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/admin.css">
 {% endblock %}
 
 {% block body %}
@@ -64,7 +64,7 @@
             {{ capture.max_elev }}&#176;
           </td>
           <td class="capture-thumbnail text-center align-middle">
-            <a href="/captures/listImages?pass_id={{ capture.id }}">
+            <a href="../captures/listImages?pass_id={{ capture.id }}">
               {% if capture.sat_type == 0 %}
                 <img class="card-img-top" src="{{ constant('Config\\Config::THUMB_PATH') }}/{{ capture.file_path }}-122-rectified.jpg">
               {% elseif capture.sat_type == 1 %}
@@ -110,5 +110,5 @@
 {% endblock %}
 
 {% block js_includes %}
-  <script src="/assets/js/admin.js"></script>
+  <script src="assets/js/admin.js"></script>
 {% endblock %}
