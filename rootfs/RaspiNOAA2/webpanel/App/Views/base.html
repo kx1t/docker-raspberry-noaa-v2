@@ -33,10 +33,10 @@
           <li class="nav-item {% if page == 'admin' %} active {% endif %}">
             <a class="nav-link" href="{% if page == 'admin' or page == 'listimages' %}../{% endif %}admin/passes">{{ lang['admin'] }}</a>
           </li>
-          <li class="nav-item">
-              {% set pagename = page dump(page) %}
+          <!-- li class="nav-link">
+              {% set pagename = page %}
               {{ pagename }}
-          </li>
+          </li -->
         </ul>
         <span class="navbar-text timezone">
           <em>

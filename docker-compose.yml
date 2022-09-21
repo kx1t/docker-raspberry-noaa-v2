@@ -82,7 +82,7 @@ services:
       - enable_tls=false
       - web_tls_port=443
       - cert_valid_days=365
-      - lock_admin_page=false
+      - lock_admin_page=true
       - admin_username='admin'
       - admin_password='admin'
       - web_passes_date_format='m/d/Y'
@@ -104,6 +104,7 @@ services:
       - slack_push_to=''
       - slack_link='https://XXXX/captures/listImages'
       - enable_matrix_push=false
+      - web_directory=noaa
     ports:
       - 89:80
       - 8073:8073   # for audio testing

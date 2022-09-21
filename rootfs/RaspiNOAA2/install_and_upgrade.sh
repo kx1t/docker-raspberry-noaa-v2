@@ -48,7 +48,7 @@ if [ -f /etc/modprobe.d/rtlsdr.conf ]; then
 fi
 
 log_running "Checking for python3-pip..."
-dpkg -l python3-pip 2>&1 >/dev/null
+dpkg -l python3-pip >/dev/null 2>&1
 if [ $? -eq 0 ]; then
   log_done "  python3-pip already installed!"
 else
@@ -122,6 +122,16 @@ if [ $? -eq 0 ]; then
   log_done "  Database schema updated!"
 else
   die "  Something failed with database update - please inspect the logs above"
+fi
+
+# Make sure that the NGINX rewriting rules are set if there is a WEBDIR variable:
+
+web_directory="$(grep -e "^\s*web_directory:" config/settings.yml | awk '{print $2}')"
+if [[ "$web_directory" != "" ]]
+then
+    sed -i 's/###WEBDIR###/'"$web_directory"'/g' /etc/nginx/sites-available/default
+    sed -i 's/###rewrite/rewrite/g' /etc/nginx/sites-available/default
+    $NOAA_HOME/scripts/reload_nginx.sh
 fi
 
 # update all web content and permissions

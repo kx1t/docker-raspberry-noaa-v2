@@ -25,4 +25,6 @@ server {
 
   # Rewrite the old path yyyy/mm/dd/ to /images/
   rewrite "^/image/\d{4}/\d{2}/\d{2}/(.+)$" /images/$1 permanent;
+  ###rewrite "^/captures/passes(.*)$" /###WEBDIR###/passes$1 permanent;
+  ###rewrite "^/captures/admin(.*)$" /###WEBDIR###/admin$1 permanent;
 }
