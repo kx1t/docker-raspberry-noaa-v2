@@ -232,6 +232,7 @@
     "admin_password",
     "web_passes_date_format",
     "web_datetime_format",
+    "web_baseurl",
     "log_level",
     "disable_at_mail",
     "enable_satvis",
