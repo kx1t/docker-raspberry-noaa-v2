@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <!--link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/header.css">
-    <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/footer.css" -->
     <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/header.css{% else %}/assets/css/header.css{% endif %}">
     <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/footer.css{% else %}/assets/css/footer.css{% endif %}">
 
@@ -24,10 +22,6 @@
     <link rel="shortcut icon" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/web_img/favicon.ico{% else %}/assets/web_img/favicon.ico{% endif %}" type="image/x-icon"/>
   </head>
   <body>
-    <!-- some debugging stuff:
-         page = {{ page }}
-         baseurl = {{ constant('Config\\Config::WEB_BASEURL') }}
-    -->
     <header class="mb-3">
       <div class="navbar navbar-expand navbar-dark bg-dark">
         <ul class="navbar-nav mr-auto">
@@ -44,7 +38,6 @@
 
           </li>
           <li class="nav-item {% if page == 'admin' %} active {% endif %}">
-            <!-- a class="nav-link" href="{% if page == 'admin' %}../{% endif %}admin/passes">{{ lang['admin'] }}</a -->
 
             {% if '.' is constant('Config\\Config::WEB_BASEURL') %}<a class="nav-link" href="/admin/passes">{{ lang['admin'] }}</a>
             {% else %}<a class="nav-link" href="{{ constant('Config\\Config::WEB_BASEURL') }}/admin/passes">{{ lang['admin'] }}</a>{% endif %}
@@ -53,6 +46,7 @@
         </ul>
         <span class="navbar-text timezone">
           <em>
+            {{ constant('Config\\Config::GS_LOCATION') }}
             {{ constant('Config\\Config::TIMEZONE') }}<br>
             (UTC{{ 'now'|date('P') }})
           </em>
