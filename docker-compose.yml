@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.3'
 services:
   raspi-noaa2:
     image: ghcr.io/kx1t/raspberry-noaa-v2
