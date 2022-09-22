@@ -40,7 +40,7 @@ The original documentation for Raspberry NOAA V2 is available [here](rootfs/Rasp
 
 ## Configuring the RaspiNOAA2 container
 - Create a directory to use as your base and go to this directory. It doesn't really matter what you name it or where you put it. We'll use `~/noaa` as an example.
-NOTE -- If you have other `docker-compose` stacks running on the same system, I recommend to use a separate `docker-compose.yml` file in a different directory for the Raspberry NOAA 2 instance. This package is independent of all other packages, and we want to avoid including it in your `watchtower` auto-update routines.
+NOTE -- If you have other `docker-compose` stacks running on the same system, I recommend to use a separate directory and `docker-compose.yml` file and not adding RN2 to the existing stack. The Raspberry NOAA 2 container is independent of all other packages, and we want to avoid including it in your `watchtower` auto-update routines.
 ```
 mkdir -p ~/noaa
 cd ~/noaa
@@ -76,7 +76,9 @@ From the directory where your `docker-compose.yml` is located, give this command
 ```
 docker compose up -d
 ```
-RaspiNOAA2 will be downloaded (this may take a while -- about 700 MB!) and will start. You can reach the web page about 30 seconds after you `docker compose up -d` is done.
+RaspiNOAA2 will be downloaded (this may take a while -- about 700 MB!) and will start.
+You can reach the web page about 30 seconds after you `docker compose up -d` is done.
+The container logs will show a message like `php-fpm7.4 is ready` once everything is up and running. 
 
 # Logs and Troubleshooting
 - You can see the Container Logs with this command. Note - if you have set `VERBOSELOGS=true`, these logs can be very verbose! If you include the `-f` flag, it will continuously show more logs as they are generated until you press CTRL-c. If you changed your container name, replace `noaa` accordingly:
