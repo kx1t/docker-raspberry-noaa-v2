@@ -117,11 +117,11 @@ The measurements were taken on 22 September 2022, using a wired 100 Mbps connect
 |---------------------|-----------------------------|------------------------------------|--------------------------------------------------|------------------|
 | RPi 3B+ / armhf     | 1238 secs | 9.6 secs | 145 secs | 1392.6 secs |
 | RPi 4B (4Gb) / arm64 | 627 secs | 16 secs | 90 secs | 733 secs |
-| Dell XPS 13* / amd64 | 129 secs | 2.5 secs | 40 secs | 171.5 secs |
+| Dell XPS 13[^1] / amd64 | 129 secs | 2.5 secs | 40 secs | 171.5 secs |
 
 Any subsequent restarts should not cause any "download and expand" time, unless you specifically request the container to be pulled.
 
-* The Dell XPS 13 was an older model Intel(R) Core(TM) i5-3317U CPU @ 1.70GHz dual (2) core
+[^1]: The Dell XPS 13 was an older model Intel(R) Core(TM) i5-3317U CPU @ 1.70GHz dual (2) core
 
 # License
 The software packages and OS layers included in this project are used with permission under license terms that are distributed with these packages. Specifically, the GPL 3.0 license terms for the original, non-containerized version of "Raspberry NOAA 2" can be found [here](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/LICENSE).
