@@ -33,9 +33,9 @@ The original documentation for Raspberry NOAA V2 is available [here](rootfs/Rasp
 
 ## Installation of Docker
 - Basic needs:
-    -- a Raspberry Pi 3B+, Raspberry Pi 4, or a Linux PC (laptop) with Ubuntu installed. If you use a Raspberry Pi, you can use Raspberry Pi OS (32 or 64 bits version) or Ubuntu. Personally, I've found Raspberry Pi OS (Bullseye) or Ubuntu 22.04 LTS to be excellent choices, but other relatively new OS versions will work as well
-    -- a SDR that can be dedicated to the project with a suitable antenna for weather satellite reception.
-    -- you should know some basic Linux commands -- logging in via `ssh`, creating and entering directories, using the `nano` editor, etc. It is beyond the scope of this README to teach you that.
+    - a Raspberry Pi 3B+, Raspberry Pi 4, or a Linux PC (laptop) with Ubuntu installed. If you use a Raspberry Pi, you can use Raspberry Pi OS (32 or 64 bits version) or Ubuntu. Personally, I've found Raspberry Pi OS (Bullseye) or Ubuntu 22.04 LTS to be excellent choices, but other relatively new OS versions will work as well
+    - a SDR that can be dedicated to the project with a suitable antenna for weather satellite reception.
+    - you should know some basic Linux commands -- logging in via `ssh`, creating and entering directories, using the `nano` editor, etc. It is beyond the scope of this README to teach you that.
 - A prerequisite for running this package is to have `Docker` (including the `Docker Compose` plugin) installed. If you haven't done this, feel free to use the handy install script [from this repository](https://github.com/sdr-enthusiasts/docker-install).
 - Create a directory to use as your base and go to this directory. It doesn't really matter what you name it or where you put it. We'll use `~/noaa` as an example.
 NOTE -- If you have other `docker-compose` stacks running on the same system, I recommend to use a separate `docker-compose.yml` file in a different directory for the Raspberry NOAA 2 instance. This package is independent of all other packages, and we want to avoid including it in your `watchtower` auto-update routines.
@@ -55,6 +55,7 @@ Update the parameters the same way as you would edit the `settings.yml` file in 
 BE CAREFUL -- using the correct indentation is VERY IMPORTANT. Don't replace spaces with (less/more) spaces or tabs, etc. You will break things.
 Also -- the format of the data in `docker-compose.yml` is `      - parameter=value`.
 A few new parameters that are specific to this Docker implementation:
+
 |-----|-----|----|
 | Parameter | Default | Description |
 | `VERBOSELOGS` | (not present) | If this parameter has any value, the Docker Logs will contain verbose information about the execution of the container. This is great for debugging! |
