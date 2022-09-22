@@ -1,8 +1,38 @@
 <ul class="nav nav-tabs">
   <li class=nav-item">
+    <!-- a class="nav-link {% if admin_action == 'passes' %}active" aria-current="page{% endif %}" href="passes">{{ lang['passes'] }}</a -->
+
+    {% if '.' is constant('Config\\Config::WEB_BASEURL') and admin_action == 'passes' %}
+        <a class="nav-link active" aria-current="page" href="passes">{{ lang['passes'] }}</a>
+    {% elseif '.' is constant('Config\\Config::WEB_BASEURL') %}
+        <a class="nav-link " href="passes">{{ lang['passes'] }}</a>
+    {% elseif '.' is not constant('Config\\Config::WEB_BASEURL') and admin_action == 'passes' %}
+        <a class="nav-link active" aria-current="page" href="{{ constant('Config\\Config::WEB_BASEURL') }}/admin/passes">{{ lang['passes'] }}</a>
+    {% else %}
+        <a class="nav-link " href="{{ constant('Config\\Config::WEB_BASEURL') }}/admin/passes">{{ lang['passes'] }}</a>
+    {% endif %}
+  </li>
+  <li class=nav-item">
+    <!-- a class="nav-link {% if admin_action == 'captures' %}active" aria-current="page{% endif %}" href="captures">{{ lang['captures'] }}</a -->
+
+    {% if '.' is constant('Config\\Config::WEB_BASEURL') and admin_action == 'captures' %}
+        <a class="nav-link active" aria-current="page" href="captures">{{ lang['captures'] }}</a>
+    {% elseif '.' is constant('Config\\Config::WEB_BASEURL') %}
+        <a class="nav-link " href="captures">{{ lang['captures'] }}</a>
+    {% elseif '.' is not constant('Config\\Config::WEB_BASEURL') and admin_action == 'captures' %}
+        <a class="nav-link active" aria-current="page" href="{{ constant('Config\\Config::WEB_BASEURL') }}/admin/captures">{{ lang['captures'] }}</a>
+    {% else %}
+        <a class="nav-link " href="{{ constant('Config\\Config::WEB_BASEURL') }}/admin/captures">{{ lang['captures'] }}</a>
+    {% endif %}
+
+  </li>
+</ul>
+
+<!-- ul class="nav nav-tabs">
+  <li class=nav-item">
     <a class="nav-link {% if admin_action == 'passes' %}active" aria-current="page{% endif %}" href="passes">{{ lang['passes'] }}</a>
   </li>
   <li class=nav-item">
     <a class="nav-link {% if admin_action == 'captures' %}active" aria-current="page{% endif %}" href="captures">{{ lang['captures'] }}</a>
   </li>
-</ul>
+</ul -->
