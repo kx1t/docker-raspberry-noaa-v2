@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/header.css">
-    <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/footer.css">
+    <!--link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/header.css">
+    <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/footer.css" -->
+    <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/header.css{% else %}/assets/css/header.css{% endif %}">
+    <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/footer.css{% else %}/assets/css/footer.css{% endif %}">
 
     {% block stylesheets %}
     {% endblock %}
@@ -19,7 +21,7 @@
     <base href="{{ constant('Config\\Config::WEB_BASEURL') }}">
     <title>Raspberry NOAA V2</title>
 
-    <link rel="shortcut icon" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/web_img/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/web_img/favicon.ico{% else %}/assets/web_img/favicon.ico{% endif %}" type="image/x-icon"/>
   </head>
   <body>
     <!-- some debugging stuff:

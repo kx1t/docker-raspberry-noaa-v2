@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}{% endif %}/assets/css/captures.css">
+  <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/captures.css{% else %}/assets/css/captures.css{% endif %}">
 {% endblock %}
 
 {% block body %}

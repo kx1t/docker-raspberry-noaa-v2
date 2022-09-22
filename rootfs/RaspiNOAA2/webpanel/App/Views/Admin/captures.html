@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/pagination.css">
-  <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/admin.css">
+  <!-- link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/pagination.css">
+  <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/admin.css -->
+  <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/pagination.css{% else %}/assets/css/pagination.css{% endif %}">
+  <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/admin.css{% else %}/assets/css/admin.css{% endif %}">
 {% endblock %}
 
 {% block body %}

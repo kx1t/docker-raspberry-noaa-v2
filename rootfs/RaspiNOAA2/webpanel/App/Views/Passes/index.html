@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/pass_list.css">
+  <!-- link rel="stylesheet" type="text/css" href="{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/pass_list.css" -->
+  <link rel="stylesheet" type="text/css" href="{% if '.' is not constant('Config\\Config::WEB_BASEURL') %}{{ constant('Config\\Config::WEB_BASEURL') }}/assets/css/pass_list.css{% else %}/assets/css/pass_list.css{% endif %}">
 {% endblock %}
 
 {% block pre_body %}
