@@ -96,6 +96,12 @@ docker-compose up -d
 docker stop noaa
 docker rm noaa
 ```
+- Making configuration changes after startup 
+```
+cd ~/noaa
+nano docker-compose.yml   # make your changes and save the file
+docker-compose up -d      # restart the RN2 container with the new parameters 
+```
 
 If you run into trouble, please join us at the Discord server (link at the top). It would be very useful if you had some logs -- for example do this:
 ```
