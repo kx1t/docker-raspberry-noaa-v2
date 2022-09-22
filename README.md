@@ -56,8 +56,8 @@ BE CAREFUL -- using the correct indentation is VERY IMPORTANT. Don't replace spa
 Also -- the format of the data in `docker-compose.yml` is `      - parameter=value`.
 A few new parameters that are specific to this Docker implementation:
 
-|-----|-----|----|
 | Parameter | Default | Description |
+|-----|-----|----|
 | `VERBOSELOGS` | (not present) | If this parameter has any value, the Docker Logs will contain verbose information about the execution of the container. This is great for debugging! |
 | `web_baseurl` | (not present) | If you use a reverse web proxy, please set this to the base URL where your website can be reached. For example: `web_baseurl=http://kx1t.com/noaa` . If you don't use a reverse web proxy, then you can leave this empty. |
 
