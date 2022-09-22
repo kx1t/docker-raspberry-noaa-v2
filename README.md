@@ -56,17 +56,17 @@ BE CAREFUL -- using the correct indentation is VERY IMPORTANT. Don't replace spa
 Also -- the format of the data in `docker-compose.yml` is `      - parameter=value`.
 A few new parameters that are specific to this Docker implementation:
 |-----|-----|----|
-|Parameter|Default|Description|
-|VERBOSELOGS|(not present)|If this parameter has any value, the Docker Logs will contain verbose information about the execution of the container. This is great for debugging!|
-|web_baseurl|(not present)|If you use a reverse web proxy, please set this to the base URL where your website can be reached. For example: `web_baseurl=http://kx1t.com/noaa` . If you don't use a reverse web proxy, then you can leave this empty.
+| Parameter | Default | Description |
+| `VERBOSELOGS` | (not present) | If this parameter has any value, the Docker Logs will contain verbose information about the execution of the container. This is great for debugging! |
+| `web_baseurl` | (not present) | If you use a reverse web proxy, please set this to the base URL where your website can be reached. For example: `web_baseurl=http://kx1t.com/noaa` . If you don't use a reverse web proxy, then you can leave this empty. |
 
 Other parameters in `docker-compose.yml` include:
-    -- setting your web port. The default is `89`. You can change this in the `ports:` section by changing `89:80` into `xxx:80` where `xxx` is your desired HTTP port
-    -- take note of the `volumes:` section.
-        --- In the first 2 lines, we pass the time and timezone of the host machine to the Docker Container. Whatever you set your timezone to on the machine, that will also be used by Docker.
-        --- The next 2 lines "mount" volumes that contain you images/audio/videos and your database. Mounting these will ensure that the data will be retained between restarts of the container
-    -- take note of the `devices:` section. This is needed to expose access to the USB ports from the container.
-    -- `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
+    - setting your web port. The default is `89`. You can change this in the `ports:` section by changing `89:80` into `xxx:80` where `xxx` is your desired HTTP port
+    - take note of the `volumes:` section.
+        - In the first 2 lines, we pass the time and timezone of the host machine to the Docker Container. Whatever you set your timezone to on the machine, that will also be used by Docker.
+        - The next 2 lines "mount" volumes that contain you images/audio/videos and your database. Mounting these will ensure that the data will be retained between restarts of the container
+    - take note of the `devices:` section. This is needed to expose access to the USB ports from the container.
+    - `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
 
 # Running the program
 From the directory where your `docker-compose.yml` is located, give this command:
