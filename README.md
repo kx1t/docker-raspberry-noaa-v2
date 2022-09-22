@@ -24,7 +24,7 @@ Here are a few "features" and "to-dos" for this containerized version:
 
 To-dos include:
 - more extensive testing on armhf and arm64
-- Some of the add-on features have not been tested at all, including Discord, Twitter and other notification
+- Some of the add-on features have not been tested at all, including ~~Discord~~ (*Discord tested & works 9/22/2022*), Twitter and other notification
 - The package is LARGE -- about 600-700 MB total. This is mainly caused by large package installs like `ansible`. It will be hard to reduce download size, but we'll continue optimizing where we can.
 
 The original documentation for Raspberry NOAA V2 is available [here](rootfs/RaspiNOAA2/docs/README.md). All other available documentation can be found [in this directory](rootfs/RaspiNOAA2/docs/).
@@ -78,7 +78,7 @@ docker compose up -d
 ```
 RaspiNOAA2 will be downloaded (this may take a while -- about 700 MB!) and will start.
 You can reach the web page about 30 seconds after you `docker compose up -d` is done.
-The container logs will show a message like `php-fpm7.4 is ready` once everything is up and running. 
+The container logs will show a message like `php-fpm7.4 is ready` once everything is up and running.
 
 # Logs and Troubleshooting
 - You can see the Container Logs with this command. Note - if you have set `VERBOSELOGS=true`, these logs can be very verbose! If you include the `-f` flag, it will continuously show more logs as they are generated until you press CTRL-c. If you changed your container name, replace `noaa` accordingly:
@@ -96,11 +96,11 @@ docker-compose up -d
 docker stop noaa
 docker rm noaa
 ```
-- Making configuration changes after startup 
+- Making configuration changes after startup
 ```
 cd ~/noaa
 nano docker-compose.yml   # make your changes and save the file
-docker-compose up -d      # restart the RN2 container with the new parameters 
+docker-compose up -d      # restart the RN2 container with the new parameters
 ```
 
 If you run into trouble, please join us at the Discord server (link at the top). It would be very useful if you had some logs -- for example do this:
@@ -109,10 +109,20 @@ docker restart noaa && sleep 30 && docker logs -n 500 noaa | nc termbin.com 9999
 ```
 Then send us the link that is returns after about 30 seconds. If it complaints that it cannot find `nc`, then do `sudo apt update && sudo apt install -y netcat` and try that line again.
 
+# Build download / container creation / configuration timing
+As written above, the container is LARGE. Here are some timing measurements for a system to become available. In this case, we started FROM SCRATCH. This means, that all layers needed to be downloaded. Normally, when you do a "quick update", no (or minimal) downloads need to happen.
+The measurements were taken on 22 September 2022, using a wired 100 Mbps connection to a 1 GB fiber internet connection. The measurements were conducted in series to avoid filling up the network bandwidth.
+
+| Device/Architecture | Time to download and expand | Time to create and start container | Time for container to be fully up and running | TOTAL TIME SPENT |
+|---------------------|-----------------------------|------------------------------------|--------------------------------------------------|------------------|
+| RPi 3B+ / armhf     |  |  |  |  |
+| RPi 4B (4Gb) / arm64 | 627 secs | 16 secs | 90 secs | 733 secs |
+| Dell XPS* / amd64 | 129 secs | 2.5 secs | 40 secs | 171.5 secs |
+
 # License
 The software packages and OS layers included in this project are used with permission under license terms that are distributed with these packages. Specifically, the GPL 3.0 license terms for the original, non-containerized version of "Raspberry NOAA 2" can be found [here](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/LICENSE).
 
-The combination of these packages and any additional software written to containerize, expand, and configure "Raspberry NOAA 2" are Copyright (C) 2022 by kx1t, and licensed under the GNU General Public License, version 3 or later. 
+The combination of these packages and any additional software written to containerize, expand, and configure "Raspberry NOAA 2" are Copyright (C) 2022 by kx1t, and licensed under the GNU General Public License, version 3 or later.
 
 Summary of License Terms This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
