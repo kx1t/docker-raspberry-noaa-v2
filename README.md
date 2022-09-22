@@ -115,9 +115,9 @@ The measurements were taken on 22 September 2022, using a wired 100 Mbps connect
 
 | Device/Architecture | Time to download and expand | Time to create and start container | Time for container to be fully up and running | TOTAL TIME |
 |---------------------|-----------------------------|------------------------------------|--------------------------------------------------|------------------|
-| RPi 3B+ / armhf     | 1238 secs | 9.6 secs | 145 secs | 1392.6 secs |
-| RPi 4B (4Gb) / arm64 | 627 secs | 16 secs | 90 secs | 733 secs |
-| Dell XPS 13[^1] / amd64 | 129 secs | 2.5 secs | 40 secs | 171.5 secs |
+| RPi 3B+ / armhf     | 1238 secs | 9.6 secs | 145 secs | 1392.6 secs (23m12.6s)|
+| RPi 4B (4Gb) / arm64 | 627 secs | 16 secs | 90 secs | 733 secs (12m13s)|
+| Dell XPS 13[^1] / amd64 | 129 secs | 2.5 secs | 40 secs | 171.5 secs (2m51.5s)|
 
 Any subsequent restarts should not cause any "download and expand" time, unless you specifically request the container to be pulled.
 
