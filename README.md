@@ -109,7 +109,7 @@ docker restart noaa && sleep 30 && docker logs -n 500 noaa | nc termbin.com 9999
 ```
 Then send us the link that is returns after about 30 seconds. If it complaints that it cannot find `nc`, then do `sudo apt update && sudo apt install -y netcat` and try that line again.
 
-#License
+# License
 The software packages and OS layers included in this project are used with permission under license terms that are distributed with these packages. Specifically, the GPL 3.0 license terms for the original, non-containerized version of "Raspberry NOAA 2" can be found [here](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/LICENSE).
 
 The combination of these packages and any additional software written to containerize, expand, and configure "Raspberry NOAA 2" are Copyright (C) 2022 by kx1t, and licensed under the GNU General Public License, version 3 or later. 
