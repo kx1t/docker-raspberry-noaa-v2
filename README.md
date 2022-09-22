@@ -31,12 +31,14 @@ The original documentation for Raspberry NOAA V2 is available [here](rootfs/Rasp
 
 # Installation
 
-## Installation of Docker
+## Installation of Docker and prerequisites
 - Basic needs:
     - a Raspberry Pi 3B+, Raspberry Pi 4, or a Linux PC (laptop) with Ubuntu installed. If you use a Raspberry Pi, you can use Raspberry Pi OS (32 or 64 bits version) or Ubuntu. Personally, I've found Raspberry Pi OS (Bullseye) or Ubuntu 22.04 LTS to be excellent choices, but other relatively new OS versions will work as well
     - a SDR that can be dedicated to the project with a suitable antenna for weather satellite reception.
     - you should know some basic Linux commands -- logging in via `ssh`, creating and entering directories, using the `nano` editor, etc. It is beyond the scope of this README to teach you that.
 - A prerequisite for running this package is to have `Docker` (including the `Docker Compose` plugin) installed. If you haven't done this, feel free to use the handy install script [from this repository](https://github.com/sdr-enthusiasts/docker-install).
+
+## Configuring the RaspiNOAA2 container
 - Create a directory to use as your base and go to this directory. It doesn't really matter what you name it or where you put it. We'll use `~/noaa` as an example.
 NOTE -- If you have other `docker-compose` stacks running on the same system, I recommend to use a separate `docker-compose.yml` file in a different directory for the Raspberry NOAA 2 instance. This package is independent of all other packages, and we want to avoid including it in your `watchtower` auto-update routines.
 ```
@@ -62,12 +64,12 @@ A few new parameters that are specific to this Docker implementation:
 | `web_baseurl` | (not present) | If you use a reverse web proxy, please set this to the base URL where your website can be reached. For example: `web_baseurl=http://kx1t.com/noaa` . If you don't use a reverse web proxy, then you can leave this empty. |
 
 Other parameters in `docker-compose.yml` include:
-    - setting your web port. The default is `89`. You can change this in the `ports:` section by changing `89:80` into `xxx:80` where `xxx` is your desired HTTP port
-    - take note of the `volumes:` section.
-        - In the first 2 lines, we pass the time and timezone of the host machine to the Docker Container. Whatever you set your timezone to on the machine, that will also be used by Docker.
-        - The next 2 lines "mount" volumes that contain you images/audio/videos and your database. Mounting these will ensure that the data will be retained between restarts of the container
-    - take note of the `devices:` section. This is needed to expose access to the USB ports from the container.
-    - `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
+- setting your web port. The default is `89`. You can change this in the `ports:` section by changing `89:80` into `xxx:80` where `xxx` is your desired HTTP port
+- take note of the `volumes:` section.
+    - In the first 2 lines, we pass the time and timezone of the host machine to the Docker Container. Whatever you set your timezone to on the machine, that will also be used by Docker.
+    - The next 2 lines "mount" volumes that contain you images/audio/videos and your database. Mounting these will ensure that the data will be retained between restarts of the container
+- take note of the `devices:` section. This is needed to expose access to the USB ports from the container.
+- `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
 
 # Running the program
 From the directory where your `docker-compose.yml` is located, give this command:
