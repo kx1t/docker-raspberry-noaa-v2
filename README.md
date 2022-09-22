@@ -31,14 +31,16 @@ The original documentation for Raspberry NOAA V2 is available [here](rootfs/Rasp
 
 # Installation
 
-## Installation of Docker
+## Installation of Docker and prerequisites
 - Basic needs:
-    -- a Raspberry Pi 3B+, Raspberry Pi 4, or a Linux PC (laptop) with Ubuntu installed. If you use a Raspberry Pi, you can use Raspberry Pi OS (32 or 64 bits version) or Ubuntu. Personally, I've found Raspberry Pi OS (Bullseye) or Ubuntu 22.04 LTS to be excellent choices, but other relatively new OS versions will work as well
-    -- a SDR that can be dedicated to the project with a suitable antenna for weather satellite reception.
-    -- you should know some basic Linux commands -- logging in via `ssh`, creating and entering directories, using the `nano` editor, etc. It is beyond the scope of this README to teach you that.
+    - a Raspberry Pi 3B+, Raspberry Pi 4, or a Linux PC (laptop) with Ubuntu installed. If you use a Raspberry Pi, you can use Raspberry Pi OS (32 or 64 bits version) or Ubuntu. Personally, I've found Raspberry Pi OS (Bullseye) or Ubuntu 22.04 LTS to be excellent choices, but other relatively new OS versions will work as well
+    - a SDR that can be dedicated to the project with a suitable antenna for weather satellite reception.
+    - you should know some basic Linux commands -- logging in via `ssh`, creating and entering directories, using the `nano` editor, etc. It is beyond the scope of this README to teach you that.
 - A prerequisite for running this package is to have `Docker` (including the `Docker Compose` plugin) installed. If you haven't done this, feel free to use the handy install script [from this repository](https://github.com/sdr-enthusiasts/docker-install).
+
+## Configuring the RaspiNOAA2 container
 - Create a directory to use as your base and go to this directory. It doesn't really matter what you name it or where you put it. We'll use `~/noaa` as an example.
-NOTE -- If you have other `docker-compose` stacks running on the same system, I recommend to use a separate `docker-compose.yml` file in a different directory for the Raspberry NOAA 2 instance. This package is independent of all other packages, and we want to avoid including it in your `watchtower` auto-update routines.
+NOTE -- If you have other `docker-compose` stacks running on the same system, I recommend to use a separate directory and `docker-compose.yml` file and not adding RN2 to the existing stack. The Raspberry NOAA 2 container is independent of all other packages, and we want to avoid including it in your `watchtower` auto-update routines.
 ```
 mkdir -p ~/noaa
 cd ~/noaa
@@ -55,25 +57,28 @@ Update the parameters the same way as you would edit the `settings.yml` file in 
 BE CAREFUL -- using the correct indentation is VERY IMPORTANT. Don't replace spaces with (less/more) spaces or tabs, etc. You will break things.
 Also -- the format of the data in `docker-compose.yml` is `      - parameter=value`.
 A few new parameters that are specific to this Docker implementation:
+
+| Parameter | Default | Description |
 |-----|-----|----|
-|Parameter|Default|Description|
-|VERBOSELOGS|(not present)|If this parameter has any value, the Docker Logs will contain verbose information about the execution of the container. This is great for debugging!|
-|web_baseurl|(not present)|If you use a reverse web proxy, please set this to the base URL where your website can be reached. For example: `web_baseurl=http://kx1t.com/noaa` . If you don't use a reverse web proxy, then you can leave this empty.
+| `VERBOSELOGS` | (not present) | If this parameter has any value, the Docker Logs will contain verbose information about the execution of the container. This is great for debugging! |
+| `web_baseurl` | (not present) | If you use a reverse web proxy, please set this to the base URL where your website can be reached. For example: `web_baseurl=http://kx1t.com/noaa` . If you don't use a reverse web proxy, then you can leave this empty. |
 
 Other parameters in `docker-compose.yml` include:
-    -- setting your web port. The default is `89`. You can change this in the `ports:` section by changing `89:80` into `xxx:80` where `xxx` is your desired HTTP port
-    -- take note of the `volumes:` section.
-        --- In the first 2 lines, we pass the time and timezone of the host machine to the Docker Container. Whatever you set your timezone to on the machine, that will also be used by Docker.
-        --- The next 2 lines "mount" volumes that contain you images/audio/videos and your database. Mounting these will ensure that the data will be retained between restarts of the container
-    -- take note of the `devices:` section. This is needed to expose access to the USB ports from the container.
-    -- `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
+- setting your web port. The default is `89`. You can change this in the `ports:` section by changing `89:80` into `xxx:80` where `xxx` is your desired HTTP port
+- take note of the `volumes:` section.
+    - In the first 2 lines, we pass the time and timezone of the host machine to the Docker Container. Whatever you set your timezone to on the machine, that will also be used by Docker.
+    - The next 2 lines "mount" volumes that contain you images/audio/videos and your database. Mounting these will ensure that the data will be retained between restarts of the container
+- take note of the `devices:` section. This is needed to expose access to the USB ports from the container.
+- `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
 
 # Running the program
 From the directory where your `docker-compose.yml` is located, give this command:
 ```
 docker compose up -d
 ```
-RaspiNOAA2 will be downloaded (this may take a while -- about 700 MB!) and will start. You can reach the web page about 30 seconds after you `docker compose up -d` is done.
+RaspiNOAA2 will be downloaded (this may take a while -- about 700 MB!) and will start.
+You can reach the web page about 30 seconds after you `docker compose up -d` is done.
+The container logs will show a message like `php-fpm7.4 is ready` once everything is up and running. 
 
 # Logs and Troubleshooting
 - You can see the Container Logs with this command. Note - if you have set `VERBOSELOGS=true`, these logs can be very verbose! If you include the `-f` flag, it will continuously show more logs as they are generated until you press CTRL-c. If you changed your container name, replace `noaa` accordingly:
@@ -91,6 +96,12 @@ docker-compose up -d
 docker stop noaa
 docker rm noaa
 ```
+- Making configuration changes after startup 
+```
+cd ~/noaa
+nano docker-compose.yml   # make your changes and save the file
+docker-compose up -d      # restart the RN2 container with the new parameters 
+```
 
 If you run into trouble, please join us at the Discord server (link at the top). It would be very useful if you had some logs -- for example do this:
 ```
@@ -98,7 +109,7 @@ docker restart noaa && sleep 30 && docker logs -n 500 noaa | nc termbin.com 9999
 ```
 Then send us the link that is returns after about 30 seconds. If it complaints that it cannot find `nc`, then do `sudo apt update && sudo apt install -y netcat` and try that line again.
 
-#License
+# License
 The software packages and OS layers included in this project are used with permission under license terms that are distributed with these packages. Specifically, the GPL 3.0 license terms for the original, non-containerized version of "Raspberry NOAA 2" can be found [here](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/LICENSE).
 
 The combination of these packages and any additional software written to containerize, expand, and configure "Raspberry NOAA 2" are Copyright (C) 2022 by kx1t, and licensed under the GNU General Public License, version 3 or later. 
