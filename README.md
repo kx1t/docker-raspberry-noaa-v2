@@ -71,6 +71,18 @@ Other parameters in `docker-compose.yml` include:
 - take note of the `devices:` section. This is needed to expose access to the USB ports from the container.
 - `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
 
+# Alternative -- convert your existing setup to use Docker Containers
+Most people wouldn't want to change a working RaspiNOAA V2 setup to use Docker Containers: if you are dedicating an entire machine to this, there is not real advantage. However, for those that would want to do this, I've written a small script.
+The script assumes that you already have Docker and Docker Compose installed. If you haven't done so, I'd strongly recommend taking a look at the install script [at this repository](https://github.com/sdr-enthusiasts/docker-install). It will take care for you of everything you need to install and set up to get Docker running.
+
+Once you have Docker installed, log in to your machine and type (or copy/paste) the following to run the conversion script:
+```
+bash <(curl -s https://raw.githubusercontent.com/kx1t/docker-raspberry-noaa-v2/main/convert_to_docker.sh)
+```
+
+Once the script has run its course, you can run the program.
+The location of your `docker-compose.yml` file will be `/opt/raspinoaa2`
+
 # Running the program
 From the directory where your `docker-compose.yml` is located, give this command:
 ```
@@ -122,7 +134,7 @@ The measurements were taken on 22 September 2022, using a wired 100 Mbps connect
 Any subsequent restarts should not cause any "download and expand" time, unless you specifically request the container to be pulled.
 
 [^1]: The Dell XPS 13 was an older model Intel(R) Core(TM) i5-3317U CPU @ 1.70GHz dual (2) core
-[^2]: Time measured from the end of the audio capture until all images were processed. Includes time taken by Discord notifications. 
+[^2]: Time measured from the end of the audio capture until all images were processed. Includes time taken by Discord notifications.
 # License
 The software packages and OS layers included in this project are used with permission under license terms that are distributed with these packages. Specifically, the GPL 3.0 license terms for the original, non-containerized version of "Raspberry NOAA 2" can be found [here](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/LICENSE).
 
