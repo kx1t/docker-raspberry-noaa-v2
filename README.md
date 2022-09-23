@@ -113,16 +113,16 @@ Then send us the link that is returns after about 30 seconds. If it complaints t
 As written above, the container is LARGE. Here are some timing measurements for a system to become available. In this case, we started FROM SCRATCH. This means, that all layers needed to be downloaded. Normally, when you do a "quick update", no (or minimal) downloads need to happen.
 The measurements were taken on 22 September 2022, using a wired 100 Mbps connection to a 1 GB fiber internet connection. The measurements were conducted in series to avoid filling up the network bandwidth.
 
-| Device/Architecture | Time to download and expand | Time to create and start container | Time for container to be fully up and running | TOTAL TIME |
-|---------------------|-----------------------------|------------------------------------|--------------------------------------------------|------------------|
-| RPi 3B+ / armhf     | 1238 secs | 9.6 secs | 145 secs | 1392.6 secs (23m12.6s)|
-| RPi 4B (4Gb) / arm64 | 627 secs | 16 secs | 90 secs | 733 secs (12m13s)|
-| Dell XPS 13[^1] / amd64 (x86) | 129 secs | 2.5 secs | 40 secs | 171.5 secs (2m51.5s)|
+| Device/Architecture | Time to download and expand | Time to create and start container | Time for container to be fully up and running | TOTAL TIME | Time to process a NOAA image[^2] |
+|---------------------|-----------------------------|------------------------------------|--------------------------------------------------|------------------|---------------|
+| RPi 3B+ / armhf     | 1238 secs | 9.6 secs | 145 secs | 1392.6 secs (23m12.6s)| 692 secs |
+| RPi 4B (4Gb) / arm64 | 627 secs | 16 secs | 90 secs | 733 secs (12m13s)| 386 secs |
+| Dell XPS 13[^1] / amd64 (x86) | 129 secs | 2.5 secs | 40 secs | 171.5 secs (2m51.5s)| 125 secs |
 
 Any subsequent restarts should not cause any "download and expand" time, unless you specifically request the container to be pulled.
 
 [^1]: The Dell XPS 13 was an older model Intel(R) Core(TM) i5-3317U CPU @ 1.70GHz dual (2) core
-
+[^2]: Time measured from the end of the audio capture until all images were processed. Includes time taken by Discord notifications. 
 # License
 The software packages and OS layers included in this project are used with permission under license terms that are distributed with these packages. Specifically, the GPL 3.0 license terms for the original, non-containerized version of "Raspberry NOAA 2" can be found [here](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/LICENSE).
 
