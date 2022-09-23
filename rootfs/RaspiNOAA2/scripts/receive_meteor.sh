@@ -112,7 +112,8 @@ polar_az_el=0
 polar_direction=0
 if [ "$METEOR_RECEIVER" == "rtl_fm" ]; then
   log "Starting rtl_fm record" "INFO"
-  ${AUDIO_PROC_DIR}/meteor_record_rtl_fm.sh $CAPTURE_TIME "${RAMFS_AUDRAMFS_AUDIO_FILEIO_BASE}.wav" >> $NOAA_LOG 2>&1
+
+  ${AUDIO_PROC_DIR}/meteor_record_rtl_fm.sh $CAPTURE_TIME "${RAMFS_AUDIO_BASE}.wav" >> $NOAA_LOG 2>&1
 
   log "Demodulation in progress (QPSK)" "INFO"
   qpsk_file="${NOAA_HOME}/tmp/meteor/${FILENAME_BASE}.qpsk"
@@ -172,7 +173,7 @@ if [ "$METEOR_RECEIVER" == "rtl_fm" ]; then
     rm "${RAMFS_AUDIO_BASE}.wav"
   else
     if [ "$in_mem" == "true" ]; then
-      log "Moving audio files out to the SD card" "INFO"
+      log "Moving audio files out to permanent storage" "INFO"
       mv "${RAMFS_AUDIO_BASE}.wav" "${AUDIO_FILE_BASE}.wav"
       rm -f "${RAMFS_AUDIO_BASE}.wav"
     fi
