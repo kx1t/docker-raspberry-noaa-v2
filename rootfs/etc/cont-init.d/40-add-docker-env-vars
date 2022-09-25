@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv bash
-#shellcheck shell=bash
+#shellcheck shell=bash disable=SC2154
 
 APPNAME="$(hostname)/40-add-docker-env-vars"
 
@@ -32,3 +32,29 @@ do
         setvalue "$variable" "${!variable}"
     fi
 done
+
+# Calculate the timezone_offset from the timezone
+# First check if $timezone is correctly formatted:
+if [[ ! -f /usr/share/zoneinfo/$timezone ]]
+then
+    echo "[$APPNAME][$(date)] EMERGENCY -- CORRECT THE FOLLOWING ERROR AND RESTART THE CONTAINER:"
+    echo "[$APPNAME][$(date)] Your timezone parameter is set to \"$timezone\", which is not a valid value."
+    echo "[$APPNAME][$(date)] See for a list of acceptable values: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones#Time_Zone_abbreviations"
+    echo "[$APPNAME][$(date)] Please update this value in docker-compose.yml and restart the container."
+    echo "[$APPNAME][$(date)] CONTAINER EXECUTION HALTED!"
+    exit 1
+fi
+
+partial_offset=""
+timezone_offset="$(TZ="$timezone" date +%z)"                     # --> "-0400" or "+1200" or "+0430"
+[[ "${timezone_offset: -2}" == "30" ]] && partial_offset=".5"    # for example for Asia/Calcutta
+[[ "${timezone_offset: -2}" == "15" ]] && partial_offset=".25"   # currently no 15 mins offsets, but included for future compatibility
+[[ "${timezone_offset: -2}" == "45" ]] && partial_offset=".75"   # for example for Asia/Kathmandu
+timezone_offset="${timezone_offset::-2}"                         # --> "-04" or "+12" or "+04"; we'll add partial offset back later
+[[ "${timezone_offset:1:1}" == "0"  ]] && timezone_offset="${timezone_offset:0:1}${timezone_offset:2:1}"
+                                                                 # --> "-4", "+12", etc
+[[ "${timezone_offset:0:1}" == "+"  ]] && timezone_offset="${timezone_offset:1}"    # --> "-4" or "12" (remove any "+" signs)
+timezone_offset="$timezone_offset$partial_offset"                # add the partial offset back to it, if any
+
+setvalue "timezone_offset" "$timezone_offset"
+echo "[$APPNAME][$(date)] Calculated Timezone Offset for $timezone to be $timezone_offset"
