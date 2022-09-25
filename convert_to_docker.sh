@@ -59,7 +59,7 @@ then
 fi
 
 # Check if a number of prerequisites are available and resolve if not:
-if ! which docker >/dev/null 2>&1
+if [[ "$argv" == "-c" ]] && ! which docker >/dev/null 2>&1
 then
     echo "[$(date)][$APPNAME] Docker is not yet installed on this machine. We suggest that you go here and use the \"docker-install\" script to install and configure it."
     echo "[$(date)][$APPNAME] https://githib.com/sdr-enthusiasts/docker-install"
