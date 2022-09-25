@@ -22,6 +22,22 @@ EXCLUDED_SETTINGS+=("ntp_server")
 
 echo "[$(date)][$APPNAME] $0 - create a docker-compose.yml file from an existing non-containerized RaspiNOAA2 setup."
 
+argv="$1"
+argv="${argv,,}"
+
+if [[ "$argv" == "-?" ]] || [[ "$argv" == "-h" ]]
+then
+    echo "Usage:"
+    echo "$0 -c          (C)onvert an existing non-Docker Raspberry NOAA V2 setup to Docker and run this Docker"
+    echo "$0 -d          only generate a (D)ocker-compose.yml file that can be used on a different machine"
+    echo "$0 -? or -h    Show this help text"
+    exit 0
+elif [[ "$argv" != "-c" ]] && [[ "$argv" != "-d" ]]
+then
+    echo "You need to specify either -c or -d, or you can ask help using $0 -?"
+    exit 1
+fi
+
 function setvalue () {
     # This function writes values to the settings file
     # Example: setvalue "latitude" "42.41234"
@@ -34,6 +50,13 @@ function setvalue () {
 
 	sed -i "s~\(^\s*- ${param}=\).*~\1${value}~" "$CONTAINER_DIR/docker-compose.yml"
 }
+
+if [[ "$argv" == "-d" ]]
+then
+    MEDIA_LOCATION=""
+    DB_LOCATION=""
+    CONTAINER_DIR="."
+fi
 
 # Check if a number of prerequisites are available and resolve if not:
 if ! which docker >/dev/null 2>&1
@@ -56,7 +79,7 @@ then
     fi
 fi
 
-if [[ ! -d $MEDIA_LOCATION ]]
+if [[ "$argv" == "-c" ]] && [[ ! -d $MEDIA_LOCATION ]]
 then
     echo "[$(date)][$APPNAME] Cannot find an existing media directory at $MEDIA_LOCATION"
     read -p "[$(date)][$APPNAME] Please enter the location of your media directory. If you don't have any saved media, press ENTER to leave it blank: " MEDIA_LOCATION
@@ -67,7 +90,7 @@ then
     fi
 fi
 
-if [[ ! -f $DB_LOCATION ]]
+if [[ "$argv" == "-c" ]] && [[ ! -f $DB_LOCATION ]]
 then
     echo "[$(date)][$APPNAME] Cannot find an existing database at $DB_LOCATION"
     read -p "[$(date)][$APPNAME] Please enter the location of your panel.db database. If you don't have any saved media, press ENTER to leave it blank: " DB_LOCATION
@@ -131,6 +154,12 @@ do
         fi
     fi
 done
+
+if [[ "$argv" == "-d" ]]
+then
+    echo "[$(date)][$APPNAME] Done! Your docker-compose file is available here: $CONTAINER_DIR/docker-compose.yml"
+    exit 0
+fi
 
 echo "[$(date)][$APPNAME] We now need to start the Docker container for a moment to ensure that the correct mapped volumes are created."
 echo "[$(date)][$APPNAME] If this is the very first time you run the Docker Container, it may take a while:"
