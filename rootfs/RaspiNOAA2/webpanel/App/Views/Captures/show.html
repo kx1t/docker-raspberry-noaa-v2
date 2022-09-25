@@ -7,7 +7,9 @@
 {% block body %}
 
  <div>
-         <p align="right"> Enhancement details <a href="../enhancement_details.html" target="_blank">information</a></p>
+     {% if '.' is constant('Config\\Config::WEB_BASEURL') %}<p align="right"> Enhancement details <a href="../enhancement_details.html" target="_blank">information</a></p>
+     {% else %}<p align="right"> Enhancement details <a href="{{ constant('Config\\Config::WEB_BASEURL') }}/enhancement_details.html" target="_blank">information</a></p>
+     {% endif %}
  </div>
 
   {% set col_count = 0 %}
