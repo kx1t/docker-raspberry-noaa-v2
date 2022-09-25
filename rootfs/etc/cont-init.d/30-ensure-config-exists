@@ -1,0 +1,11 @@
+#!/usr/bin/with-contenv bash
+#shellcheck shell=bash
+
+APPNAME="$(hostname)/50-ensure-config-exists"
+
+echo "[$(date)][$APPNAME] Ensuring config dir exists ..."
+
+if [[ ! -f /RaspiNOAA2/config/settings.yml ]]
+then
+	cp -rf /RaspiNOAA2/config.bkup/* /RaspiNOAA2/config
+fi
