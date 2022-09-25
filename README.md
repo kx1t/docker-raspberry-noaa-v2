@@ -96,7 +96,7 @@ The script assumes that you already have Docker and Docker Compose installed. If
 
 Once you have Docker installed, log in to your machine and type (or copy/paste) the following to run the conversion script:
 ```
-bash <(curl -s "https://raw.githubusercontent.com/kx1t/docker-raspberry-noaa-v2/main/convert_to_docker.sh -c")
+wget -q https://raw.githubusercontent.com/kx1t/docker-raspberry-noaa-v2/main/convert_to_docker.sh && bash convert_to_docker.sh -c
 ```
 
 Once the script has run its course, you can run the program.
@@ -105,7 +105,7 @@ The location of your `docker-compose.yml` file will be `/opt/raspinoaa2`
 ## Only generate a `docker-compose.yml` file from an existing setup
 If you want to convert your existing, non-containerized setup to a Docker-based setup on a different machine, we have a script that allows you to generate a `docker-compose,.yml` file from your existing setup. You can then copy this file to your Docker host machine and use it there.
 ```
-bash <(curl -s "https://raw.githubusercontent.com/kx1t/docker-raspberry-noaa-v2/main/convert_to_docker.sh -d")
+wget -q https://raw.githubusercontent.com/kx1t/docker-raspberry-noaa-v2/main/convert_to_docker.sh && bash convert_to_docker.sh -d
 ```
 After running this script, you should see a `docker-compose.yml` file in the directory from where you issued the command.
 
