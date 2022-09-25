@@ -117,3 +117,4 @@ services:
       - "/etc/timezone:/etc/timezone:ro"
       - /opt/noaa/srv:/srv
       - /opt/noaa/db:/RaspiNOAA2/db
+      - /opt/noaa/annotation:/RaspiNOAA2/config/annotation

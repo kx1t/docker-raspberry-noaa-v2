@@ -71,6 +71,24 @@ Other parameters in `docker-compose.yml` include:
 - take note of the `devices:` section. This is needed to expose access to the USB ports from the container.
 - `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
 
+### Customizing your annotation setup
+You can optionally [customize the annotations](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/docs/annotation.md). In the containerized version, we mapped the `annotation` directory in `docker-compose.yml` to `/opt/noaa/annotation`. Follow this sequence:
+
+- start your container (see below in "Running the program") and wait until you can reach the website
+- do this once (only needed the first time):
+    ```
+    sudo chmod -R a+w /opt/noaa/annotation
+    ```
+- Now, you can edit the annotation file as per the original description:
+    ```
+    nano /opt/noaa/annotation/annotation.html.j2
+    ```
+- If you have any image files you want to add, you can copy them to the `/opt/noaa/annotation` directory
+- Once done, simply restart the container with this command and the new annotations should be applied:
+    ```
+    docker restart noaa
+    ```
+
 # Alternative -- convert your existing setup to use Docker Containers
 Most people wouldn't want to change a working RaspiNOAA V2 setup to use Docker Containers: if you are dedicating an entire machine to this, there is not real advantage. However, for those that would want to do this, I've written a small script.
 The script assumes that you already have Docker and Docker Compose installed. If you haven't done so, I'd strongly recommend taking a look at the install script [at this repository](https://github.com/sdr-enthusiasts/docker-install). It will take care for you of everything you need to install and set up to get Docker running.
