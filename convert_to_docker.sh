@@ -18,10 +18,30 @@ DOCKERCOMPOSE_TEMPLATE="https://raw.githubusercontent.com/kx1t/docker-raspberry-
 EXCLUDED_SETTINGS=()
 EXCLUDED_SETTINGS+=("disable_wifi_power_mgmt")
 EXCLUDED_SETTINGS+=("ntp_server")
+USER="$(whoami)"
+if [[ "$USER" != "root" ]]
+then
+    SUDO="sudo"
+else
+    SUDO=""
+fi
 
+function setvalue () {
+    # This function writes values to the settings file
+    # Example: setvalue "latitude" "42.41234"
+    local param
+    local value
+    param="$1"; param="${param,,}"
+    value="$2"
+
+    [[ -z "$value" ]] && value="''"
+
+	sed -i "s~\(^\s*- ${param}=\).*~\1${value}~" "$CONTAINER_DIR/docker-compose.yml"
+}
 
 echo "[$(date)][$APPNAME] $0 - create a docker-compose.yml file from an existing non-containerized RaspiNOAA2 setup."
 
+# Check the command line args:
 argv="$1"
 argv="${argv,,}"
 
@@ -37,19 +57,6 @@ then
     echo "You need to specify either -c or -d, or you can ask help using $0 -?"
     exit 1
 fi
-
-function setvalue () {
-    # This function writes values to the settings file
-    # Example: setvalue "latitude" "42.41234"
-    local param
-    local value
-    param="$1"; param="${param,,}"
-    value="$2"
-
-    [[ -z "$value" ]] && value="''"
-
-	sed -i "s~\(^\s*- ${param}=\).*~\1${value}~" "$CONTAINER_DIR/docker-compose.yml"
-}
 
 if [[ "$argv" == "-d" ]]
 then
@@ -111,13 +118,13 @@ echo "[$(date)][$APPNAME] Reading settings parameters from: $SETTINGS_LOCATION"
 read -s -n 1 -p "[$(date)][$APPNAME] Press any key to start or CTRL-c to abort..."
 
 # start prepping the target area:
-sudo mkdir -p "$CONTAINER_DIR"
-sudo chmod a+rwx "$CONTAINER_DIR"
+$SUDO mkdir -p "$CONTAINER_DIR"
+$SUDO chmod a+rwx "$CONTAINER_DIR"
 if [[ -f "$CONTAINER_DIR/docker-compose.yml" ]]
 then
     echo "Found an existing file at $CONTAINER_DIR/docker-compose.yml. This file will be backed up as $CONTAINER_DIR/docker-compose-backup.yml"
     cp -f "$CONTAINER_DIR/docker-compose.yml" "$CONTAINER_DIR/docker-compose-backup.yml"
-    sudo rm -f "$CONTAINER_DIR/docker-compose.yml"
+    $SUDO rm -f "$CONTAINER_DIR/docker-compose.yml"
 fi
 
 # get a template docker-compose.yml file:
@@ -178,7 +185,7 @@ if [[ -n "$MEDIA_LOCATION" ]]
 then
     echo "[$(date)][$APPNAME] Copying previously captured media (images, audio, video) in place..."
     targetdir="$(sed -n 's|^[ -]*\(.*\):.*$|\1|p' <<< "$(grep ":/srv" "$CONTAINER_DIR/docker-compose.yml")")"
-    sudo chmod a+rwx "$targetdir"
+    $SUDO chmod a+rwx "$targetdir"
     cp -rf $MEDIA_LOCATION/* "$targetdir"
 else
     echo "[$(date)][$APPNAME] Skipping the copying of previously captured media."
@@ -189,7 +196,7 @@ then
     echo "[$(date)][$APPNAME] Copying existing database in place..."
     # Get the target directory name:
     targetdir="$(sed -n 's|^[ -]*\(.*\):.*$|\1|p' <<< "$(grep ":/RaspiNOAA2/db" "$CONTAINER_DIR/docker-compose.yml")")"
-    sudo chmod a+rwx "$targetdir"
+    $SUDO chmod a+rwx "$targetdir"
     cp -rf $DB_LOCATION/* "$targetdir"
 else
     echo "[$(date)][$APPNAME] Skipping the copying of existing database."
