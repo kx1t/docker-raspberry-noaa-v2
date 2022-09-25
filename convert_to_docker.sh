@@ -139,6 +139,7 @@ do
             sed -i "s~\(^\s*- ${variable}=\).*~\1${value}~" "$CONTAINER_DIR/docker-compose.yml"
         else
             # the param doesn't exist in docker-compose.yml Figure out if we need to add it
+            #shellcheck disable=SC2076
             if [[ " ${EXCLUDED_SETTINGS[*]} " =~ " ${variable} " ]]
             then
                 echo "$variable=$value was excluded -- not needed/desired in Docker environment"
@@ -167,8 +168,10 @@ echo "[$(date)][$APPNAME] Download size is about 600 MB and download/extraction 
 echo "[$(date)][$APPNAME] 2.5 minutes (on a i7 PC) to upwards of 20 minutes on a Raspberry Pi 3B+."
 echo ""
 
+#shellcheck disable=SC2164
 pushd "$CONTAINER_DIR" >/dev/null
     docker compose up -d && docker-compose down
+#shellcheck disable=SC2164
 popd
 
 if [[ -n "$MEDIA_LOCATION" ]]
