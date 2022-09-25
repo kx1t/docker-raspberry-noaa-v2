@@ -1,0 +1,17 @@
+#!/usr/bin/with-contenv bash
+#shellcheck shell=bash
+
+# Run cron daemon
+# (C) 2022 by kx1t (Ramon F. Kolb), license: GPLv3.
+
+set -euo pipefail
+
+APPNAME="$(hostname)/cron"
+echo "[$(date)][$APPNAME] Starting cron daemon ..."
+
+while true
+do
+	/usr/sbin/cron -f
+	echo "[$(date)][$APPNAME] Cron daemon has excited. Restarting..."
+	sleep 5
+done
