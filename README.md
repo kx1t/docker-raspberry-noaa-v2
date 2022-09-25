@@ -72,7 +72,7 @@ Other parameters in `docker-compose.yml` include:
 - `container_name` contains the name you give to the container. Name it whatever you want; I'd advise to keep the `hostname` parameter set to the same value for consistency
 
 ### Customizing your annotation setup
-You can optionally [customize the annotations](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/docs/annotation.md). In the containerized version, we mapped the `annotation` directory in `docker-compose.yml` to `/opt/noaa/annotation`. Follow this sequence:
+You can optionally [customize the annotations](https://github.com/jekhokie/raspberry-noaa-v2/blob/master/docs/annotation.md). In the containerized version, we mapped the `annotation` directory in [`docker-compose.yml`](https://github.com/kx1t/docker-raspberry-noaa-v2/blob/main/docker-compose.yml) to `/opt/noaa/annotation`. Follow this sequence:
 
 - start your container (see below in "Running the program") and wait until you can reach the website
 - do this once (only needed the first time):
