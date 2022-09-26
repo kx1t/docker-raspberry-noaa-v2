@@ -10,7 +10,7 @@ logfile="/var/log/raspberry-noaa-v2/output.log"
 if [[ -n "$VERBOSELOG" ]]
 then
     echo "[$(date)][$APPNAME] VERBOSELOG enabled -- all logs from $logfile are printed to the Docker Logs"
-    tail -f "$logfile" \
+    tail -n 0 -f "$logfile" \
         | stdbuf -o0 sed --unbuffered '/^$/d' | stdbuf -o0 awk '{print "[" strftime("%a %b %e %T %Z %Y", systime()) "]['"$APPNAME"'] " $0}'
 else
     sleep infinity
