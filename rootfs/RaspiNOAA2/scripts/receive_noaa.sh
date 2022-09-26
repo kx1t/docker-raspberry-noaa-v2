@@ -173,7 +173,7 @@ if [[ "${PRODUCE_POLAR_DIRECTION}" == "true" ]]; then
   ${IMAGE_PROC_DIR}/thumbnail.sh 300 "${IMAGE_FILE_BASE}-polar-direction.png" "${IMAGE_THUMB_BASE}-polar-direction.png" >> $NOAA_LOG 2>&1
 fi
 
-log "Bulding pass map" "INFO"
+log "Building pass map" "INFO"
 # add 10 seconds to ensure we account for small deviations in timing - being even a second too soon
 # can cause an error of "wxmap: warning: could not find matching pass to build overlay map.", while
 # going over the start time by a few seconds while still being within the pass timing causes wxmap
