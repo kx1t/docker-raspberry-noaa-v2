@@ -19,7 +19,9 @@ do
 	while pgrep -x cron >/dev/null 2>&1
 	do
 		# really, do nothing, just check again in a few seconds
-		sleep 10
+		# I didn't choose "10" seconds because I don't want it to overlap with the ATD daemon
+		# which checks every 10 seconds. Just spreading out the (minimal) load...
+		sleep 13
 	done
 	echo "[$(date)][$APPNAME] Cron daemon has excited. Restarting..."
 done
