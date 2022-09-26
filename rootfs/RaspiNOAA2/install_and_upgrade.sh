@@ -12,7 +12,7 @@ export NOAA_HOME="/RaspiNOAA2"
 
 echo "Home directory is $NOAA_HOME"
 
-cd "$NOAA-HOME"
+cd "$NOAA_HOME"
 
 die() {
   >&2 echo "${RED}Error: $1${RESET}" && exit 1
