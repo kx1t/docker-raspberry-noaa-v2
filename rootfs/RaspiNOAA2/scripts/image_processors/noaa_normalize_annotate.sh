@@ -9,7 +9,7 @@
 #   3. Image quality percent (whole number)
 #
 # Example:
-#   ./noaa_normalize_annotate.sh /path/to/inputfile.jpg 95
+#   ./noaa_normalize_annotate.sh /path/to/inputfile.jpg /path/to/outputfile.jpg 95
 
 # import common lib and settings
 source "$NOAA_HOME/.noaa-v2.conf"
