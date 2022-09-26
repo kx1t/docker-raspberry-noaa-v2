@@ -11,7 +11,15 @@ echo "[$(date)][$APPNAME] Starting cron daemon ..."
 
 while true
 do
-	/usr/sbin/cron -f
+	/usr/sbin/cron
+
+	# this is necessary to ensure that cron reloads any previously created crontabs:
+	find /var/spool/cron/crontabs -exec touch {} +
+	find /etc -name "cron*" -exec touch {} +
+	while pgrep -x cron >/dev/null 2>&1
+	do
+		# really, do nothing, just check again in a few seconds
+		sleep 10
+	done
 	echo "[$(date)][$APPNAME] Cron daemon has excited. Restarting..."
-	sleep 5
 done
