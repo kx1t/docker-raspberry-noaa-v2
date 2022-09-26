@@ -75,6 +75,13 @@
     special_time: reboot
     job: "{{ noaa_home }}/scripts/schedule.sh"
 
+- name: Ramons special test cron entry
+  cron:
+    name: Ramons special test cron entry
+    minute: "*"
+    hour: "*"
+    job: "/bin/date >> /tmp/testfile"
+
 - name: create database
   shell: "/usr/bin/sqlite3 {{ noaa_home }}/db/panel.db < {{ noaa_home }}/db_migrations/00_seed_schema.sql"
   args:
