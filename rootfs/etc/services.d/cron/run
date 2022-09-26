@@ -23,5 +23,5 @@ do
 		# which checks every 10 seconds. Just spreading out the (minimal) load...
 		sleep 13
 	done
-	echo "[$(date)][$APPNAME] Cron daemon has excited. Restarting..."
+	echo "[$(date)][$APPNAME] Cron daemon has exited. Restarting..."
 done
