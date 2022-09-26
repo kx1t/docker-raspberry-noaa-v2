@@ -21,18 +21,12 @@
   directory alongside this file.
 -->
 
-<table style="width: 1048px; text-align: left; background-color: opacity; border-radius: 20px; padding: 2px; height: 20px;">
-      <tbody>
-        <tr>
-          <td style="width: 322.867px;"><center><img src="11.png"><br>
-          </td>
-          <td style="width: 1313.13px;"><font color="yellow"><font size="5">
-          <center> Ground Station: {{ ground_station_location }} <br>
-          {% if antenna_info is not '' %}Antenna: {{ antenna_info }} <br>{% endif %}
-          Satellite: {{ sat_name }} | {{ capture_start }} <br>
-          Max Elevation: {{ sat_max_elevation }}&#176; {{ pass_side_long }} | Sun Elevation: {{ sun_elevation }}&#176; <br>
-          Direction: {{ pass_direction }} | {{ enhancement }} | Gain: {{ gain }}</center>
-          </font></td>
-        </tr>
-      </tbody>
-    </table>
+<div style="text-align: left;">
+  <img src="./raspberry-noaa-v2-logo.png">
+</div>
+
+<p style="color: yellow; font-weight: bold;">
+  Ground Station: {{ ground_station_location }}<br>
+  {{ sat_name }} {{ enhancement }} {{ capture_start }} Max Elev: {{ sat_max_elevation }}&#176; {{ pass_side }}
+  Sun Elevation: {{ sun_elevation }}&#176; Gain: {{ gain }} | {{ pass_direction }}
+</p>

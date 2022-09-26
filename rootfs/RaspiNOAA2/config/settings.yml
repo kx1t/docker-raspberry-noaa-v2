@@ -124,6 +124,7 @@ produce_noaa_pristine_histogram: false
 produce_polar_az_el_graph: false
 produce_polar_direction_graph: true
 ground_station_location: ''
+antenna_info: ''
 show_sun_elevation: true
 show_pass_direction: true
 noaa_daytime_enhancements: 'MCIR MCIR-precip MSA MSA-precip HVC-precip HVCT-precip HVC HVCT ZA therm CC HE HF MD BD MB JF JJ LC TA WV NO sea'
