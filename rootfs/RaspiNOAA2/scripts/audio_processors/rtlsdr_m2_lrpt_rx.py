@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 ##################################################
 # GNU Radio Python Flow Graph
@@ -70,7 +70,7 @@ class top_block(gr.top_block):
     # determine if gain is specified or if auto-gain should be used
     if (gain == 0):
       self.rtlsdr_source_0.set_gain_mode(True, 0)
-    else:  
+    else:
       self.rtlsdr_source_0.set_gain_mode(False, 0)
       self.rtlsdr_source_0.set_gain(gain, 0)
     self.rtlsdr_source_0.set_if_gain(0, 0)

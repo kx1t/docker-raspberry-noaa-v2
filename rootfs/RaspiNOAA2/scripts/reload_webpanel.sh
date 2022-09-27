@@ -1,5 +1,5 @@
 #!/usr/bin/with-contenv bash
-#shellcheck shell=bash
+#shellcheck shell=bash disable=SC2038
 
 APPNAME="$(hostname)/reload_nginx"
 

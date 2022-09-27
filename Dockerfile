@@ -9,23 +9,16 @@ RUN set -x && \
     KEPT_PACKAGES=() && \
     KEPT_PIP3_PACKAGES=() && \
     KEPT_RUBY_PACKAGES=() && \
-    TEMP_PACKAGES+=(gcc) && \
-    KEPT_PACKAGES+=(python3-dev) && \
-    TEMP_PACKAGES+=(pkg-config) && \
-    KEPT_PACKAGES+=(at) && \
+    #
     KEPT_PACKAGES+=(ansible) && \
+    KEPT_PACKAGES+=(at) && \
     KEPT_PACKAGES+=(bc) && \
-    TEMP_PACKAGES+=(cmake) && \
-    TEMP_PACKAGES+=(cmake-data) && \
     KEPT_PACKAGES+=(composer) && \
-    TEMP_PACKAGES+=(cpp-10) && \
     KEPT_PACKAGES+=(cron) && \
     KEPT_PACKAGES+=(curl) && \
     KEPT_PACKAGES+=(ffmpeg) && \
-    TEMP_PACKAGES+=(git) && \
+    KEPT_PACKAGES+=(gfortran) && \
     KEPT_PACKAGES+=(gmic) && \
-    TEMP_PACKAGES+=(g++) && \
-    TEMP_PACKAGES+=(gcc-10) && \
     KEPT_PACKAGES+=(gnuradio) && \
     KEPT_PACKAGES+=(gr-osmosdr) && \
     KEPT_PACKAGES+=(imagemagick) && \
@@ -34,13 +27,14 @@ RUN set -x && \
     KEPT_PACKAGES+=(libatlas-base-dev) && \
     KEPT_PACKAGES+=(libgfortran5) && \
     KEPT_PACKAGES+=(libjpeg-dev) && \
+    KEPT_PACKAGES+=(liblapacke-dev) && \
     KEPT_PACKAGES+=(libncurses5-dev) && \
     KEPT_PACKAGES+=(libncursesw5-dev) && \
     KEPT_PACKAGES+=(libsox-fmt-mp3) && \
     KEPT_PACKAGES+=(libusb-1.0-0) && \
     KEPT_PACKAGES+=(libusb-1.0-0-dev) && \
-    KEPT_PACKAGES+=(libxft-dev) && \
     KEPT_PACKAGES+=(libxft2) && \
+    KEPT_PACKAGES+=(libxft-dev) && \
     KEPT_PACKAGES+=(mailutils) && \
 #    KEPT_PACKAGES+=(make) && \
     KEPT_PACKAGES+=(nginx) && \
@@ -48,25 +42,35 @@ RUN set -x && \
     KEPT_PACKAGES+=(php7.4-mbstring) && \
     KEPT_PACKAGES+=(php7.4-sqlite3) && \
     KEPT_PACKAGES+=(python3-apt) && \
-    KEPT_PACKAGES+=(python3-pip) && \
-    KEPT_PACKAGES+=(python-setuptools) && \
-    KEPT_PACKAGES+=(python3-matplotlib) && \
-    KEPT_PACKAGES+=(python3-pyrsistent) && \
-    KEPT_PACKAGES+=(python3-pillow) && \
+    KEPT_PACKAGES+=(python3-dev) && \
     KEPT_PACKAGES+=(python3-ephem) && \
     KEPT_PACKAGES+=(python3-idna) && \
     KEPT_PACKAGES+=(python3-jsonschema) && \
+    KEPT_PACKAGES+=(python3-matplotlib) && \
     KEPT_PACKAGES+=(python3-numpy) && \
-    KEPT_PACKAGES+=(python3-yaml) && \
+    KEPT_PACKAGES+=(python3-pillow) && \
+    KEPT_PACKAGES+=(python3-pip) && \
+    KEPT_PACKAGES+=(python3-pyrsistent) && \
     KEPT_PACKAGES+=(python3-requests) && \
+    KEPT_PACKAGES+=(python3-yaml) && \
+    KEPT_PACKAGES+=(python-setuptools) && \
     KEPT_PACKAGES+=(rtl-sdr) && \
     KEPT_PACKAGES+=(socat) && \
     KEPT_PACKAGES+=(sox) && \
     KEPT_PACKAGES+=(sqlite3) && \
-    TEMP_PACKAGES+=(systemd) && \
-    KEPT_PACKAGES+=(xfonts-base) && \
     KEPT_PACKAGES+=(xfonts-75dpi) && \
-#
+    KEPT_PACKAGES+=(xfonts-base) && \
+    #
+    TEMP_PACKAGES+=(build_essentials) && \
+    TEMP_PACKAGES+=(cmake) && \
+    TEMP_PACKAGES+=(cmake-data) && \
+    TEMP_PACKAGES+=(cpp-10) && \
+    TEMP_PACKAGES+=(g++) && \
+    TEMP_PACKAGES+=(gcc) && \
+    TEMP_PACKAGES+=(gcc-10) && \
+    TEMP_PACKAGES+=(git) && \
+    TEMP_PACKAGES+=(pkg-config) && \
+    TEMP_PACKAGES+=(systemd) && \#
 # other packages:
     KEPT_PACKAGES+=(unzip) && \
     KEPT_PACKAGES+=(psmisc) && \
@@ -111,13 +115,30 @@ pushd /git/docker-raspberry-noaa-v2/software && \
 popd && \
 #
 # Install meteor_demod
-    pushd /git/docker-raspberry-noaa-v2/software && \
-        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp meteor_demod_armhf /usr/bin/meteor_demod; \
-        elif [ "$TARGETARCH" == "amd64" ]; then cp meteor_demod_amd64 /usr/bin/meteor_demod; \
-        elif [ "$TARGETARCH" == "arm64" ]; then cp meteor_demod_arm64 /usr/bin/meteor_demod; \
-        else echo "No target for meteor_demod for $TARGETARCH" && exit 1; \
-        fi && \
-    popd && \
+    # pushd /git/docker-raspberry-noaa-v2/software && \
+    #     if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp meteor_demod_armhf /usr/bin/meteor_demod; \
+    #     elif [ "$TARGETARCH" == "amd64" ]; then cp meteor_demod_amd64 /usr/bin/meteor_demod; \
+    #     elif [ "$TARGETARCH" == "arm64" ]; then cp meteor_demod_arm64 /usr/bin/meteor_demod; \
+    #     else echo "No target for meteor_demod for $TARGETARCH" && exit 1; \
+    #     fi && \
+    # popd && \
+pushd /git && \
+    git clone --depth=1 https://github.com/opencv/opencv.git && \
+    cd opencv/ && \
+    mkdir build && cd build && \
+    cmake ../  -DBUILD_LIST=core,imgproc,imgcodecs -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_SHARED_LINKER_FLAGS=-latomic && \
+    make -j4 && \
+    make install && \
+popd && \
+pushd /git && \
+    git clone https://github.com/Digitelektro/MeteorDemod.git && \
+    cd MeteorDemod && \
+    git submodule update --init --recursive && \
+    mkdir build && cd build && \
+    cmake ../ && \
+    make -j4 && \
+    make install && \
+popd && \
 #
 # Install medet
     pushd /git/docker-raspberry-noaa-v2/software && \
@@ -143,6 +164,15 @@ popd && \
         fi && \
     popd && \
 #
+# Install noaa-apt
+    pushd /git/docker-raspberry-noaa-v2/software && \
+        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ] || [ "$TARGETARCH" == "arm64" ]; then cp nooa-apt-arm /usr/bin/noaa-apt; \
+        elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i noaa-apt_1.3.1-1_amd64.deb; \
+        else echo "No target for noaa-apt for $TARGETARCH" && exit 1; \
+        fi && \
+    popd && \
+
+#
 # Install udev rules
     mkdir -p /etc/udev/rules.d && \
     curl -sL -o /etc/udev/rules.d/rtl-sdr.rules https://raw.githubusercontent.com/wiedehopf/adsb-scripts/master/osmocom-rtl-sdr.rules && \
@@ -150,8 +180,8 @@ popd && \
 # --------------------------------------------------------------------------------------------
 #
 # Clean up
-    echo Uninstalling $TEMP_PACKAGES && \
-    apt-get remove --purge -y -q ${TEMP_PACKAGES[@]} && \
+    echo "Uninstalling ${TEMP_PACKAGES[*]}" && \
+    apt-get remove --purge -y -q "${TEMP_PACKAGES[@]}" && \
     apt-get autoremove -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -y && \
     apt-get clean -y -q && \
     rm -rf \

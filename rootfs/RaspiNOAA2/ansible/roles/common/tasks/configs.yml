@@ -23,6 +23,14 @@
     group: root
     mode: 0644
 
+- name: MeteorDemod config settings.ini file
+  template:
+    src: settings.ini.j2
+    dest: /root/.config/meteordemod/settings.ini
+    owner: root
+    group: root
+    mode: 0644
+
 - name: wxtoimg config file
   template:
     src: wxtoimgrc.j2
