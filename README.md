@@ -4,7 +4,7 @@ Looking for support, wanting to talk about new features, or just hang out? Come 
 
 # Containerized Version of Raspberry NOAA V2
 
-The group at [jekhokie/raspberry-noaa-v2](https://githib.com/jekhokie/raspberry-noaa-v2) implemented a fantastic NOAA and METEOR weather image capturing package. Unfortunately, it had a few issues that made it ever harder to deploy this in the modern world:
+The group at [jekhokie/raspberry-noaa-v2](https://github.com/jekhokie/raspberry-noaa-v2) implemented a fantastic NOAA and METEOR weather image capturing package. Unfortunately, it had a few issues that made it ever harder to deploy this in the modern world:
 
 - The build was for `armhf` and (with some efforts) `arm64` only
 - It was hard to install and configure, unless you'd put a full image on a further unused Raspberry Pi
