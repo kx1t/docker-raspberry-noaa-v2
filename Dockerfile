@@ -61,7 +61,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(xfonts-75dpi) && \
     KEPT_PACKAGES+=(xfonts-base) && \
     #
-    TEMP_PACKAGES+=(build_essential) && \
+    TEMP_PACKAGES+=(build-essential) && \
     TEMP_PACKAGES+=(cmake) && \
     TEMP_PACKAGES+=(cmake-data) && \
     TEMP_PACKAGES+=(cpp-10) && \
