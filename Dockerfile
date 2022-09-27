@@ -70,7 +70,7 @@ RUN set -x && \
     TEMP_PACKAGES+=(gcc-10) && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(pkg-config) && \
-    TEMP_PACKAGES+=(systemd) && \#
+    TEMP_PACKAGES+=(systemd) && \
 # other packages:
     KEPT_PACKAGES+=(unzip) && \
     KEPT_PACKAGES+=(psmisc) && \
