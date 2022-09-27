@@ -26,6 +26,8 @@ RUN set -x && \
     KEPT_PACKAGES+=(libasound2-dev) && \
     KEPT_PACKAGES+=(libatlas-base-dev) && \
     KEPT_PACKAGES+=(libgfortran5) && \
+    KEPT_PACKAGES+=(libgtk-3-0) && \
+    KEPT_PACKAGES+=(libgdk-pixbuf2.0-0) && \
     KEPT_PACKAGES+=(libjpeg-dev) && \
     KEPT_PACKAGES+=(liblapacke-dev) && \
     KEPT_PACKAGES+=(libncurses5-dev) && \
