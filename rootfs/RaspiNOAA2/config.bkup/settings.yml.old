@@ -2,9 +2,9 @@
 # base station configurations
 #   latitude: south values are negative
 #   longitude: west values are negative
-latitude: 40.712776
-longitude: -74.005974
-altitude: 0.0
+latitude: 42.4
+longitude: -71.1
+altitude: 18
 
 # time zone offset from UTC (for example, '-5' for US Eastern)
 timezone_offset: -5
@@ -21,22 +21,22 @@ ntp_server: ''
 #   test_freq_offset - receiver frequency offset (PPM)
 test_gain: 7.7
 test_sdr_device_id: 0
-test_enable_bias_tee: true
+test_sdr_device_serial: ''
+test_enable_bias_tee: false
 test_freq_offset: 0
 
 # receiver settings
-#   noaa_receiver  - which receiver method to use (either 'rtl_fm' or 'gnuradio')
 #   meteor_receiver - which receiver method to use (either 'rtl_fm' or 'gnuradio')
+#   noaa_receiver  - which receiver method to use (either 'rtl_fm' or 'gnuradio')
 #     **WARNING**: 'gnuradio' does not work with certain SDR devices (e.g. it will not currently
 #                  work with a RTL-SDR v3 dongle, as no image will be decoded from the bitstream)
-
-meteor_receiver: 'gnuradio'
-noaa_receiver: 'gnuradio'
-
+meteor_receiver: 'rtl_fm'
+noaa_receiver: 'rtl_fm'
 
 # whether to schedule specific orbiting objects for capture
 #   <satellite_name>_schedule - whether to schedule captures for the satellite
 #   <satellite_name>_sdr_device_id - device ID of the SDR device to be used for recording for the satellite
+#   <satellite_name>_sdr_device_serial - Serial of the SDR device. If this one is defined, then <satellite_name>_sdr_device_id is ignored
 #   <satellite_name>_freq_offset - receiver frequency offset (PPM) for the satellite capture
 #   <satellite_name>_enable_bias_tee - whether to enable bias tee for the recording of the satellite
 #   <satellite_name>_gain - gain setting for specific satellite captures
@@ -49,8 +49,7 @@ noaa_15_sdr_device_id: 0
 noaa_15_sdr_device_serial: ''
 noaa_15_freq_offset: 0
 noaa_15_enable_bias_tee: true
-noaa_15_gain: 48.0
-
+noaa_15_gain: 30
 noaa_15_sun_min_elevation: 6
 noaa_15_sat_min_elevation: 30
 
@@ -59,8 +58,7 @@ noaa_18_sdr_device_id: 0
 noaa_18_sdr_device_serial: ''
 noaa_18_freq_offset: 0
 noaa_18_enable_bias_tee: true
-noaa_18_gain: 48.0
-
+noaa_18_gain: 30
 noaa_18_sun_min_elevation: 6
 noaa_18_sat_min_elevation: 30
 
@@ -69,7 +67,7 @@ noaa_19_sdr_device_id: 0
 noaa_19_sdr_device_serial: ''
 noaa_19_freq_offset: 0
 noaa_19_enable_bias_tee: true
-noaa_19_gain: 48.0
+noaa_19_gain: 30
 noaa_19_sun_min_elevation: 6
 noaa_19_sat_min_elevation: 30
 
@@ -78,10 +76,20 @@ meteor_m2_sdr_device_id: 0
 meteor_m2_sdr_device_serial: ''
 meteor_m2_freq_offset: 0
 meteor_m2_enable_bias_tee: true
-meteor_m2_gain: 48.0
+meteor_m2_gain: 30
 meteor_m2_sun_min_elevation: 6
 meteor_m2_sat_min_elevation: 30
 meteor_m2_memory_threshold: 600
+
+# how many days to schedule passes - note this MUST be an even integer,
+# and the current day counts as "1" - passes will be scheduled until midnight
+# of the `days_to_schedule_passes` final day
+#
+# NOTE: If you want to set this value LOWER than a previously configured
+#       value, you must run the schedule script manually and pass the '-x' switch
+#       after re-running the ./install_and_upgrade.sh script to align the variables:
+#           ./scripts/schedule.sh -x
+days_to_schedule_passes: 1
 
 # whether audio files should be deleted after images are created
 delete_audio: false
@@ -104,27 +112,22 @@ delete_audio: false
 #        direction over the course of the pass, including AOS and LOS
 #   ground_station_location - free-form text for indicating ground station location in image
 #        annotation (leave blank if you wish to exclude the ground station annotation)
-#   antenna_information - free-form text for indicating antenna information in image
-#        annotation (leave blank if you wish to exclude the antenna information annotation)
 #   show_sun_elevation - whether to show sun elevation in annotation
 #   show_pass_direction - show which direction the satellite is moving in the image annotation
 #   noaa_daytime_enhancements - list of enhancements to create images using during daytime captures
 #        (note: default value seen includes list of ALL supported image processors excluding 'avi' which must be explicitly added when opting to 'enable_animation' below )
 #   noaa_nighttime_enhancements - list of enhancements to create images using during nighttime captures
-
-#        (note: default value is total list of supported image processors)
-#   noaa_crop_toptobottom - shows entire image including noise at start and end.
-#   noaa_interpolate - produces a larger, higher quality image
-#   noaa_apt (experimental) - an alternative demodulator and image rendering option to wxtoimg
-
+#        (note: default value seen includes list of ALL supported image processors excluding 'avi' which must be explicitly added when opting to 'enable_animation' below )
+#   noaa_crop_toptobottom - whether to crop the top and bottom noise out of the noaa capture
+#   noaa_interpolate - whether to interpolate and oversample the images (larger images produced)
 flip_meteor_image: true
 produce_spectrogram: true
 noaa_crop_telemetry: false
 image_annotation_location: 'NorthWest'
-extend_for_annotation: false
+extend_for_annotation: true
 produce_noaa_pristine_image: false
 produce_noaa_pristine_histogram: false
-produce_polar_az_el_graph: false
+produce_polar_az_el_graph: true
 produce_polar_direction_graph: true
 ground_station_location: ''
 antenna_information: ''
@@ -132,13 +135,8 @@ show_sun_elevation: true
 show_pass_direction: true
 noaa_daytime_enhancements: 'MCIR MCIR-precip MSA MSA-precip HVC-precip HVCT-precip HVC HVCT ZA therm CC HE HF MD BD MB JF JJ LC TA WV NO sea'
 noaa_nighttime_enhancements: 'MCIR MCIR-precip HVCT ZA therm NO TA sea'
-meteor_create_spreaded_images_without_overlay: true
-meteor_create_rain_probability_overlay: true
-meteor_create_equidistant_projection: true
-meteor_create_mercator_projection: false
 noaa_crop_toptobottom: true
 noaa_interpolate: false
-
 
 # noaa map configurations
 # http://usradioguy.com/wp-content/uploads/2020/05/wxtoimgcommand-line.pdf
@@ -177,7 +175,7 @@ noaa_map_state_border_color: "0xffff00"
 #   noaa_thermal_temp_overlay - whether to overlay a thermal map for color codes to temperature
 #   noaa_thermal_temp_overlay_location - where to place the thermal map in images - valid options are:
 #        NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast
-noaa_thermal_temp_overlay: false
+noaa_thermal_temp_overlay: true
 noaa_thermal_temp_overlay_location: 'NorthEast'
 
 # locale settings for timezone and language
@@ -204,18 +202,25 @@ lang_setting: en
 #   admin_username - username used to access the 'admin' endpoint of the webpanel (WARNING: see 'lock_admin_page' above)
 #   admin_password - password used to access the 'admin' endpoint of the webpanel (WARNING: see 'lock_admin_page' above)
 #                    NOTE: MAKE SURE YOU SET THIS TO SOMETHING REASONABLY COMPLICATED!
-#   web_datetime_format - format to display date and time in the web interface - note that this MUST conform to
+#   web_passes_date_format - format to display the dates in the pass list view - note that this MUST conform to
+#                            https://www.php.net/manual/en/datetime.format.php or else bad things will happen
+#   web_datetime_format - format to display date and time in the web interface for captures - note that this MUST conform to
 #                         https://www.php.net/manual/en/datetime.format.php or else bad things will happen
+#   web_baseurl - if you are using a reverse web proxy, set this to the base directory where the website is rendered.
+#                   For example, if you are proxying https://abcd.com/my_noaa --> http://localhost:89 for RaspiNoaa, set this parameter to "https://abcd.com/my_noaa"
+#                   If you are not using a reverse web proxy, set it to false.
 web_server_name: raspberry-noaa.localdomain
-enable_non_tls: false
+enable_non_tls: true
 web_port: 80
-enable_tls: true
+enable_tls: false
 web_tls_port: 443
 cert_valid_days: 365
 lock_admin_page: false
 admin_username: 'admin'
 admin_password: 'admin'
+web_passes_date_format: 'm/d/Y'
 web_datetime_format: 'm/d/Y H:i:s'
+web_baseurl: false
 
 # log level for output from scripts
 log_level: DEBUG
@@ -225,6 +230,11 @@ log_level: DEBUG
 # by default disabled on "extra-small" devices such as phones due to
 # the processing and space requirements
 enable_satvis: true
+
+# whether to enable the image video in the passes view - note that this
+# is by default disabled on "extra-small" devices such as phones due
+# to the processing and space requirements
+enable_animation: false
 
 # pruning capabilities - must be configured in cron (see documentation)
 #   delete_oldest_n - how many oldest captures to delete on each run
@@ -263,10 +273,4 @@ slack_push_url: ''
 slack_push_to: ''
 slack_link: 'https://XXXX/captures/listImages'
 enable_matrix_push: false
-days_to_schedule_passes: 1
-enable_animation: true
-noaa_apt: false
-web_baseurl: '.'
-web_passes_date_format: 'm/d/Y'
-
 ...

@@ -203,7 +203,7 @@
     "produce_polar_az_el_graph",
     "produce_polar_direction_graph",
     "ground_station_location",
-    "antenna_info",
+    "antenna_information",
     "show_sun_elevation",
     "show_pass_direction",
     "noaa_daytime_enhancements",

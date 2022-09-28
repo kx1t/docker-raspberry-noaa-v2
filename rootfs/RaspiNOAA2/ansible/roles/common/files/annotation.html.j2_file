@@ -28,7 +28,7 @@
           </td>
           <td style="width: 1313.13px;"><font color="yellow"><font size="5">
           <center> {% if ground_station_location|length %} Ground Station: {{ ground_station_location }}<br>{% endif %}
-          {% if antenna_info|length %}Antenna: {{ antenna_info }} <br>{% endif %}
+          {% if antenna_information|length %}Antenna: {{ antenna_information }} <br>{% endif %}
           Satellite: {{ sat_name }} | {{ capture_start }}<br>
           Max Elevation: {{ sat_max_elevation }}&#176; {{ pass_side_long }} | Sun Elevation: {{ sun_elevation }}&#176;<br>
           Direction: {{ pass_direction }} | {{ enhancement }} | Gain: {{ gain }}</center>

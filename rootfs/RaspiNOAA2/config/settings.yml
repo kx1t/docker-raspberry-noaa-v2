@@ -263,4 +263,10 @@ slack_push_url: ''
 slack_push_to: ''
 slack_link: 'https://XXXX/captures/listImages'
 enable_matrix_push: false
+days_to_schedule_passes: 1
+enable_animation: true
+noaa_apt: false
+web_baseurl: '.'
+web_passes_date_format: 'm/d/Y'
+
 ...

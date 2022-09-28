@@ -157,7 +157,6 @@ popd && \
         else echo "No target for noaa-apt for $TARGETARCH" && exit 1; \
         fi && \
     popd && \
-
 #
 # Install udev rules
     mkdir -p /etc/udev/rules.d && \
