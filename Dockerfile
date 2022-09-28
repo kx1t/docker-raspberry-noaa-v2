@@ -168,7 +168,7 @@ popd && \
 #
 # Install noaa-apt
     pushd /git/docker-raspberry-noaa-v2/software && \
-        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ] || [ "$TARGETARCH" == "arm64" ]; then cp nooa-apt-arm /usr/bin/noaa-apt; \
+        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ] || [ "$TARGETARCH" == "arm64" ]; then cp noaa-apt-arm /usr/bin/noaa-apt; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i noaa-apt_1.3.1-1_amd64.deb; \
         else echo "No target for noaa-apt for $TARGETARCH" && exit 1; \
         fi && \
