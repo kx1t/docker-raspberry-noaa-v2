@@ -50,6 +50,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(python3-jsonschema) && \
     KEPT_PACKAGES+=(python3-matplotlib) && \
     KEPT_PACKAGES+=(python3-numpy) && \
+    KEPT_PACKAGES+=(python3-opencv) && \
     KEPT_PACKAGES+=(python3-pillow) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python3-pyrsistent) && \
@@ -117,30 +118,13 @@ pushd /git/docker-raspberry-noaa-v2/software && \
 popd && \
 #
 # Install meteor_demod
-    # pushd /git/docker-raspberry-noaa-v2/software && \
-    #     if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp meteor_demod_armhf /usr/bin/meteor_demod; \
-    #     elif [ "$TARGETARCH" == "amd64" ]; then cp meteor_demod_amd64 /usr/bin/meteor_demod; \
-    #     elif [ "$TARGETARCH" == "arm64" ]; then cp meteor_demod_arm64 /usr/bin/meteor_demod; \
-    #     else echo "No target for meteor_demod for $TARGETARCH" && exit 1; \
-    #     fi && \
-    # popd && \
-pushd /git && \
-    git clone --depth=1 https://github.com/opencv/opencv.git && \
-    cd opencv/ && \
-    mkdir build && cd build && \
-    cmake ../  -DBUILD_LIST=core,imgproc,imgcodecs -DCMAKE_INSTALL_PREFIX=/usr/local -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_SHARED_LINKER_FLAGS=-latomic && \
-    make -j4 && \
-    make install && \
-popd && \
-pushd /git && \
-    git clone https://github.com/Digitelektro/MeteorDemod.git && \
-    cd MeteorDemod && \
-    git submodule update --init --recursive && \
-    mkdir build && cd build && \
-    cmake ../ && \
-    make -j4 && \
-    make install && \
-popd && \
+    pushd /git/docker-raspberry-noaa-v2/software && \
+        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i Meteordemod-2.3.0-armhf.deb; \
+        elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i Meteordemod-2.3.0-amd64.deb; \
+        elif [ "$TARGETARCH" == "arm64" ]; then dpkg -i Meteordemod-2.3.0-arm64.deb; \
+        else echo "No target for meteor_demod for $TARGETARCH" && exit 1; \
+        fi && \
+    popd && \
 #
 # Install medet
     pushd /git/docker-raspberry-noaa-v2/software && \
