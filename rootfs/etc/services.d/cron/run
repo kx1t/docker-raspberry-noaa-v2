@@ -7,6 +7,10 @@
 set -euo pipefail
 
 APPNAME="$(hostname)/cron"
+
+echo "[$(date)][$APPNAME] Cron daemon has been disabled in this version."
+sleep infinity
+
 echo "[$(date)][$APPNAME] Starting cron daemon ..."
 
 while true
