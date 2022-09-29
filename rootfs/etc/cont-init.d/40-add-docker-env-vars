@@ -58,3 +58,6 @@ timezone_offset="$timezone_offset$partial_offset"                # add the parti
 
 setvalue "timezone_offset" "$timezone_offset"
 echo "[$APPNAME][$(date)] Calculated Timezone Offset for $timezone to be $timezone_offset"
+
+# add the container_version to the settings.yml file:
+setvalue "container_version" "$(cat /.CONTAINER_VERSION)"
