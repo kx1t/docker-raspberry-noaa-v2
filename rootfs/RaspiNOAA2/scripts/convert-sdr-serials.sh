@@ -1,11 +1,15 @@
-#!/usr/bin/with-contenv bash
+#!/bin/bash
 #shellcheck shell=bash disable=SC2154
 
-APPNAME="$(hostname)/41-convert-sdr-serials"
+settingsfile="$NOAA_HOME/config/settings.yml"
 
-echo "[$(date)][$APPNAME] Converting SDR Serials to Device IDs ..."
+# import common lib and settings
+[[ -f "$NOAA_HOME"/.noaa-v2.conf ]] && source "$NOAA_HOME/.noaa-v2.conf" || source "$HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
-settingsfile="/RaspiNOAA2/config/settings.yml"
+
+LOG "Converting SDR Serials to Device IDs ..." "INFO"
+
 
 function setvalue () {
     # This function writes values to the settings file
@@ -28,8 +32,8 @@ readarray -t sats <<< "$(sed -n "s/^\s*\([A-Za-z0-9_-]*\)_sdr_device_serial:.*$/
 readarray -t devices <<< "$(timeout 1 rtl_test 2>&1)"
 if [[ "${devices[0]:0:3}" == "No " ]]
 then
-    echo "[$(date)][$APPNAME] EMERGENCY - No SDR devices found!"
-    echo "[$(date)][$APPNAME] Please check your setup and restart this container!"
+    LOG "EMERGENCY - No SDR devices found!" "ERROR"
+    LOG "Please check your setup and restart this script!" "ERROR"
     exit 1
 fi
 
@@ -53,7 +57,7 @@ do
         do
             if [[ "${!satserialparam}" == "${device_serial[$i]}" ]]
             then
-                echo "[$(date)][$APPNAME] Match: ${device_serial[$i]} --> device_id ${i} for ${satidparam}"
+                LOG "Match: ${device_serial[$i]} --> device_id ${i} for ${satidparam}" "INFO"
                 setvalue "${satidparam}" "${i}"
                 break
             fi

@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck shell=bash disable=SC2034,SC2155
 #
 # Purpose: Common code that is likely loaded in most of the scripts
 #          within this framework. Handles things such as a start date/time,
@@ -24,7 +25,7 @@ log() {
   echo "${log_priority} : ${log_message}"
 
   # log output to a log file
-  echo $(date '+%d-%m-%Y %H:%M') $0 "${log_priority} : ${log_message}" >> "$NOAA_LOG"
+  echo "$(date '+%d-%m-%Y %H:%M') $0 ${log_priority} : ${log_message}" >> "$NOAA_LOG"
 }
 
 # run as a normal user for any scripts within
