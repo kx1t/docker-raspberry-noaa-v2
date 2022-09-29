@@ -46,9 +46,9 @@
         </ul>
         <span class="navbar-text timezone">
           <em>
-            {{ constant('Config\\Config::GS_LOCATION') }}
-            {{ constant('Config\\Config::TIMEZONE') }}<br>
-            (UTC{{ 'now'|date('P') }})
+            {{ constant('Config\\Config::GS_LOCATION') }} {{ constant('Config\\Config::TIMEZONE') }} (UTC{{ 'now'|date('P') }})<br>
+            version: {{ constant('Config\\Config::CONTAINER_VERSION') }}<br>
+            <a href="https://github.com/kx1t/docker-raspberry-noaa-v2" target="_blank">Containerized version</a> of Jekhokie's <a href="https://github.com/jekhokie/raspberry-noaa-v2" target="_blank">RaspiNOAA v2</a> by Ram&oacute;n F. Kolb, k1xt
           </em>
         </span>
       </div>

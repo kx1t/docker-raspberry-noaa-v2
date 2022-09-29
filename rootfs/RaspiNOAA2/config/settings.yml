@@ -270,4 +270,6 @@ noaa_apt: false
 web_baseurl: '.'
 web_passes_date_format: 'm/d/Y'
 
+container_version: ''
+
 ...
