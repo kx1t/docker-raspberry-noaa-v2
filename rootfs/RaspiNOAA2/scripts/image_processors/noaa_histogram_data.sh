@@ -12,7 +12,7 @@
 
 
 # import common lib and settings
-source "$HOME/.noaa-v2.conf"
+source "$NOAA_HOME/.noaa-v2.conf"
 source "$NOAA_HOME/scripts/common.sh"
 
 # input params
