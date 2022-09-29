@@ -3,7 +3,7 @@
 
 APPNAME="$(hostname)/41-convert-sdr-serials"
 
-echo "[$(date)][$APPNAME] Setting Environment Variables from the Docker Environment ..."
+echo "[$(date)][$APPNAME] Converting SDR Serials to Device IDs ..."
 
 settingsfile="/RaspiNOAA2/config/settings.yml"
 
