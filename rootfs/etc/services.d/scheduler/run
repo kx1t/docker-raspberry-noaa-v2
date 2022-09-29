@@ -5,6 +5,8 @@ set -euo pipefail
 set -a				# export all variables!
 
 APPNAME="$(hostname)/scheduler"
+echo "[$(date)][$APPNAME] Started as an s6 service"
+
 NOAA_HOME="/RaspiNOAA2"
 source "$NOAA_HOME/.noaa-v2.conf"
 source "$NOAA_HOME/scripts/common.sh"
