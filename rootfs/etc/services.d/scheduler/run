@@ -1,0 +1,18 @@
+#!/usr/bin/with-contenv bash
+#shellcheck shell=bash
+
+set -euo pipefail
+
+APPNAME="$(hostname)/scheduler"
+source /RaspiNOAA2/.noaa-v2.conf
+
+# sleep until upcoming midnight:
+sleep "$(( $(date -d 0:00 +%s) + 86400 - $(date +%s) ))"
+
+# no do this every 24 hours:
+while true
+do
+	/RaspiNOAA2/scripts/schedule.sh -t
+	
+	sleep 86400 # sleep for 24 hours
+done
