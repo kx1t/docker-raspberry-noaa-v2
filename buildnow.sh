@@ -2,7 +2,7 @@
 #
 
 
-[[ "$1" != "" ]] && BRANCH="$1" || BRANCH=main
+[[ "$1" != "" ]] && BRANCH="$1" || BRANCH="$(git branch --show-current)"
 [[ "$BRANCH" == "main" ]] && TAG="latest" || TAG="$BRANCH"
 [[ "$ARCHS" == "" ]] && ARCHS="linux/armhf,linux/arm64,linux/amd64"
 
@@ -19,8 +19,10 @@ read
 starttime="$(date +%s)"
 # rebuild the container
 set -x
-git checkout $BRANCH || exit 2
+
 git pull -a
+echo "$(TZ=UTC date +%Y%m%d-%H%M%S%z)_$(git rev-parse --short HEAD)_$(git branch --show-current)" > rootfs/.CONTAINER_VERSION
 docker buildx build --compress --push $2 --platform $ARCHS --tag $IMAGE1 .
 [[ $? ]] && docker buildx build --compress --push $2 --platform $ARCHS --tag $IMAGE2 .
+rm -f rootfs/.CONTAINER_VERSION
 echo "Total build time: $(( $(date +%s) - starttime )) seconds"
