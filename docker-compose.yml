@@ -24,10 +24,13 @@ services:
       # test settings when running test scripts
       #   test_gain - gain to use for scanner test scripts
       #   test_sdr_device_id - device ID of the SDR device to be used for scanner test scripts
+      #   test_sdr_device_serial - Serial string of the SDR device. If not empty, it will replace the corresponding sdr_device_id
+      #                            This is implemented to allow dynamic assignment of the device ID in case you have multiple SDRs
       #   test_enable_bias_tee - whether to enable bias tee when running scanner test scripts
       #   test_freq_offset - receiver frequency offset (PPM)
       - test_gain=7.7
       - test_sdr_device_id=0
+      - test_sdr_device_serial=''
       - test_enable_bias_tee=true
       - test_freq_offset=0
       #
@@ -43,6 +46,8 @@ services:
       # whether to schedule specific orbiting objects for capture
       #   <satellite_name>_schedule - whether to schedule captures for the satellite
       #   <satellite_name>_sdr_device_id - device ID of the SDR device to be used for recording for the satellite
+      #   <satellite_name>_sdr_device_serial - Serial string of the SDR device. If not empty, it will replace the corresponding sdr_device_id
+      #                            This is implemented to allow dynamic assignment of the device ID in case you have multiple SDRs
       #   <satellite_name>_freq_offset - receiver frequency offset (PPM) for the satellite capture
       #   <satellite_name>_enable_bias_tee - whether to enable bias tee for the recording of the satellite
       #   <satellite_name>_gain - gain setting for specific satellite captures

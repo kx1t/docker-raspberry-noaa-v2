@@ -1,0 +1,66 @@
+#!/usr/bin/with-contenv bash
+#shellcheck shell=bash disable=SC2154
+
+APPNAME="$(hostname)/41-convert-sdr-serials"
+
+echo "[$(date)][$APPNAME] Setting Environment Variables from the Docker Environment ..."
+
+settingsfile="/RaspiNOAA2/config/settings.yml"
+
+function setvalue () {
+    # This function writes values to the settings file
+    # Example: setvalue "latitude" "42.41234"
+    local param
+    local value
+    param="$1"; param="${param,,}"
+    value="$2"
+
+    [[ -z "$value" ]] && value="\'\'"
+
+	sed -i "s~\(^\s*${param}:\s*\).*~\1${value}~" "$settingsfile"
+}
+
+# If xxx_sdr_device_serial is defined, figure out what the device ID is that corresponds to the serial number and replace xxx_sdr_device_id with it
+sats=()
+sats+=("test")
+sats+=("noaa_15")
+sats+=("noaa_18")
+sats+=("noaa_19")
+sats+=("meteor_m2")
+
+# read serial numbers into an array
+readarray -t devices <<< "$(timeout 1 rtl_test 2>&1)"
+if [[ "${devices[0]:0:3}" == "No " ]]
+then
+    echo "[$(date)][$APPNAME] EMERGENCY - No SDR devices found!"
+    echo "[$(date)][$APPNAME] Please check your setup and restart this container!"
+    exit 1
+fi
+
+devices_count="$(awk '{print $2}' <<< "${devices[0]}")"
+
+# read the device serial names into an associative array with as index the device_id:
+declare -A device_serial
+for (( n=1; n<=$devices_count; n++ ))
+do
+    device_serial+=(["$(sed 's/^\s*\([0-9]*\).*/\1/g' <<< "${devices[n]}")"]="$(sed 's/^\s*[0-9]*.*, SN: \(.*\)/\1/g' <<< "${devices[n]}")")
+done
+
+# Now consider these for each of the satellites and replace the device_id in setting.yml accordingly:
+for sat in "${sats[@]}"
+do
+    satserialparam="${sat}_sdr_device_serial"
+    satidparam="${sat}_sdr_device_id"
+    if [[ -n "${!satserialparam}" ]]
+    then
+        for i in "${!device_serial[@]}"
+        do
+            if [[ "${!satserialparam}" == "${device_serial[$i]}" ]]
+            then
+                echo "[$(date)][$APPNAME] Match: ${device_serial[$i]} --> device_id ${i} for ${satidparam}"
+                setvalue "${satidparam}" "${i}"
+                break
+            fi
+        done
+    fi
+done

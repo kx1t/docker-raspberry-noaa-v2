@@ -2,8 +2,8 @@
 # base station configurations
 #   latitude: south values are negative
 #   longitude: west values are negative
-latitude: 40.712776
-longitude: -74.005974
+latitude: 40.00000
+longitude: -74.00000
 altitude: 0.0
 
 # time zone offset from UTC (for example, '-5' for US Eastern)
@@ -21,6 +21,7 @@ ntp_server: ''
 #   test_freq_offset - receiver frequency offset (PPM)
 test_gain: 7.7
 test_sdr_device_id: 0
+test_sdr_device_serial: ''
 test_enable_bias_tee: true
 test_freq_offset: 0
 
