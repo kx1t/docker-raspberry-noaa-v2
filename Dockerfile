@@ -2,6 +2,7 @@ FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
+ARG BRANCH="meteordemod_staging"
 
 RUN set -x && \
 # define packages needed for installation and general management of the container:
@@ -95,6 +96,7 @@ RUN set -x && \
 #
 # Install wxtoimg
     git clone --depth=1 https://github.com/kx1t/docker-raspberry-noaa-v2.git  /git/docker-raspberry-noaa-v2 && \
+    if [ -n "$BRANCH" ]; then git checkout $BRANCH; fi && \
     pushd /git/docker-raspberry-noaa-v2/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
