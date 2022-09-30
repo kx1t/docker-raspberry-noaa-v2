@@ -96,7 +96,7 @@ RUN set -x && \
 #
 # Install wxtoimg
     git clone --depth=1 https://github.com/kx1t/docker-raspberry-noaa-v2.git  /git/docker-raspberry-noaa-v2 && \
-    if [ -n "$BRANCH" ]; then git checkout $BRANCH; fi && \
+    if [ -n "$BRANCH" ]; then pushd /git/docker-raspberry-noaa-v2; git checkout $BRANCH; popd; fi && \
     pushd /git/docker-raspberry-noaa-v2/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
