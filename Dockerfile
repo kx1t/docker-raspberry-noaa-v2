@@ -119,9 +119,9 @@ popd && \
 #
 # Install meteor_demod
     pushd /git/docker-raspberry-noaa-v2/software && \
-        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i Meteordemod-2.3.0-armhf.deb; \
-        elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i Meteordemod-2.3.0-amd64.deb; \
-        elif [ "$TARGETARCH" == "arm64" ]; then dpkg -i Meteordemod-2.3.0-arm64.deb; \
+        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i Meteordemod-2.3.1-armhf.deb; \
+        elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i Meteordemod-2.3.1-amd64.deb; \
+        elif [ "$TARGETARCH" == "arm64" ]; then dpkg -i Meteordemod-2.3.1-arm64.deb; \
         else echo "No target for meteor_demod for $TARGETARCH" && exit 1; \
         fi && \
     popd && \
