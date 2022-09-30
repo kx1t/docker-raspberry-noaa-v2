@@ -11,11 +11,11 @@ RUN set -x && \
     KEPT_PIP3_PACKAGES=() && \
     KEPT_RUBY_PACKAGES=() && \
     #
-    KEPT_PACKAGES+=(ansible) && \
+    KEPT_PACKAGES+=(ansible-core) && \
     KEPT_PACKAGES+=(at) && \
     KEPT_PACKAGES+=(bc) && \
     KEPT_PACKAGES+=(composer) && \
-    KEPT_PACKAGES+=(cron) && \
+#    KEPT_PACKAGES+=(cron) && \
     KEPT_PACKAGES+=(curl) && \
     KEPT_PACKAGES+=(ffmpeg) && \
     KEPT_PACKAGES+=(gfortran) && \
