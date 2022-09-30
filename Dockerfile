@@ -51,7 +51,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(python3-jsonschema) && \
     KEPT_PACKAGES+=(python3-matplotlib) && \
     KEPT_PACKAGES+=(python3-numpy) && \
-    KEPT_PACKAGES+=(python3-opencv) && \
+#    KEPT_PACKAGES+=(python3-opencv) && \
     KEPT_PACKAGES+=(python3-pillow) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python3-pyrsistent) && \
