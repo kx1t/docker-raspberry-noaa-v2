@@ -94,7 +94,7 @@ RUN set -x && \
 # This is done here rather than in a COPY command to keep the image clean
     mkdir -p /git && \
     if [ -n "$BRANCH" ]; then BRANCHSTRING="-b $BRANCH"; else BRANCHSTRING=""; fi && \
-    git clone --depth=1 "$BRANCHSTRING" https://github.com/kx1t/docker-raspberry-noaa-v2.git  /git/docker-raspberry-noaa-v2 && \
+    git clone --depth=1 $BRANCHSTRING https://github.com/kx1t/docker-raspberry-noaa-v2.git  /git/docker-raspberry-noaa-v2 && \
 #
 # Install wxtoimg
     pushd /git/docker-raspberry-noaa-v2/software && \
