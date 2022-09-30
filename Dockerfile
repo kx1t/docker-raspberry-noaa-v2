@@ -11,7 +11,7 @@ RUN set -x && \
     KEPT_PIP3_PACKAGES=() && \
     KEPT_RUBY_PACKAGES=() && \
     #
-    KEPT_PACKAGES+=(ansible-core) && \
+    #KEPT_PACKAGES+=(ansible-core) && \
     KEPT_PACKAGES+=(at) && \
     KEPT_PACKAGES+=(bc) && \
     KEPT_PACKAGES+=(composer) && \
@@ -75,6 +75,7 @@ RUN set -x && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(pkg-config) && \
     # TEMP_PACKAGES+=(systemd) && \
+    KEPT_PIP3_PACKAGES+=(ansible-core) && \
 # other packages:
     KEPT_PACKAGES+=(unzip) && \
     KEPT_PACKAGES+=(psmisc) && \
@@ -87,7 +88,7 @@ RUN set -x && \
     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ${TEMP_PACKAGES[@]} ${KEPT_PACKAGES[@]} && \
 #
 #  Pip3 installs arent necessary because the modules in requirements.txt are already installed via APT
-#    pip3 install -r /tmp/requirements.txt && \
+    pip3 install ${KEPT_PIP3_PACKAGES[@]} && \
 #
 # --------------------------------------------------------------------------------------------
 # Install a bunch of other things from the repo
