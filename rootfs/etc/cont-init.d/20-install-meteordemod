@@ -1,0 +1,41 @@
+#!/usr/bin/with-contenv bash
+#shellcheck shell=bash
+
+APPNAME="$(hostname)/20-install-meteordemod"
+
+echo "[$(date)][$APPNAME] Ensuring MeteorDemod is installed ..."
+# The meteordemod DEB install package is finicky and get uninstalled with apt-get autoremove
+# for no apparent reason.
+#
+# So we will get at runtime to ensure it's there, and if not, we'll fetch it.
+# Should take only a few seconds.
+
+
+if ! which meteordemod
+then
+	echo "[$(date)][$APPNAME] It is not installed. Doing that now ..."
+	echo "[$(date)][$APPNAME] Step 1 of 3. Updating package repos ..."
+	apt update -qqq
+
+	echo "[$(date)][$APPNAME] Step 2 of 3. Fetching MeteorDemod debian package ..."
+	arch="$(uname -m)"
+	[[ "$arch" == "aarch64" ]] && arch="arm64"
+	[[ "${arch::5}" == "armv7" ]] && arch="armhf"
+	[[ "$arch" == "x86_64" ]] && arch="amd64"
+
+	read -r branch < /.CONTAINER_VERSION
+	branch="${branch:24}"
+
+	if curl -sL -o "/tmp/Meteordemod-2.3.1-$arch.deb" "https://github.com/kx1t/docker-raspberry-noaa-v2/blob/$branch/software/Meteordemod-2.3.1-$arch.deb?raw=true"
+	then
+		echo "[$(date)][$APPNAME] Step 3 of 3. Installing MeteorDemod and dependencies ..."
+		apt install -qqq -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests python3-opencv /tmp/Meteordemod-2.3.1-$arch.deb >/dev/null 2>&1
+		ln -sf /usr/bin/meteordemod /usr/local/bin
+		rm -f "/tmp/Meteordemod-2.3.1-$arch.deb"
+		echo "[$(date)][$APPNAME] Done!"
+	else
+		echo "[$(date)][$APPNAME] ERROR: Cannot get this archive: https://github.com/kx1t/docker-raspberry-noaa-v2/blob/$branch/software/Meteordemod-2.3.1-$arch.deb?raw=true"
+		echo "[$(date)][$APPNAME] ERROR: Please check the URL. You may need to rebuild the container. Stopping container execution!"
+		exit 1
+	fi
+fi
