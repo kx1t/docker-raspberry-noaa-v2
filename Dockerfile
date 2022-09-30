@@ -65,16 +65,16 @@ RUN set -x && \
     KEPT_PACKAGES+=(xfonts-75dpi) && \
     KEPT_PACKAGES+=(xfonts-base) && \
     #
-    TEMP_PACKAGES+=(build-essential) && \
-    TEMP_PACKAGES+=(cmake) && \
-    TEMP_PACKAGES+=(cmake-data) && \
-    TEMP_PACKAGES+=(cpp-10) && \
-    TEMP_PACKAGES+=(g++) && \
-    TEMP_PACKAGES+=(gcc) && \
-    TEMP_PACKAGES+=(gcc-10) && \
+    # TEMP_PACKAGES+=(build-essential) && \
+    # TEMP_PACKAGES+=(cmake) && \
+    # TEMP_PACKAGES+=(cmake-data) && \
+    # TEMP_PACKAGES+=(cpp-10) && \
+    # TEMP_PACKAGES+=(g++) && \
+    # TEMP_PACKAGES+=(gcc) && \
+    # TEMP_PACKAGES+=(gcc-10) && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(pkg-config) && \
-    TEMP_PACKAGES+=(systemd) && \
+    # TEMP_PACKAGES+=(systemd) && \
 # other packages:
     KEPT_PACKAGES+=(unzip) && \
     KEPT_PACKAGES+=(psmisc) && \
