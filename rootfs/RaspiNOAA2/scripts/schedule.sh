@@ -18,9 +18,7 @@ source "$NOAA_HOME/.noaa-v2.conf"
 source "$NOAA_HOME/scripts/common.sh"
 
 # TLE data files
-WEATHER_TXT="${NOAA_HOME}/tmp/weather.txt"
-AMATEUR_TXT="${NOAA_HOME}/tmp/amateur.txt"
-TLE_OUTPUT="${NOAA_HOME}/tmp/orbit.tle"
+# moved to common.sh
 
 # check if TLE file should be updated
 update_tle=0
