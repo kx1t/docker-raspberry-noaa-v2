@@ -15,7 +15,7 @@ if ! which meteordemod
 then
 	echo "[$(date)][$APPNAME] It is not installed. Doing that now ..."
 	echo "[$(date)][$APPNAME] Step 1 of 3. Updating package repos ..."
-	apt update -qqq
+	apt-get update -qqq
 
 	echo "[$(date)][$APPNAME] Step 2 of 3. Fetching MeteorDemod debian package ..."
 	arch="$(uname -m)"
@@ -29,7 +29,7 @@ then
 	if curl -sL -o "/tmp/Meteordemod-2.3.1-$arch.deb" "https://github.com/kx1t/docker-raspberry-noaa-v2/blob/$branch/software/Meteordemod-2.3.1-$arch.deb?raw=true"
 	then
 		echo "[$(date)][$APPNAME] Step 3 of 3. Installing MeteorDemod and dependencies ..."
-		apt install -qqq -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests python3-opencv /tmp/Meteordemod-2.3.1-$arch.deb >/dev/null 2>&1
+		apt-get install -qqq -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests python3-opencv /tmp/Meteordemod-2.3.1-$arch.deb >/dev/null 2>&1
 		ln -sf /usr/bin/meteordemod /usr/local/bin
 		rm -f "/tmp/Meteordemod-2.3.1-$arch.deb"
 		echo "[$(date)][$APPNAME] Done!"
