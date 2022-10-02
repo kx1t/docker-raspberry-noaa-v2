@@ -21,7 +21,7 @@ sleep "$(( $(date -d 0:00 +%s) + 86400 - $(date +%s) ))"
 # no do this every 24 hours:
 while true
 do
-	/RaspiNOAA2/scripts/schedule.sh -t
+	/RaspiNOAA2/scripts/schedule.sh -t -x
 	(( PRUNE_OLDER_THAN > 0 )) && "$NOAA_HOME/scripts/prune_scripts/prune_older_than.sh"
 	(( PRUNE_OLDEST > 0 )) && "$NOAA_HOME/scripts/prune_scripts/prune_oldest.sh"
 
