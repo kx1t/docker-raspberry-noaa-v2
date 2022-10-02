@@ -171,7 +171,7 @@ popd && \
 # Clean up
     echo "Uninstalling ${TEMP_PACKAGES[*]}" && \
     # Needed because the dependency in meteordemod isn't well defined - it will get autoremoved otherwise:
-    apt-mark manual python3-opencv && \
+    # apt-mark manual python3-opencv  # not needed as this is moved to the runtime
     apt-get remove --purge -y -q "${TEMP_PACKAGES[@]}" && \
     apt-get autoremove -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -y && \
     apt-get clean -y -q && \
