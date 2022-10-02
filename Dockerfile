@@ -15,7 +15,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(at) && \
     KEPT_PACKAGES+=(bc) && \
     KEPT_PACKAGES+=(composer) && \
-#    KEPT_PACKAGES+=(cron) && \
+#    KEPT_PACKAGES+=(cron)
     KEPT_PACKAGES+=(curl) && \
     KEPT_PACKAGES+=(ffmpeg) && \
     KEPT_PACKAGES+=(gfortran) && \
@@ -51,7 +51,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(python3-jsonschema) && \
     KEPT_PACKAGES+=(python3-matplotlib) && \
     KEPT_PACKAGES+=(python3-numpy) && \
-#    KEPT_PACKAGES+=(python3-opencv) && \
+#    KEPT_PACKAGES+=(python3-opencv)
     KEPT_PACKAGES+=(python3-pillow) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python3-pyrsistent) && \
@@ -75,7 +75,7 @@ RUN set -x && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(pkg-config) && \
     TEMP_PACKAGES+=(systemd) && \
-    # KEPT_PIP3_PACKAGES+=(ansible-core) && \
+# KEPT_PIP3_PACKAGES+=(ansible-core)
 # other packages:
     KEPT_PACKAGES+=(unzip) && \
     KEPT_PACKAGES+=(psmisc) && \
@@ -85,7 +85,12 @@ RUN set -x && \
 # --------------------------------------------------------------------------------------------
 # Install all the apt, pip3, and gem (ruby) packages:
     apt-get update -q && \
-    apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ${TEMP_PACKAGES[@]} ${KEPT_PACKAGES[@]} && \
+    apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${TEMP_PACKAGES[@]}" "${KEPT_PACKAGES[@]}" && \
+    # The following is needed to use the armhf version of wxtoimg on arm64 archs:
+    if [ "$TARGETARCH" == "arm64" ]; then \
+        dpkg --add-architecture armhf && \
+        apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests libc6:armhf libstdc++6:armhf libasound2:armhf libx11-6:armhf libxft-dev:armhf libxft2:armhf ghostscript; \
+    fi && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.9 100 && \
 #
 #  Pip3 installs arent necessary because the modules in requirements.txt are already installed via APT
@@ -100,14 +105,8 @@ RUN set -x && \
 #
 # Install wxtoimg
     pushd /git/docker-raspberry-noaa-v2/software && \
-        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
+        if   [ "${TARGETARCH:0:3}" == "arm" ]; then dpkg -i wxtoimg-armhf-2.11.2-beta.deb; \
         elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i wxtoimg-amd64-2.11.2-beta.deb; \
-        elif [ "$TARGETARCH" == "386"  ]; then dpkg -i wxtoimg_2.10.11-1_i386.deb; \
-        elif [ "$TARGETARCH" == "arm64" ]; then \
-            dpkg --add-architecture armhf && \
-            apt-get update -q && apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests libc6:armhf libstdc++6:armhf libasound2:armhf libx11-6:armhf libxft-dev:armhf libxft2:armhf ghostscript && \
-            dpkg -i wxtoimg-armhf-2.11.2-beta.deb && \
-            apt-get clean -y -q; \
         else echo "No target for wxtoimg for $TARGETARCH" && exit 1; \
         fi && \
     popd && \
