@@ -89,6 +89,7 @@ RUN set -x && \
     # The following is needed to use the armhf version of wxtoimg on arm64 archs:
     if [ "$TARGETARCH" == "arm64" ]; then \
         dpkg --add-architecture armhf && \
+        apt-get update -q && \
         apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests libc6:armhf libstdc++6:armhf libasound2:armhf libx11-6:armhf libxft-dev:armhf libxft2:armhf ghostscript; \
     fi && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.9 100 && \
