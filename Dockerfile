@@ -86,6 +86,7 @@ RUN set -x && \
 # Install all the apt, pip3, and gem (ruby) packages:
     apt-get update -q && \
     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ${TEMP_PACKAGES[@]} ${KEPT_PACKAGES[@]} && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.9 100 && \
 #
 #  Pip3 installs arent necessary because the modules in requirements.txt are already installed via APT
 #    pip3 install ${KEPT_PIP3_PACKAGES[@]} && \
