@@ -22,4 +22,4 @@ OUTPUT_QPSK=$2
 # produce the output image - note QPSK output lists before wav
 # $METEOR_DEMOD -B -o "${OUTPUT_QPSK}" "${INPUT_WAV}" >> $NOAA_LOG 2>&1
 # note we switched to DigitElektro's MeteorDemod (https://github.com/Digitelektro/MeteorDemod)
-$METEOR_DEMOD -i "${INPUT_WAV}" -o "${OUTPUT_QPSK}" -t "${TLE_OUTPUT}" >> $NOAA_LOG 2>&1
+$METEOR_DEMOD -i "${INPUT_WAV}" -o "${OUTPUT_QPSK}" -t "${TLE_OUTPUT}" -f jpg >> $NOAA_LOG 2>&1
