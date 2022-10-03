@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bash
 #shellcheck shell=bash disable=SC2164
 
-APPNAME="$(hostname)/50-configure-RaspiNOAA2"
+APPNAME="$(hostname)/60-configure-RaspiNOAA2"
 
 echo "[$(date)][$APPNAME] Configuring Raspberry-NOAA-2 ..."
 

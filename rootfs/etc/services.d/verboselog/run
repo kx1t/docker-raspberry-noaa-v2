@@ -7,6 +7,8 @@ APPNAME="$(hostname)/VERBOSELOG"
 
 logfile="/var/log/raspberry-noaa-v2/output.log"
 
+mkdir -p /var/log/raspberry-noaa-v2
+
 if [[ -n "$VERBOSELOG" ]]
 then
     echo "[$(date)][$APPNAME] VERBOSELOG enabled -- all logs from $logfile are printed to the Docker Logs"

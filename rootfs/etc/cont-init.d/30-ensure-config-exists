@@ -7,5 +7,6 @@ echo "[$(date)][$APPNAME] Ensuring config dir exists ..."
 
 if [[ ! -f /RaspiNOAA2/config/settings.yml ]]
 then
+	mkdir -p /RaspiNOAA2/config
 	cp -rf /RaspiNOAA2/config.bkup/* /RaspiNOAA2/config
 fi

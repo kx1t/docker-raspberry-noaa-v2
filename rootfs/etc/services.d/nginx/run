@@ -6,6 +6,8 @@ APPNAME="$(hostname)/nginx"
 echo "[$(date)][$APPNAME] Started as an s6 service"
 echo "[$(date)][$APPNAME] Starting the NGINX service..."
 
+mkdir -p /var/log/nginx
+
 while true
 do
     touch /tmp/nginx.up
