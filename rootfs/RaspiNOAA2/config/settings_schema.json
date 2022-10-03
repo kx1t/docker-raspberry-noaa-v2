@@ -73,6 +73,7 @@
       "maximum": 90
     },
     "meteor_m2_memory_threshold":      { "type": "number" },
+    "noaa_memory_threshold":           { "type": "number" },
     "days_to_schedule_passes":         { "type": "number" },
     "delete_audio":                    { "type": "boolean" },
     "flip_meteor_image":               { "type": "boolean" },

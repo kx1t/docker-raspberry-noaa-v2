@@ -79,7 +79,6 @@ else
 fi
 if (( FREE_MEMORY == 0 )); then
     log "No TMPFS is mounted; capturing to disk" "INFO"
-    log "Free : ${FREE_MEMORY} ; Required : ${METEOR_M2_MEMORY_TRESHOLD}" "INFO"
     RAMFS_AUDIO_BASE="${AUDIO_FILE_BASE}"
     in_mem=false
 elif [ "$FREE_MEMORY" -lt $METEOR_M2_MEMORY_TRESHOLD ]; then

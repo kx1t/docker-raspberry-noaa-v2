@@ -15,6 +15,9 @@
 # Example:
 #   ./receive_noaa.sh "NOAA 18" NOAA1820210208-194829 ./orbit.tle 1612831709 919 31 Southbound E
 
+# needed to ensure that we get an error if any command in a pipe fails:
+set -o pipefail
+
 # time keeping
 TIMER_START=$(date '+%s')
 
@@ -61,6 +64,7 @@ if [ "$SAT_NAME" == "NOAA 19" ]; then
 fi
 
 # base directory plus filename helper variables
+RAMFS_AUDIO_BASE="${RAMFS_AUDIO}/${FILENAME_BASE}"
 AUDIO_FILE_BASE="${NOAA_AUDIO_OUTPUT}/${FILENAME_BASE}"
 IMAGE_FILE_BASE="${IMAGE_OUTPUT}/${FILENAME_BASE}"
 IMAGE_THUMB_BASE="${IMAGE_OUTPUT}/thumb/${FILENAME_BASE}"
@@ -71,7 +75,7 @@ export SUN_ELEV=$(python3 "$SCRIPTS_DIR"/tools/sun.py "$PASS_START")
 
 #check for running captures in rtl_fm mode
 if pgrep "rtl_fm" > /dev/null; then
-  log "There is an existing rtl_fm instance running, I quit" "ERROR"
+  log "There is an existing rtl_fm instance running, exiting" "ERROR"
   exit 1
 fi
 
@@ -86,28 +90,56 @@ if pgrep -f rtlsdr_m2_lrpt_rx.py > /dev/null; then
   exit 1
 fi
 
-#start capture
-log "Starting rtl_fm record" "INFO"
-if [ "$NOAA_RECEIVER" == "rtl_fm" ]; then
-  log "Starting rtl_fm record" "INFO"
-  ${AUDIO_PROC_DIR}/noaa_record_rtl_fm.sh "${SAT_NAME}" $CAPTURE_TIME "${AUDIO_FILE_BASE}.wav" >> $NOAA_LOG 2>&1
+# ---------------------------------------------------------------------------
+# check if there is enough free memory to store pass on RAM
+# check if /run is mounted - if it's not, then there's no actual TMPFS memory
+
+if ! FREE_MEMORY="$(set -o pipefail && df -BM | grep -E "/run$" 2>/dev/null | awk '{print $4}')"; then
+    FREE_MEMORY=0
+else
+    # remove the "M" at the end of the string:
+    FREE_MEMORY="${FREE_MEMORY:: -1}"
 fi
-if [ "$NOAA_RECEIVER" == "gnuradio" ]; then
-  log "Starting gnuradio record" "INFO"
-  ${AUDIO_PROC_DIR}/noaa_record_gnuradio.sh "${SAT_NAME}" $CAPTURE_TIME "${AUDIO_FILE_BASE}.wav" >> $NOAA_LOG 2>&1
-
+if (( FREE_MEMORY == 0 )); then
+    log "No TMPFS is mounted; capturing to disk" "INFO"
+    RAMFS_AUDIO_BASE="${AUDIO_FILE_BASE}"
+    in_mem=false
+elif [ "$FREE_MEMORY" -lt $NOAA_MEMORY_TRESHOLD ]; then
+    log "Not enough space to store a NOAA pass on TMPFS; capturing to disk" "INFO"
+    log "Free : ${FREE_MEMORY} ; Required : ${NOAA_MEMORY_TRESHOLD}" "INFO"
+    RAMFS_AUDIO_BASE="${AUDIO_FILE_BASE}"
+    in_mem=false
+else
+    log "The system has enough space to store a NOAA pass on TMPFS" "INFO"
+    log "Free : ${FREE_MEMORY} ; Required : ${NOAA_MEMORY_TRESHOLD}" "INFO"
+    in_mem=true
 fi
 
-# wait for files to close
-sleep 5
+# ---------------------------------------------------------------------------
+# Perform audio capture:
 
-#generate outputs
-spectrogram=0
+log "Starting $NOAA_RECEIVER record for $CAPTURE_TIME secs (=until $(date -d "+ ${CAPTURE_TIME} seconds"))" "INFO"
+if [ "$NOAA_RECEIVER" == "rtl_fm" ]
+then
+    AUDIO_FILE="${RAMFS_AUDIO_BASE}.wav"
+    ${AUDIO_PROC_DIR}/noaa_record_rtl_fm.sh "${SAT_NAME}" $CAPTURE_TIME "${AUDIO_FILE}" >> $NOAA_LOG 2>&1
+elif [ "$NOAA_RECEIVER" == "gnuradio" ]
+then
+    AUDIO_FILE="${RAMFS_AUDIO_BASE}.s"
+    ${AUDIO_PROC_DIR}/noaa_record_gnuradio.sh "${SAT_NAME}" $CAPTURE_TIME "${AUDIO_FILE}" >> $NOAA_LOG 2>&1
+else
+    log "Receiver type '$NOAA_RECEIVER' not valid - aborting capture run" "ERROR"
+    exit 1
+fi
+
+# ---------------------------------------------------------------------------
+# Creation of spectrogram and other output files:
+
 if [[ "${PRODUCE_SPECTROGRAM}" == "true" ]]; then
   log "Producing spectrogram" "INFO"
   spectrogram=1
   spectro_text="${capture_start} @ ${SAT_MAX_ELEVATION}°"
-  ${IMAGE_PROC_DIR}/spectrogram.sh "${AUDIO_FILE_BASE}.wav" "${IMAGE_FILE_BASE}-spectrogram.png" "${SAT_NAME}" "${spectro_text}" >> $NOAA_LOG 2>&1
+  ${IMAGE_PROC_DIR}/spectrogram.sh "${AUDIO_FILE}" "${IMAGE_FILE_BASE}-spectrogram.png" "${SAT_NAME}" "${spectro_text}" >> $NOAA_LOG 2>&1
   ${IMAGE_PROC_DIR}/thumbnail.sh 300 "${IMAGE_FILE_BASE}-spectrogram.png" "${IMAGE_THUMB_BASE}-spectrogram.png" >> $NOAA_LOG 2>&1
 fi
 
@@ -115,7 +147,7 @@ pristine=0
 if [[ "${PRODUCE_NOAA_PRISTINE}" == "true" ]]; then
   log "Producing pristine image" "INFO"
   pristine=1
-  ${IMAGE_PROC_DIR}/noaa_pristine.sh "${AUDIO_FILE_BASE}.wav" "${IMAGE_FILE_BASE}-pristine.jpg" >> $NOAA_LOG 2>&1
+  ${IMAGE_PROC_DIR}/noaa_pristine.sh "${AUDIO_FILE}" "${IMAGE_FILE_BASE}-pristine.jpg" >> $NOAA_LOG 2>&1
   ${IMAGE_PROC_DIR}/thumbnail.sh 300 "${IMAGE_FILE_BASE}-pristine.jpg" "${IMAGE_THUMB_BASE}-pristine.jpg" >> $NOAA_LOG 2>&1
 fi
 
@@ -126,7 +158,7 @@ if [ "${PRODUCE_NOAA_PRISTINE_HISTOGRAM}" == "true" ]; then
   histogram_text="${capture_start} @ ${SAT_MAX_ELEVATION}° Gain: ${GAIN}"
 
   log "Generating Data for Histogram" "INFO"
-  ${IMAGE_PROC_DIR}/noaa_histogram_data.sh "${AUDIO_FILE_BASE}.wav" "${tmp_dir}/${FILENAME_BASE}-a.png" "${tmp_dir}/${FILENAME_BASE}-b.png" >> $NOAA_LOG 2>&1
+  ${IMAGE_PROC_DIR}/noaa_histogram_data.sh "${AUDIO_FILE}" "${tmp_dir}/${FILENAME_BASE}-a.png" "${tmp_dir}/${FILENAME_BASE}-b.png" >> $NOAA_LOG 2>&1
 
   log "Producing histogram of NOAA pristine image channel A" "INFO"
   ${IMAGE_PROC_DIR}/histogram.sh "${tmp_dir}/${FILENAME_BASE}-a.png" "${IMAGE_FILE_BASE}-histogram-a.jpg" "${SAT_NAME} - Channel A" "${histogram_text}" >> $NOAA_LOG 2>&1
@@ -232,7 +264,7 @@ for enhancement in $ENHANCEMENTS; do
   export ENHANCEMENT=$enhancement
   log "Decoding image" "INFO"
 
-  ${IMAGE_PROC_DIR}/noaa_enhancements.sh "$map_overlay" "${AUDIO_FILE_BASE}.wav" "${IMAGE_FILE_BASE}-$enhancement.jpg" $enhancement >> $NOAA_LOG 2>&1
+  ${IMAGE_PROC_DIR}/noaa_enhancements.sh "$map_overlay" "${AUDIO_FILE}" "${IMAGE_FILE_BASE}-$enhancement.jpg" $enhancement >> $NOAA_LOG 2>&1
 
   if [ -f "${IMAGE_FILE_BASE}-$enhancement.jpg" ]; then
     filesize=$(wc -c "${IMAGE_FILE_BASE}-$enhancement.jpg" | awk '{print $1}')
@@ -356,10 +388,18 @@ if [ $has_one_image -eq 1 ]; then
                      );"
 fi
 
+# ---------------------------------------------------------------------------
+# Delete audio or save it to (more) permanent storage:
 if [ "$DELETE_AUDIO" = true ]; then
-  log "Deleting audio files" "INFO"
-  rm "${AUDIO_FILE_BASE}.wav"
+   log "Deleting audio files" "INFO"
+   rm -f "${AUDIO_FILE}"
+else
+   if [ "$in_mem" == "true" ]; then
+       log "Moving audio file to permanent storage (${AUDIO_FILE_BASE}.${AUDIO_FILE##*.})" "INFO"
+       mv -f "${AUDIO_FILE}" "${AUDIO_FILE_BASE}.${AUDIO_FILE##*.}"
+   fi
 fi
+
 
 # calculate and report total time for capture
 TIMER_END=$(date '+%s')

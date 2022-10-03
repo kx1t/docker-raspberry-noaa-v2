@@ -31,9 +31,8 @@ test_freq_offset: 0
 #     **WARNING**: 'gnuradio' does not work with certain SDR devices (e.g. it will not currently
 #                  work with a RTL-SDR v3 dongle, as no image will be decoded from the bitstream)
 
-meteor_receiver: 'gnuradio'
-noaa_receiver: 'gnuradio'
-
+meteor_receiver: 'rtl_fm'
+noaa_receiver: 'rtl_fm'
 
 # whether to schedule specific orbiting objects for capture
 #   <satellite_name>_schedule - whether to schedule captures for the satellite
@@ -44,6 +43,8 @@ noaa_receiver: 'gnuradio'
 #   <satellite_name>_sun_min_elevation - threshold for sun elevation for specific satellite captures
 #   <satellite_name>_sat_min_elevation - threshold for sat elevation for specific satellite captures
 #   <satellite_name>_memory_threshold - for METEOR satellite, minimum free memory (MB) required to store pass in RAM
+
+noaa_memory_threshold: 600
 
 noaa_15_schedule: true
 noaa_15_sdr_device_id: 0
