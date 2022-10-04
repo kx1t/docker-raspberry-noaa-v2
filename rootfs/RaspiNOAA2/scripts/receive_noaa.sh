@@ -104,14 +104,14 @@ if (( FREE_MEMORY == 0 )); then
     log "No TMPFS is mounted; capturing to disk" "INFO"
     RAMFS_AUDIO_BASE="${AUDIO_FILE_BASE}"
     in_mem=false
-elif [ "$FREE_MEMORY" -lt $NOAA_MEMORY_TRESHOLD ]; then
+elif [ "$FREE_MEMORY" -lt $NOAA_MEMORY_THRESHOLD ]; then
     log "Not enough space to store a NOAA pass on TMPFS; capturing to disk" "INFO"
-    log "Free : ${FREE_MEMORY} ; Required : ${NOAA_MEMORY_TRESHOLD}" "INFO"
+    log "Free : ${FREE_MEMORY} ; Required : ${NOAA_MEMORY_THRESHOLD}" "INFO"
     RAMFS_AUDIO_BASE="${AUDIO_FILE_BASE}"
     in_mem=false
 else
     log "The system has enough space to store a NOAA pass on TMPFS" "INFO"
-    log "Free : ${FREE_MEMORY} ; Required : ${NOAA_MEMORY_TRESHOLD}" "INFO"
+    log "Free : ${FREE_MEMORY} ; Required : ${NOAA_MEMORY_THRESHOLD}" "INFO"
     in_mem=true
 fi
 
