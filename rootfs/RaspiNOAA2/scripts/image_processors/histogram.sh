@@ -29,7 +29,11 @@ input_filename="${input_file%.*}"
 input_fileext="${input_file##*.}"
 
 #adjust output with os release
+<<<<<<< HEAD
 if grep bullseye /etc/os-release >/dev/null 2>&1
+=======
+if cat /etc/os-release | grep bullseye >/dev/null 2>&1
+>>>>>>> 047baefe19316d23f37c622b9943e41de2f71b31
 then
    gmic_temp_1="${input_path}/_${input_filename}_c1.${input_fileext}"
 else
