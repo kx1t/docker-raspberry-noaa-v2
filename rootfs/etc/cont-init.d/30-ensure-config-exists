@@ -10,3 +10,7 @@ then
 	mkdir -p /RaspiNOAA2/config
 	cp -rf /RaspiNOAA2/config.bkup/* /RaspiNOAA2/config
 fi
+
+# Make sure that /RaspiNOAA2/tmp is a shortcut to /tmp:
+[[ -d /RaspiNOAA2/tmp ]] && rm -rf /RaspiNOAA2/tmp
+ln -sf /tmp /RaspiNOAA2/tmp
