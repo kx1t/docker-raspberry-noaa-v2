@@ -18,7 +18,10 @@ server {
   location ~ /videos/(.*) {
     alias /srv/videos/$1;
   }
-
+  
+  location ~ /audio/(.*) {
+    alias /srv/audio/$1;
+  }
   location / {
     try_files $uri $uri/ /index.php;
   }
