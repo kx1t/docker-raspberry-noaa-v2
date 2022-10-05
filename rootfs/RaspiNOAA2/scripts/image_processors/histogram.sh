@@ -12,8 +12,8 @@
 #   ./histogram.sh /path/to/inputfile.jpg /path/to/outputfile.jpg "my chart title" "my chart comment"
 
 # import common lib and settings
-. "$NOAA_HOME/.noaa-v2.conf"
-. "$NOAA_HOME/scripts/common.sh"
+source "$NOAA_HOME/.noaa-v2.conf"
+source "$NOAA_HOME/scripts/common.sh"
 
 # change input params to sane names for readability
 IN_FILE=$1
@@ -29,11 +29,7 @@ input_filename="${input_file%.*}"
 input_fileext="${input_file##*.}"
 
 #adjust output with os release
-<<<<<<< HEAD
 if grep bullseye /etc/os-release >/dev/null 2>&1
-=======
-if cat /etc/os-release | grep bullseye >/dev/null 2>&1
->>>>>>> 047baefe19316d23f37c622b9943e41de2f71b31
 then
    gmic_temp_1="${input_path}/_${input_filename}_c1.${input_fileext}"
 else
