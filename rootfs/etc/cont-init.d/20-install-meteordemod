@@ -11,7 +11,7 @@ echo "[$(date)][$APPNAME] Ensuring MeteorDemod is installed ..."
 # Should take only a few seconds.
 
 
-if ! which meteordemod
+if ! which meteordemod >/dev/null 2>&1
 then
 	echo "[$(date)][$APPNAME] It is not installed. Doing that now ..."
 	echo "[$(date)][$APPNAME] Step 1 of 3. Updating package repos ..."
@@ -38,9 +38,11 @@ then
 		echo "[$(date)][$APPNAME] ERROR: Please check the URL. You may need to rebuild the container. Stopping container execution!"
 		exit 1
 	fi
+else
+	echo "[$(date)][$APPNAME] meteordemod is already installed."
 fi
 
 # On ARMHF/ARMV7 systems (specificall RPI3B+), we want to disable the MercatorProjection because
 # the Pi often runs out of memory with it.
 
-grep "armv7" <<< "$(uname -m)" >/dev/null 2>&1 && sed -i 's/^MercatorProjection=true$/MercatorProjection=false/g' /root/.config/meteordemod/settings.ini
+grep "armv7" <<< "$(uname -m)" >/dev/null 2>&1 && sed -i 's/^MercatorProjection=true$/MercatorProjection=false/g' /root/.config/meteordemod/settings.ini || true
