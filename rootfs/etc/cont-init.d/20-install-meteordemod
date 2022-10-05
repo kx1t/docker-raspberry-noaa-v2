@@ -39,3 +39,8 @@ then
 		exit 1
 	fi
 fi
+
+# On ARMHF/ARMV7 systems (specificall RPI3B+), we want to disable the MercatorProjection because
+# the Pi often runs out of memory with it.
+
+grep "armv7" <<< "$(uname -m)" >/dev/null 2>&1 && sed -i 's/^MercatorProjection=true$/MercatorProjection=false/g' /root/.config/meteordemod/settings.ini
