@@ -153,9 +153,11 @@ do
             else
                 # Let's add it as the first variable after the environment: tag
                 # $firstline will contain the first line after the environment: tag
-                firstline="$(sed -n '/\s*environment:/{n;p;}' "$CONTAINER_DIR/docker-compose.yml" )"
+                firstline="$(sed -n '/\s*environment:/{n;p;q}' "$CONTAINER_DIR/docker-compose.yml" )"
                 # strip $firstline from anything before the actual "name=value part:
                 firstline="$(sed -n 's|^[ -]*\(.*\)$|\1|p' <<< "$firstline")"
+                # if the firstline starts with "#", it wasn't a variable and we'll have to assume there was no "- ":
+                [[ "${firstline:0:1}" == "#" ]] && variable="- $variable"
                 # now insert the new variable and value before $firstline into the file
                 sed -i "s|^\([ -]*\)\($firstline\)$|\1$variable=$value\n\1\2|g" "$CONTAINER_DIR/docker-compose.yml"
             fi
