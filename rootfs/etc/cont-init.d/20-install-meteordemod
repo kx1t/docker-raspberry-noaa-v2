@@ -26,12 +26,12 @@ then
 	read -r branch < /.CONTAINER_VERSION
 	branch="${branch:24}"
 
-	if curl -sL -o "/tmp/Meteordemod_2.3.1_$arch.deb" "https://github.com/kx1t/docker-raspberry-noaa-v2/blob/$branch/software/Meteordemod_2.3.1_$arch.deb?raw=true"
+	if curl -sL -o "/tmp/meteordemod_2.3.1_$arch.deb" "https://github.com/kx1t/docker-raspberry-noaa-v2/blob/$branch/software/meteordemod_2.3.1_$arch.deb?raw=true"
 	then
 		echo "[$(date)][$APPNAME] Step 3 of 3. Installing MeteorDemod and dependencies ..."
-		apt-get install -qqq -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests python3-opencv /tmp/Meteordemod_2.3.1_$arch.deb >/dev/null
+		apt-get install -qqq -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests python3-opencv /tmp/meteordemod_2.3.1_$arch.deb >/dev/null
 		ln -sf /usr/bin/meteordemod /usr/local/bin
-		rm -f "/tmp/Meteordemod_2.3.1_$arch.deb"
+		rm -f "/tmp/meteordemod_2.3.1_$arch.deb"
 		echo "[$(date)][$APPNAME] Done!"
 	else
 		echo "[$(date)][$APPNAME] ERROR: Cannot get this archive: https://github.com/kx1t/docker-raspberry-noaa-v2/blob/$branch/software/Meteordemod-2.3.1-$arch.deb?raw=true"
