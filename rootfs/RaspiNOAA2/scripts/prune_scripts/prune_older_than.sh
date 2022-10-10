@@ -20,8 +20,8 @@ for img_path in $(sqlite3 ${DB_FILE} "select file_path from decoded_passes where
 done
 
 log "Pruning recordings, if any..." "INFO"
-find "${NOAA_AUDIO_OUTPUT}"/*  -maxdepth 1 -mtime +$PRUNE_OLDER_THAN -exec rm {} \;
-find "${METEOR_AUDIO_OUTPUT}"/*  -maxdepth 1 -mtime +$PRUNE_OLDER_THAN -exec rm {} \;
+find "${NOAA_AUDIO_OUTPUT}/"  -maxdepth 1 -mtime +$PRUNE_OLDER_THAN -exec rm {} \;
+find "${METEOR_AUDIO_OUTPUT}/"  -maxdepth 1 -mtime +$PRUNE_OLDER_THAN -exec rm {} \;
 
 # the pruning of images should already have been done in the "for" loop above, but sometimes it doesn't work...
 # consider the following 2 command "safety overrides" that will make sure that the system is really cleaned up.
