@@ -22,4 +22,9 @@ done
 log "Pruning recordings, if any..." "INFO"
 find "${NOAA_AUDIO_OUTPUT}"/*  -maxdepth 1 -mtime +$PRUNE_OLDER_THAN -exec rm {} \;
 find "${METEOR_AUDIO_OUTPUT}"/*  -maxdepth 1 -mtime +$PRUNE_OLDER_THAN -exec rm {} \;
+
+# the pruning of images should already have been done in the "for" loop above, but sometimes it doesn't work...
+# consider the following 2 command "safety overrides" that will make sure that the system is really cleaned up.
+find "${IMAGE_OUTPUT}/" -maxdepth 1 -type f -mtime +$PRUNE_OLDER_THAN -exec rm -f {} \;
+find "${IMAGE_OUTPUT}/thumb/" -maxdepth 1 -type f -mtime +$PRUNE_OLDER_THAN -exec rm -f {} \;
 log "Done pruning recordings" "INFO"
