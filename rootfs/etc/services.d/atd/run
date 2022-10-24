@@ -10,7 +10,7 @@ APPNAME="$(hostname)/atd"
 echo "[$(date)][$APPNAME] Starting custom AT daemon ..."
 
 SPOOLDIR="/run/atspool"
-PIDFILE=/var/run/atd.pid
+PIDFILE="/var/run/atd.pid"
 
 # $ATD_INTERVAL determines how often ATD checks if a job needs to get executed. Default = 10 (seconds)
 # Note that this will cause a delay of up to $ATD_INTERVAL to execute the job.
@@ -29,7 +29,8 @@ trap_with_arg() {
 
 func_trap() {
     echo "[$(date)][$APPNAME] Received signal $1; exiting/restarting ATD"
-    rm $PIDFILE
+    rm -f "$PIDFILE"
+    rm -f "$SPOOLDIR"/*
     exit
 }
 
@@ -47,6 +48,7 @@ then
 fi
 
 mkdir -p "$SPOOLDIR"
+rm -f "$SPOOLDIR"/*
 
 while true
 do
@@ -54,30 +56,35 @@ do
     sleep $ATD_INTERVAL
 
     # Iterate through each of the items in the queue:
-    while IFS=$'\n' read -r task
+    IFS=$'\n' readarray taskarray <<< "$(at -l |sort -k4,5)"
+    for task in "${taskarray[@]}"
     do
-        if [[ -n "$task" ]] && [[ ! -f "$SPOOLDIR/${task%%[[:space:]]*}" ]]
+        taskq="$(awk '{print $1;exit}' <<< "$task")"
+        [[ -z "$taskq" ]] && continue
+        spoolfile="$SPOOLDIR/$taskq"
+        tasktime="$(date -d "$(awk '{print $2,$3,$4,$5,$6;exit}' <<< "$task")" +%s)"
+        if [[ ! -f "$spoolfile" ]]
         then
-            # check if the scheduled date <= current time and exec task if true
+            # check if the current time >= scheduled time and exec task if true
             # run task in the background as not to block the process and
             # delete the task when finished
-            if (( $(date -d "$(awk '{print $2,$3,$4,$5,$6}' <<< "$task")" +%s) <= $(date +%s) ))
+            if (( $(date +%s) >= tasktime ))
             then
                 echo "[$(date)][$APPNAME] Executing task ${task%%[[:space:]]*}"
                 {
                     # we rather execute it as a file than run the sequence through BASH
                     # copy the task to the SPOOLDIR and adjust the attribs to allow execution:
-                    at -c ${task%%[[:space:]]*} > "$SPOOLDIR/${task%%[[:space:]]*}"
-                    chmod u+rx "$SPOOLDIR/${task%%[[:space:]]*}"
+                    at -c "$taskq" > "$spoolfile"
+                    chmod u+rx "$spoolfile"
 
                     # execute the task:
-                    "$SPOOLDIR"/"${task%%[[:space:]]*}"
+                    "$spoolfile"
 
                     # clean up:
-                    rm -f "$SPOOLDIR/${task%%[[:space:]]*}"
-                    at -d ${task%%[[:space:]]*}
+                    rm -f "$spoolfile"
+                    at -d "$taskq"
                 } &
             fi
         fi
-    done <<< "$(at -l)"
+    done
 done

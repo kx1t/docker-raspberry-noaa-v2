@@ -56,14 +56,14 @@ IMAGE_THUMB_BASE="${IMAGE_OUTPUT}/thumb/${FILENAME_BASE}"
 # for Meteor, no matter which receive method is being used, in order
 # to avoid resource contention and/or signal interference
 # First check for rtl_fm mode active instances
-if pgrep "rtl_fm" > /dev/null; then
+if pgrep "rtl_fm" >/dev/null 2>&1; then
     log "Killing existing rtl_fm capture instance in favor of the current METEOR capture run" "INFO"
     pkill -9 -f rtl_fm
 fi
 # then for gnuradio mode active instances
-if pgrep -f rtlsdr_noaa_apt_rx.py > /dev/null; then
+if pgrep -f "rtlsdr_noaa_apt_rx.py" >/dev/null 2>&1; then
     log "Killing existing gnuradio capture instance in favor of the current METEOR capture run" "INFO"
-    kill "$(pgrep -f rtlsdr_noaa_apt_rx.py)"
+    pkill -9 -f rtlsdr_noaa_apt_rx.py
 fi
 
 
@@ -71,7 +71,7 @@ fi
 # check if there is enough free memory to store pass on RAM
 # check if /run is mounted - if it's not, then there's no actual TMPFS memory
 
-if ! FREE_MEMORY="$(set -o pipefail && df -BM | grep -E "/run$" 2>/dev/null | awk '{print $4}')"; then
+if ! FREE_MEMORY="$(set -o pipefail && df -BM | grep -E '/run$' 2>/dev/null | awk '{print $4}')"; then
     FREE_MEMORY=0
 else
     # remove the "M" at the end of the string:
