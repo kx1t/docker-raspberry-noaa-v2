@@ -60,31 +60,31 @@ do
     for task in "${taskarray[@]}"
     do
         taskq="$(awk '{print $1;exit}' <<< "$task")"
-        [[ -z "$taskq" ]] && continue
         spoolfile="$SPOOLDIR/$taskq"
+        [[ -z "$taskq" ]] && continue
+        [[ -f "$spoolfile" ]] && continue
         tasktime="$(date -d "$(awk '{print $2,$3,$4,$5,$6;exit}' <<< "$task")" +%s)"
-        if [[ ! -f "$spoolfile" ]]
+
+        # check if the current time >= scheduled time and exec task if true
+        # run task in the background as not to block the process and
+        # delete the task when finished
+        if (( $(date +%s) >= tasktime ))
         then
-            # check if the current time >= scheduled time and exec task if true
-            # run task in the background as not to block the process and
-            # delete the task when finished
-            if (( $(date +%s) >= tasktime ))
-            then
-                echo "[$(date)][$APPNAME] Executing task ${task%%[[:space:]]*}"
-                {
-                    # we rather execute it as a file than run the sequence through BASH
-                    # copy the task to the SPOOLDIR and adjust the attribs to allow execution:
-                    at -c "$taskq" > "$spoolfile"
-                    chmod u+rx "$spoolfile"
+            echo "[$(date)][$APPNAME] Executing task ${task%%[[:space:]]*}"
+            {
+                # we rather execute it as a file than run the sequence through BASH
+                # copy the task to the SPOOLDIR and adjust the attribs to allow execution:
+                at -c "$taskq" > "$spoolfile"
+                chmod u+rx "$spoolfile"
 
-                    # execute the task:
-                    "$spoolfile"
+                # execute the task:
+                "$spoolfile"
 
-                    # clean up:
-                    rm -f "$spoolfile"
-                    at -d "$taskq"
-                } &
-            fi
+                # clean up:
+                rm -f "$spoolfile"
+                at -d "$taskq"
+            } &
         fi
+
     done
 done
