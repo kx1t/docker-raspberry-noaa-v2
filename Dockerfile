@@ -28,11 +28,11 @@ RUN set -x && \
     make -j4 && \
     make install && \
     cpack && \
-    cp *.deb meteordemod2.deb
+    cp *.deb /meteordemod2.deb
 
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
-COPY --from=build /git/MeteorDemod/meteordemod2.deb /software/meteordemod2.deb
+COPY --from=build /meteordemod2.deb /software/meteordemod2.deb
 
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
