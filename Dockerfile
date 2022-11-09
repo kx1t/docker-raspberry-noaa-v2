@@ -32,7 +32,7 @@ RUN set -x && \
 
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
-COPY --from=build /git/meteordemod2.deb /software/meteordemod2.deb
+COPY --from=build /git/MeteorDemod/meteordemod2.deb /software/meteordemod2.deb
 
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
