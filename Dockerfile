@@ -1,4 +1,38 @@
+FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python AS build
+RUN set -x && \
+    BUILD_PACKAGES=() && \
+    BUILD_PACKAGES+=(python3-dev) && \
+    BUILD_PACKAGES+=(python3-pip) && \
+    BUILD_PACKAGES+=(cmake) && \
+    BUILD_PACKAGES+=(build-essential) && \
+    BUILD_PACKAGES+=(pkg-config) && \
+    BUILD_PACKAGES+=(git) && \
+    BUILD_PACKAGES+=(libatlas-base-dev) && \
+    BUILD_PACKAGES+=(liblapacke-dev) && \
+    BUILD_PACKAGES+=(gfortran) && \
+    BUILD_PACKAGES+=(libopencv-dev) && \
+    BUILD_PACKAGES+=(python3-opencv) && \
+    #
+    # now install these packages:
+    apt-get update -q && \
+    apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${BUILD_PACKAGES[@]}" && \
+    #
+    # get and build MeteorDemod:
+    mkdir /git && \
+    cd /git && \
+    git clone --depth=1 https://github.com/Digitelektro/MeteorDemod.git && \
+    cd MeteorDemod && \
+    git submodule update --init --recursive && \
+    mkdir build && cd build && \
+    cmake ../ && \
+    make -j4 && \
+    make install && \
+    cpack && \
+    cp *.deb meteordemod2.deb
+
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
+
+COPY --from=build /git/meteordemod2.deb /software/meteordemod2.deb
 
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
@@ -51,7 +85,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(python3-jsonschema) && \
     KEPT_PACKAGES+=(python3-matplotlib) && \
     KEPT_PACKAGES+=(python3-numpy) && \
-#    KEPT_PACKAGES+=(python3-opencv)
+    KEPT_PACKAGES+=(python3-opencv) && \
     KEPT_PACKAGES+=(python3-pillow) && \
     KEPT_PACKAGES+=(python3-pip) && \
     KEPT_PACKAGES+=(python3-pyrsistent) && \
@@ -113,23 +147,18 @@ RUN set -x && \
     popd && \
 #
 # Install predict
-pushd /git/docker-raspberry-noaa-v2/software && \
-    if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp predict_armhf /usr/bin/predict; \
-    elif [ "$TARGETARCH" == "amd64" ]; then cp predict_amd64 /usr/bin/predict; \
-    elif [ "$TARGETARCH" == "arm64" ]; then cp predict_arm64 /usr/bin/predict; \
-    else echo "No target for predict for $TARGETARCH" && exit 1; \
-    fi && \
-popd && \
+    pushd /git/docker-raspberry-noaa-v2/software && \
+        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp predict_armhf /usr/bin/predict; \
+        elif [ "$TARGETARCH" == "amd64" ]; then cp predict_amd64 /usr/bin/predict; \
+        elif [ "$TARGETARCH" == "arm64" ]; then cp predict_arm64 /usr/bin/predict; \
+        else echo "No target for predict for $TARGETARCH" && exit 1; \
+        fi && \
+    popd && \
 #
-# Install meteor_demod
-# Removed for now -- done at runtime startup
-    # pushd /git/docker-raspberry-noaa-v2/software && \
-    #     if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then dpkg -i Meteordemod-2.3.1-armhf.deb; \
-    #     elif [ "$TARGETARCH" == "amd64" ]; then dpkg -i Meteordemod-2.3.1-amd64.deb; \
-    #     elif [ "$TARGETARCH" == "arm64" ]; then dpkg -i Meteordemod-2.3.1-arm64.deb; \
-    #     else echo "No target for meteor_demod for $TARGETARCH" && exit 1; \
-    #     fi && \
-    # popd && \
+# Install meteordemod2
+    pushd /software && \
+        apt-get install -qqq -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ./meteordemod2.deb && \
+    popd && \
 #
 # Install medet
     pushd /git/docker-raspberry-noaa-v2/software && \
@@ -192,8 +221,10 @@ popd && \
 #
 # --------------------------------------------------------------------------------------------
 #
-
 COPY rootfs/ /
+#
+# Add and install MeteorDemod2.pkg:
+
 
 #
 # No need for SHELL and ENTRYPOINT as those are inherited from the base image
