@@ -36,7 +36,7 @@ COPY --from=build /meteordemod2.deb /software/meteordemod2.deb
 
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
-ARG BRANCH="meteordemod_staging"
+ARG BRANCH="main"
 
 RUN set -x && \
 # define packages needed for installation and general management of the container:
@@ -213,13 +213,14 @@ RUN set -x && \
       /var/lib/apt/lists/* \
       /.dockerenv \
       /git \
-      /wxtoimg \ && \
+      /wxtoimg && \
 #
 # --------------------------------------------------------------------------------------------
 #
 # Do some other stuff
     echo "alias dir=\"ls -alsv\"" >> /root/.bashrc && \
-    echo "alias nano=\"nano -l\"" >> /root/.bashrc
+    echo "alias nano=\"nano -l\"" >> /root/.bashrc && \
+    ln -sf /usr/bin/meteordemod /usr/local/bin/meteordemod
 #
 # --------------------------------------------------------------------------------------------
 #
