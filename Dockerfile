@@ -100,16 +100,16 @@ RUN set -x && \
     KEPT_PACKAGES+=(xfonts-base) && \
     KEPT_PACKAGES+=(/software/meteordemod2.deb) && \
     #
-    TEMP_PACKAGES+=(build-essential) && \
-    TEMP_PACKAGES+=(cmake) && \
-    TEMP_PACKAGES+=(cmake-data) && \
-    TEMP_PACKAGES+=(cpp-10) && \
-    TEMP_PACKAGES+=(g++) && \
-    TEMP_PACKAGES+=(gcc) && \
-    TEMP_PACKAGES+=(gcc-10) && \
+    # TEMP_PACKAGES+=(build-essential) && \
+    # TEMP_PACKAGES+=(cmake) && \
+    # TEMP_PACKAGES+=(cmake-data) && \
+    # TEMP_PACKAGES+=(cpp-10) && \
+    # TEMP_PACKAGES+=(g++) && \
+    # TEMP_PACKAGES+=(gcc) && \
+    # TEMP_PACKAGES+=(gcc-10) && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(pkg-config) && \
-    TEMP_PACKAGES+=(systemd) && \
+    # TEMP_PACKAGES+=(systemd) && \
 # KEPT_PIP3_PACKAGES+=(ansible-core)
 # other packages:
     KEPT_PACKAGES+=(unzip) && \
@@ -120,7 +120,7 @@ RUN set -x && \
 # --------------------------------------------------------------------------------------------
 # Install all the apt, pip3, and gem (ruby) packages:
     apt-get update -q && \
-    apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${TEMP_PACKAGES[@]}" "${KEPT_PACKAGES[@]}" && \
+    apt-get install -q - -o Dpkg::Options::="--force-confnew" -y --no-install-recommends  --no-install-suggests "${TEMP_PACKAGES[@]}" "${KEPT_PACKAGES[@]}" && \
     # The following is needed to use the armhf version of wxtoimg on arm64 archs:
     if [ "$TARGETARCH" == "arm64" ]; then \
         dpkg --add-architecture armhf && \
