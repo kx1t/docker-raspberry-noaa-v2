@@ -157,10 +157,10 @@ RUN set -x && \
     popd && \
 #
 # Install meteordemod2
-    pushd /software && \
-        apt-get install -y -qqq --no-install-recommends  --no-install-suggests ./meteordemod2.deb && \
-        ln -sf /usr/bin/meteordemod /usr/local/bin/meteordemod && \
-    popd && \
+#    pushd /software && \
+#        apt-get install -y -qqq --no-install-recommends  --no-install-suggests ./meteordemod2.deb && \
+#        ln -sf /usr/bin/meteordemod /usr/local/bin/meteordemod && \
+#    popd && \
 #
 # Install medet
     pushd /git/docker-raspberry-noaa-v2/software && \
