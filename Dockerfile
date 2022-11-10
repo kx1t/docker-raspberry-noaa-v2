@@ -158,6 +158,7 @@ RUN set -x && \
 # Install meteordemod2
     pushd /software && \
         apt-get install -qqq -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests ./meteordemod2.deb && \
+        ln -s /usr/bin/meteordemod /usr/local/bin/meteordemod && \
     popd && \
 #
 # Install medet
