@@ -143,11 +143,11 @@ log "Starting $METEOR_RECEIVER record for $CAPTURE_TIME secs (=until $(date -d "
 if [ "$METEOR_RECEIVER" == "rtl_fm" ]
 then
     AUDIO_FILE="${RAMFS_AUDIO_BASE}.wav"
-    ${AUDIO_PROC_DIR}/meteor_record_rtl_fm.sh $CAPTURE_TIME "${AUDIO_FILE}" >> $NOAA_LOG 2>&1
+    ${AUDIO_PROC_DIR}/meteor_record_rtl_fm.sh $CAPTURE_TIME "${AUDIO_FILE}" >> "${NOAA_LOG}" 2>&1
 elif [ "$METEOR_RECEIVER" == "gnuradio" ]
 then
     AUDIO_FILE="${RAMFS_AUDIO_BASE}.s"
-    ${AUDIO_PROC_DIR}/meteor_record_gnuradio.sh $CAPTURE_TIME "${AUDIO_FILE}" >> $NOAA_LOG 2>&1
+    ${AUDIO_PROC_DIR}/meteor_record_gnuradio.sh $CAPTURE_TIME "${AUDIO_FILE}" >> "${NOAA_LOG}" 2>&1
 else
     log "Receiver type '$METEOR_RECEIVER' not valid - aborting capture run" "ERROR"
     exit 1
@@ -158,14 +158,19 @@ fi
 
 log "Demodulation in progress (QPSK)" "INFO"
 qpsk_file="/tmp/meteor/${FILENAME_BASE}.qpsk"
-${AUDIO_PROC_DIR}/meteor_demodulate_qpsk.sh "${AUDIO_FILE}" "${qpsk_file}" >> $NOAA_LOG 2>&1
+if ! ${AUDIO_PROC_DIR}/meteor_demodulate_qpsk.sh "${AUDIO_FILE}" "${qpsk_file}" >> "${NOAA_LOG}" 2>&1
+then
+    echo "Couldn't decode any data. Exiting..." >> "${NOAA_LOG}"
+    exit 1
+fi
+
 
 if [[ "${PRODUCE_SPECTROGRAM}" == "true" ]]; then
     log "Producing spectrogram" "INFO"
     spectrogram=1
     spectro_text="${capture_start} @ ${SAT_MAX_ELEVATION}°"
-    ${IMAGE_PROC_DIR}/spectrogram.sh "${AUDIO_FILE}" "${IMAGE_FILE_BASE}-spectrogram.png" "${SAT_NAME}" "${spectro_text}" >> $NOAA_LOG 2>&1    #Bilo je ${AUDIO_FILE_BASE}.wav
-    ${IMAGE_PROC_DIR}/thumbnail.sh 300 "${IMAGE_FILE_BASE}-spectrogram.png" "${IMAGE_THUMB_BASE}-spectrogram.png" >> $NOAA_LOG 2>&1
+    ${IMAGE_PROC_DIR}/spectrogram.sh "${AUDIO_FILE}" "${IMAGE_FILE_BASE}-spectrogram.png" "${SAT_NAME}" "${spectro_text}" >> "${NOAA_LOG}" 2>&1    #Bilo je ${AUDIO_FILE_BASE}.wav
+    ${IMAGE_PROC_DIR}/thumbnail.sh 300 "${IMAGE_FILE_BASE}-spectrogram.png" "${IMAGE_THUMB_BASE}-spectrogram.png" >> "${NOAA_LOG}" 2>&1
 fi
 
 # ---------------------------------------------------------------------------
@@ -221,7 +226,7 @@ rm -f *.gcp *.bmp 2>/dev/null
 
 for i in spread_*.jpg
 do
-    $CONVERT -quality 100 $FLIP "$i" "$i" >> $NOAA_LOG 2>&1
+    $CONVERT -quality 100 $FLIP "$i" "$i" >> "${NOAA_LOG}" 2>&1
 done
 
 # ---------------------------------------------------------------------------
@@ -231,8 +236,8 @@ log "Annotating images and creating thumbnails" "INFO"
 counter=1
 for i in *.jpg
 do
-    ${IMAGE_PROC_DIR}/meteor_normalize_annotate.sh "$i" "$i" 100 >> $NOAA_LOG 2>&1
-    ${IMAGE_PROC_DIR}/thumbnail.sh 300 "$i" "${i%.jpg}-thumb-122-rectified.jpg" >> $NOAA_LOG 2>&1
+    ${IMAGE_PROC_DIR}/meteor_normalize_annotate.sh "$i" "$i" 100 >> "${NOAA_LOG}" 2>&1
+    ${IMAGE_PROC_DIR}/thumbnail.sh 300 "$i" "${i%.jpg}-thumb-122-rectified.jpg" >> "${NOAA_LOG}" 2>&1
     mv "$i" "${IMAGE_FILE_BASE}-${counter}-122-rectified.jpg"
     mv "${i%.jpg}-thumb-122-rectified.jpg" "${IMAGE_THUMB_BASE}-${counter}-122-rectified.jpg"
     push_file_list="$push_file_list ${IMAGE_FILE_BASE}-${counter}-122-rectified.jpg "
@@ -325,7 +330,7 @@ if [ "$ENABLE_EMAIL_PUSH" == "true" ]; then
     if [ -f "${IMAGE_FILE_BASE}-1-122-rectified.jpg" ]; then
         for i in $push_file_list
         do
-            ${PUSH_PROC_DIR}/push_email.sh "${EMAIL_PUSH_ADDRESS}" "$i" "${push_annotation}" >> $NOAA_LOG 2>&1
+            ${PUSH_PROC_DIR}/push_email.sh "${EMAIL_PUSH_ADDRESS}" "$i" "${push_annotation}" >> "${NOAA_LOG}" 2>&1
             sleep 2
         done
     fi
@@ -336,7 +341,7 @@ if [ "${ENABLE_DISCORD_PUSH}" == "true" ]; then
     if [ -f "${IMAGE_FILE_BASE}-1-122-rectified.jpg" ]; then
         for i in $push_file_list
         do
-            ${PUSH_PROC_DIR}/push_discord.sh "$i" "${push_annotation}" >> $NOAA_LOG 2>&1
+            ${PUSH_PROC_DIR}/push_discord.sh "$i" "${push_annotation}" >> "${NOAA_LOG}" 2>&1
             sleep 2
         done
     fi
