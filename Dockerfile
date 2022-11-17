@@ -1,47 +1,47 @@
-FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python AS build
-RUN set -x && \
-    BUILD_PACKAGES=() && \
-    # BUILD_PACKAGES+=(python3-dev) && \
-    # BUILD_PACKAGES+=(python3-pip) && \
-    BUILD_PACKAGES+=(cmake) && \
-    BUILD_PACKAGES+=(build-essential) && \
-    BUILD_PACKAGES+=(pkg-config) && \
-    BUILD_PACKAGES+=(git) && \
-    # BUILD_PACKAGES+=(libatlas-base-dev) && \
-    # BUILD_PACKAGES+=(liblapacke-dev) && \
-    # BUILD_PACKAGES+=(gfortran) && \
-    # BUILD_PACKAGES+=(libopencv-dev) && \
-    # BUILD_PACKAGES+=(python3-opencv) && \
-    # #
-    # now install these packages:
-    apt-get update -q && \
-    apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${BUILD_PACKAGES[@]}" && \
-    #
-    # get and build MeteorDemod:
-    # mkdir /git && \
-    # cd /git && \
-    # git clone --depth=1 https://github.com/Digitelektro/MeteorDemod.git && \
-    # cd MeteorDemod && \
-    # git submodule update --init --recursive && \
-    # mkdir build && cd build && \
-    # cmake ../ && \
-    # make -j4 && \
-    # make install && \
-    # cpack && \
-    # cp *.deb /meteordemod2.deb
-
-    # Instead, build meteor_demod:
-    mkdir /git && \
-    cd /git && \
-    git clone --depth=1 https://github.com/dbdexter-dev/meteor_demod.git && \
-    cd meteor_demod && \
-    mkdir build && cd build && \
-    cmake -DENABLE_TUI=OFF .. && \
-    make
+# FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python AS build
+# RUN set -x && \
+#     BUILD_PACKAGES=() && \
+#     # BUILD_PACKAGES+=(python3-dev) && \
+#     # BUILD_PACKAGES+=(python3-pip) && \
+#     BUILD_PACKAGES+=(cmake) && \
+#     BUILD_PACKAGES+=(build-essential) && \
+#     BUILD_PACKAGES+=(pkg-config) && \
+#     BUILD_PACKAGES+=(git) && \
+#     # BUILD_PACKAGES+=(libatlas-base-dev) && \
+#     # BUILD_PACKAGES+=(liblapacke-dev) && \
+#     # BUILD_PACKAGES+=(gfortran) && \
+#     # BUILD_PACKAGES+=(libopencv-dev) && \
+#     # BUILD_PACKAGES+=(python3-opencv) && \
+#     # #
+#     # now install these packages:
+#     apt-get update -q && \
+#     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${BUILD_PACKAGES[@]}" && \
+#     #
+#     # get and build MeteorDemod:
+#     # mkdir /git && \
+#     # cd /git && \
+#     # git clone --depth=1 https://github.com/Digitelektro/MeteorDemod.git && \
+#     # cd MeteorDemod && \
+#     # git submodule update --init --recursive && \
+#     # mkdir build && cd build && \
+#     # cmake ../ && \
+#     # make -j4 && \
+#     # make install && \
+#     # cpack && \
+#     # cp *.deb /meteordemod2.deb
+#
+#     # Instead, build meteor_demod:
+#     mkdir /git && \
+#     cd /git && \
+#     git clone --depth=1 https://github.com/dbdexter-dev/meteor_demod.git && \
+#     cd meteor_demod && \
+#     mkdir build && cd build && \
+#     cmake -DENABLE_TUI=OFF .. && \
+#     make
 
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
-COPY --from=build /git/meteor_demod/build/meteor_demod /usr/local/bin/meteor_demod
+# COPY --from=build /git/meteor_demod/build/meteor_demod /usr/local/bin/meteor_demod
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
 ARG BRANCH="main"
@@ -125,15 +125,11 @@ RUN set -x && \
     KEPT_PACKAGES+=(nano) && \
 #
 # --------------------------------------------------------------------------------------------
-# Install all the apt, pip3, and gem (ruby) packages:
+# Install all the apt packages:
     if [ "$TARGETARCH" == "arm64" ]; then dpkg --add-architecture armhf; else ARM64_PACKAGES=(); fi && \
     apt-get update -q && \
     apt-get install -q -o Dpkg::Options::="--force-confnew" -y --no-install-recommends --no-install-suggests "${TEMP_PACKAGES[@]}" "${KEPT_PACKAGES[@]}" "${ARM64_PACKAGES}" && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.9 100 && \
-#
-#  Pip3 installs arent necessary because the modules in requirements.txt are already installed via APT
-#    pip3 install ${KEPT_PIP3_PACKAGES[@]} && \
-#
 # --------------------------------------------------------------------------------------------
 # Install a bunch of other things from the repo
 # This is done here rather than in a COPY command to keep the image clean
@@ -159,10 +155,13 @@ RUN set -x && \
     popd && \
 #
 # Install meteordemod2
-#    pushd /software && \
-#        apt-get install -y -qqq --no-install-recommends  --no-install-suggests ./meteordemod2.deb && \
-#        ln -sf /usr/bin/meteordemod /usr/local/bin/meteordemod && \
-#    popd && \
+    pushd /git/docker-raspberry-noaa-v2/software && \
+        if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp meteor_demod_armhf /usr/local/bin/meteor_demod; \
+        elif [ "$TARGETARCH" == "amd64" ]; then cp meteor_demod_amd64 /usr/local/bin/meteor_demod; \
+        elif [ "$TARGETARCH" == "arm64" ]; then cp meteor_demod_arm64 /usr/local/bin/meteor_demod; \
+        else echo "No target for predict for $TARGETARCH" && exit 1; \
+        fi && \
+    popd && \
 #
 # Install medet
     pushd /git/docker-raspberry-noaa-v2/software && \
