@@ -129,7 +129,7 @@ RUN set -x && \
     if [ "$TARGETARCH" == "arm64" ]; then \
         dpkg --add-architecture armhf && \
     else \
-        ARM64_PACKAGES=();
+        ARM64_PACKAGES=(); \
     fi && \
     apt-get update -q && \
     apt-get install -q -o Dpkg::Options::="--force-confnew" -y --no-install-recommends --no-install-suggests "${TEMP_PACKAGES[@]}" "${KEPT_PACKAGES[@]}" "${ARM64_PACKAGES}" && \
