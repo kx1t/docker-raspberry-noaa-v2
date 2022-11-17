@@ -221,8 +221,8 @@ RUN set -x && \
 #
 # Do some other stuff
     echo "alias dir=\"ls -alsv\"" >> /root/.bashrc && \
-    echo "alias nano=\"nano -l\"" >> /root/.bashrc && \
-    ln -sf /usr/bin/meteordemod /usr/local/bin/meteordemod
+    echo "alias nano=\"nano -l\"" >> /root/.bashrc
+    # ln -sf /usr/bin/meteordemod /usr/local/bin/meteordemod
 #
 # --------------------------------------------------------------------------------------------
 #
