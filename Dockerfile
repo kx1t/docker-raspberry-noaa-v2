@@ -1,39 +1,47 @@
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python AS build
 RUN set -x && \
     BUILD_PACKAGES=() && \
-    BUILD_PACKAGES+=(python3-dev) && \
-    BUILD_PACKAGES+=(python3-pip) && \
+    # BUILD_PACKAGES+=(python3-dev) && \
+    # BUILD_PACKAGES+=(python3-pip) && \
     BUILD_PACKAGES+=(cmake) && \
     BUILD_PACKAGES+=(build-essential) && \
     BUILD_PACKAGES+=(pkg-config) && \
     BUILD_PACKAGES+=(git) && \
-    BUILD_PACKAGES+=(libatlas-base-dev) && \
-    BUILD_PACKAGES+=(liblapacke-dev) && \
-    BUILD_PACKAGES+=(gfortran) && \
-    BUILD_PACKAGES+=(libopencv-dev) && \
-    BUILD_PACKAGES+=(python3-opencv) && \
-    #
+    # BUILD_PACKAGES+=(libatlas-base-dev) && \
+    # BUILD_PACKAGES+=(liblapacke-dev) && \
+    # BUILD_PACKAGES+=(gfortran) && \
+    # BUILD_PACKAGES+=(libopencv-dev) && \
+    # BUILD_PACKAGES+=(python3-opencv) && \
+    # #
     # now install these packages:
     apt-get update -q && \
     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${BUILD_PACKAGES[@]}" && \
     #
     # get and build MeteorDemod:
+    # mkdir /git && \
+    # cd /git && \
+    # git clone --depth=1 https://github.com/Digitelektro/MeteorDemod.git && \
+    # cd MeteorDemod && \
+    # git submodule update --init --recursive && \
+    # mkdir build && cd build && \
+    # cmake ../ && \
+    # make -j4 && \
+    # make install && \
+    # cpack && \
+    # cp *.deb /meteordemod2.deb
+
+    # Instead, build meteor_demod:
     mkdir /git && \
     cd /git && \
-    git clone --depth=1 https://github.com/Digitelektro/MeteorDemod.git && \
-    cd MeteorDemod && \
-    git submodule update --init --recursive && \
+    git clone --depth=1 https://github.com/dbdexter-dev/meteor_demod.git && \
+    cd meteor_demod && \
     mkdir build && cd build && \
-    cmake ../ && \
-    make -j4 && \
-    make install && \
-    cpack && \
-    cp *.deb /meteordemod2.deb
+    cmake -DENABLE_TUI=OFF .. && \
+    make
 
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
-COPY --from=build /meteordemod2.deb /software/meteordemod2.deb
-
+COPY --from=build /git/meteor_demod/build/meteor_demod /usr/local/bin/meteor_demod
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
 ARG BRANCH="main"
@@ -42,6 +50,7 @@ RUN set -x && \
 # define packages needed for installation and general management of the container:
     TEMP_PACKAGES=() && \
     KEPT_PACKAGES=() && \
+    ARM64_PACKAGES=() && \
     KEPT_PIP3_PACKAGES=() && \
     KEPT_RUBY_PACKAGES=() && \
     #
@@ -99,18 +108,16 @@ RUN set -x && \
     KEPT_PACKAGES+=(xfonts-75dpi) && \
     KEPT_PACKAGES+=(xfonts-base) && \
     KEPT_PACKAGES+=(/software/meteordemod2.deb) && \
-    #
-    # TEMP_PACKAGES+=(build-essential) && \
-    # TEMP_PACKAGES+=(cmake) && \
-    # TEMP_PACKAGES+=(cmake-data) && \
-    # TEMP_PACKAGES+=(cpp-10) && \
-    # TEMP_PACKAGES+=(g++) && \
-    # TEMP_PACKAGES+=(gcc) && \
-    # TEMP_PACKAGES+=(gcc-10) && \
+    KEPT_PACKAGES+=(ghostscript) && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(pkg-config) && \
-    # TEMP_PACKAGES+=(systemd) && \
-# KEPT_PIP3_PACKAGES+=(ansible-core)
+# armhf packages for use with arm64 -- neded for wxtoimg on arm64:
+    ARM64_PACKAGES+=(libc6:armhf) && \
+    ARM64_PACKAGES+=(libstdc++6:armhf) && \
+    ARM64_PACKAGES+=(libasound2:armhf) && \
+    ARM64_PACKAGES+=(libx11-6:armhf) && \
+    ARM64_PACKAGES+=(libxft-dev:armhf) && \
+    ARM64_PACKAGES+=(libxft2:armhf) && \
 # other packages:
     KEPT_PACKAGES+=(unzip) && \
     KEPT_PACKAGES+=(psmisc) && \
@@ -119,14 +126,13 @@ RUN set -x && \
 #
 # --------------------------------------------------------------------------------------------
 # Install all the apt, pip3, and gem (ruby) packages:
-    apt-get update -q && \
-    apt-get install -q - -o Dpkg::Options::="--force-confnew" -y --no-install-recommends  --no-install-suggests "${TEMP_PACKAGES[@]}" "${KEPT_PACKAGES[@]}" && \
-    # The following is needed to use the armhf version of wxtoimg on arm64 archs:
     if [ "$TARGETARCH" == "arm64" ]; then \
         dpkg --add-architecture armhf && \
-        apt-get update -q && \
-        apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests libc6:armhf libstdc++6:armhf libasound2:armhf libx11-6:armhf libxft-dev:armhf libxft2:armhf ghostscript; \
+    else \
+        ARM64_PACKAGES=();
     fi && \
+    apt-get update -q && \
+    apt-get install -q -o Dpkg::Options::="--force-confnew" -y --no-install-recommends --no-install-suggests "${TEMP_PACKAGES[@]}" "${KEPT_PACKAGES[@]}" "${ARM64_PACKAGES}" && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.9 100 && \
 #
 #  Pip3 installs arent necessary because the modules in requirements.txt are already installed via APT
