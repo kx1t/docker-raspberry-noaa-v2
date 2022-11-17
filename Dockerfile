@@ -126,11 +126,7 @@ RUN set -x && \
 #
 # --------------------------------------------------------------------------------------------
 # Install all the apt, pip3, and gem (ruby) packages:
-    if [ "$TARGETARCH" == "arm64" ]; then \
-        dpkg --add-architecture armhf && \
-    else \
-        ARM64_PACKAGES=(); \
-    fi && \
+    if [ "$TARGETARCH" == "arm64" ]; then dpkg --add-architecture armhf; else ARM64_PACKAGES=(); fi && \
     apt-get update -q && \
     apt-get install -q -o Dpkg::Options::="--force-confnew" -y --no-install-recommends --no-install-suggests "${TEMP_PACKAGES[@]}" "${KEPT_PACKAGES[@]}" "${ARM64_PACKAGES}" && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.9 100 && \
