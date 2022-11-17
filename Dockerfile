@@ -107,7 +107,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(sqlite3) && \
     KEPT_PACKAGES+=(xfonts-75dpi) && \
     KEPT_PACKAGES+=(xfonts-base) && \
-    KEPT_PACKAGES+=(/software/meteordemod2.deb) && \
+    # KEPT_PACKAGES+=(/software/meteordemod2.deb) && \
     KEPT_PACKAGES+=(ghostscript) && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(pkg-config) && \
