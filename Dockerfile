@@ -1,18 +1,18 @@
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python AS build
 RUN set -x && \
     BUILD_PACKAGES=() && \
-    # BUILD_PACKAGES+=(python3-dev) && \
-    # BUILD_PACKAGES+=(python3-pip) && \
+    BUILD_PACKAGES+=(python3-dev) && \
+    BUILD_PACKAGES+=(python3-pip) && \
     BUILD_PACKAGES+=(cmake) && \
     BUILD_PACKAGES+=(build-essential) && \
     BUILD_PACKAGES+=(pkg-config) && \
     BUILD_PACKAGES+=(git) && \
-    # BUILD_PACKAGES+=(libatlas-base-dev) && \
-    # BUILD_PACKAGES+=(liblapacke-dev) && \
-    # BUILD_PACKAGES+=(gfortran) && \
-    # BUILD_PACKAGES+=(libopencv-dev) && \
-    # BUILD_PACKAGES+=(python3-opencv) && \
-    # #
+    BUILD_PACKAGES+=(libatlas-base-dev) && \
+    BUILD_PACKAGES+=(liblapacke-dev) && \
+    BUILD_PACKAGES+=(gfortran) && \
+    BUILD_PACKAGES+=(libopencv-dev) && \
+    BUILD_PACKAGES+=(python3-opencv) && \
+    #
     # now install these packages:
     apt-get update -q && \
     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${BUILD_PACKAGES[@]}" && \
