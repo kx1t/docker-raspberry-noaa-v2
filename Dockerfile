@@ -41,7 +41,7 @@ RUN set -x && \
 
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
-COPY --from=build /git/meteor_demod/build/meteor_demod /usr/local/bin/meteor_demod
+COPY --from=build /meteordemod2.deb /software/meteordemod2.deb
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
 ARG BRANCH="main"
@@ -107,7 +107,7 @@ RUN set -x && \
     KEPT_PACKAGES+=(sqlite3) && \
     KEPT_PACKAGES+=(xfonts-75dpi) && \
     KEPT_PACKAGES+=(xfonts-base) && \
-    # KEPT_PACKAGES+=(/software/meteordemod2.deb) && \
+    KEPT_PACKAGES+=(/software/meteordemod2.deb) && \
     KEPT_PACKAGES+=(ghostscript) && \
     TEMP_PACKAGES+=(git) && \
     TEMP_PACKAGES+=(pkg-config) && \
