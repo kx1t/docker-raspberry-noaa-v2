@@ -1,34 +1,34 @@
-# FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python AS build
-# RUN set -x && \
-#     BUILD_PACKAGES=() && \
-#     # BUILD_PACKAGES+=(python3-dev) && \
-#     # BUILD_PACKAGES+=(python3-pip) && \
-#     BUILD_PACKAGES+=(cmake) && \
-#     BUILD_PACKAGES+=(build-essential) && \
-#     BUILD_PACKAGES+=(pkg-config) && \
-#     BUILD_PACKAGES+=(git) && \
-#     # BUILD_PACKAGES+=(libatlas-base-dev) && \
-#     # BUILD_PACKAGES+=(liblapacke-dev) && \
-#     # BUILD_PACKAGES+=(gfortran) && \
-#     # BUILD_PACKAGES+=(libopencv-dev) && \
-#     # BUILD_PACKAGES+=(python3-opencv) && \
-#     # #
-#     # now install these packages:
-#     apt-get update -q && \
-#     apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${BUILD_PACKAGES[@]}" && \
-#     #
-#     # get and build MeteorDemod:
-#     # mkdir /git && \
-#     # cd /git && \
-#     # git clone --depth=1 https://github.com/Digitelektro/MeteorDemod.git && \
-#     # cd MeteorDemod && \
-#     # git submodule update --init --recursive && \
-#     # mkdir build && cd build && \
-#     # cmake ../ && \
-#     # make -j4 && \
-#     # make install && \
-#     # cpack && \
-#     # cp *.deb /meteordemod2.deb
+FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python AS build
+RUN set -x && \
+    BUILD_PACKAGES=() && \
+    # BUILD_PACKAGES+=(python3-dev) && \
+    # BUILD_PACKAGES+=(python3-pip) && \
+    BUILD_PACKAGES+=(cmake) && \
+    BUILD_PACKAGES+=(build-essential) && \
+    BUILD_PACKAGES+=(pkg-config) && \
+    BUILD_PACKAGES+=(git) && \
+    # BUILD_PACKAGES+=(libatlas-base-dev) && \
+    # BUILD_PACKAGES+=(liblapacke-dev) && \
+    # BUILD_PACKAGES+=(gfortran) && \
+    # BUILD_PACKAGES+=(libopencv-dev) && \
+    # BUILD_PACKAGES+=(python3-opencv) && \
+    # #
+    # now install these packages:
+    apt-get update -q && \
+    apt-get install -q -o APT::Autoremove::RecommendsImportant=0 -o APT::Autoremove::SuggestsImportant=0 -o Dpkg::Options::="--force-confold" -y --no-install-recommends  --no-install-suggests "${BUILD_PACKAGES[@]}" && \
+
+    # get and build MeteorDemod:
+    mkdir /git && \
+    cd /git && \
+    git clone --depth=1 https://github.com/Digitelektro/MeteorDemod.git && \
+    cd MeteorDemod && \
+    git submodule update --init --recursive && \
+    mkdir build && cd build && \
+    cmake ../ && \
+    make -j4 && \
+    make install && \
+    cpack && \
+    cp *.deb /meteordemod2.deb
 #
 #     # Instead, build meteor_demod:
 #     mkdir /git && \
@@ -41,7 +41,7 @@
 
 FROM ghcr.io/sdr-enthusiasts/docker-baseimage:python
 
-# COPY --from=build /git/meteor_demod/build/meteor_demod /usr/local/bin/meteor_demod
+COPY --from=build /git/meteor_demod/build/meteor_demod /usr/local/bin/meteor_demod
 ARG TARGETARCH
 ENV NOAA_HOME="/RaspiNOAA2"
 ARG BRANCH="main"
@@ -154,7 +154,7 @@ RUN set -x && \
         fi && \
     popd && \
 #
-# Install meteordemod2
+# Install meteor_demod
     pushd /git/docker-raspberry-noaa-v2/software && \
         if   [ "$TARGETARCH" == "armhf" ] || [ "$TARGETARCH" == "arm" ]; then cp meteor_demod_armhf /usr/local/bin/meteor_demod; \
         elif [ "$TARGETARCH" == "amd64" ]; then cp meteor_demod_amd64 /usr/local/bin/meteor_demod; \
@@ -219,9 +219,7 @@ RUN set -x && \
 # --------------------------------------------------------------------------------------------
 #
 # Do some other stuff
-    echo "alias dir=\"ls -alsv\"" >> /root/.bashrc && \
-    echo "alias nano=\"nano -l\"" >> /root/.bashrc
-    # ln -sf /usr/bin/meteordemod /usr/local/bin/meteordemod
+    ln -sf /usr/bin/meteordemod /usr/local/bin/meteordemod
 #
 # --------------------------------------------------------------------------------------------
 #
